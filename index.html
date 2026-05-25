@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Rendez-vous">
+<meta name="application-name" content="Rendez-vous">
+<meta name="theme-color" content="#1A1A2E">
+<meta name="description" content="Ton calendrier personnel d'événements — sport, culture, mode, sorties.">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" sizes="152x152" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJgAAACYCAYAAAAYwiAhAAAJUUlEQVR4nO2d22sc1x3HvzO72osuthxFIZaC8UuhhDROlAQCjhMKaUJsU0rf8tBAYyiFtM8t9KkQyEMIpQ8hTyF/QsAhFwIhlGJKS1tix5AbFD9Iu7asyBfJ2qt2+iBG2Tk7uzuXc2Z+vzO/z5N3JM3O+Z3PfM/Z32otBxmwsvKol8XzCPFoNK44pp/DyBOIUDwxIZzWE4pYdqBTtNQnEqnsJq1sbpofFrnsJ+0cJ7JTxComSdIsdoKJXMUlydzHEkzkEuI6EFkwkUvwieNCJMFELkElqhNTBRO5hHFEcWOiYCKXMI1pjowVTOQSojLJlVDBRC4hLuOcSdXJF4RpjAgm6SUkJcwdd9o3CEIcVIdkiRSMIoIJRjkUTJZHQRfDLkmCCUZxAUkvQT++U+W8L4Qi/z3+UOKfXWuua7wS/hResDQyRT1fkaUrnGC6hUrynEUSzinC/isPqaJiu2xWC0ZZLBVbRbNSME5iqdgmmlWCcRZLxRbRrBDMJrFUuIvGWjCbxVLhKhrbt4qKJBfAd7wsBeNa7LRwHDerJZJjgU3BZclkI1jWciWZQA7XmDUsBDM9cSYnivO164C8YKYmKI+JsWksUSEtmIkJoTAZto4rDLKC6Z4EihNQhDGSFExn4SkWXcXm8ZITTFexdRd6Y+PyyLHV1VNan4Pq2NNAqtFqY4HjoOu6KfULyQimoyhrzXW2cvnoGgMVyUgIpksum7BFMhKCpcU2uXxsGFfugqW9y2yYhEmkHV/eKZarYCJXNDhLlptgIlc8uEqW+xKZhKLJ5cNx3LkIJh/NT06a8eeRYqwSrOhy+XCqQ+aCJb2LOBU1C5LWI+sUY5VgAj8yFUzSSy8cUox8golck6Fen8wEy7ujLATJaj5IJxj1u5MKlOuUiWCSXjTJYl7IJhjlu5IiVOtFVjAdhP2as5AtxgVLEsM67kZfro2Ny4URjeKn0a1OsGGKIhk1yAmmM73CjtsuGrW9GDnB0hJFoCKIRgWjglFvT4hkB5icJ1IJljbekwhjY5pRWiZJCZaW1dVTiT9tbZtkVLBKMJ80koloerFSMCB9moloejAmGJUNviyb0TA1X2QSzPTGtGhpRmWjX6g/5+dLlkSYG0+e0305hYBMgmVJ3GVznFxUtgGUKaRgPlEkm5ZcItlkCi0YMDnNoi6LItl4Ci+Yj+7/DlM4QAQbIk1LQwhHBAtBRNOHCCYYRQSbQNRmJZWmJkVEsClMk0fkmowIFoFxEolc0ynUW0VpEJmSQSbBpFmpFyr1NCaY3PG8MDVfZBJMsBMRTDCKCCYYhZRgVDam3KFUR6OCyUafBybniVSCCfZBTjBK8c4RavUjJ5hgF8YFo/ifotlKXv/Z3yQkwQSjkBVMUiweVOuViWDSrqBJFvNCNsEAunclNSjXKTPBJMVokdV8kE4wgPbdSQHq9clUMA5/fo4THP48IvkEE3iTuWCSYnrgkF4AswQTyQ7gVIdcBEtzF3EqrgnSjD+PV/KsEsynqJJxHHdugqW9mzgWOw1px5tXHzLXBBPJosFVLoDAEimSTYazXAABwXRgq2Q2jIuEYDruMhsmYxgd48k7vQDAWVl51Mv7Inx0SUKhsEmxrQYkEsxHV1G4ppltcgHEEsxHpyCUij0Om8dLUjBAfwpRKzxQjDGSFQwws9RRmARbxxUGacEAc/upPCbEprFEhbxggPlNu8kJ4nztOmAhGJD9K0MOHximLhfASDCAb/vBBBzkApgJ5lNk0biI5UOq0RoVbkXWBcdxsxQM4FnsNHAdL8slUsXmJZOrWD5WCOZjk2jcxfKxSjAfzqLZIpaPlYL5cBLNNrF8HACwWTKAtmi2igUAjcYVpxB/bW14EinIZrNUKoUQbBh1crMQrkhCqRROMJWwyef26WnKOP4/bN+HCdnSaFxxAMadfIEHh4L5xglCWoZdkgQTjCKCCUYJCCbLpJAW1aGRBBPJhKSEuSNLpGCUsWnFpS/21/vux5lqLfRrHoC252F7sI//9fu41G7jg9Y9tLzwoYWdywPQ9zx04OHuYIDN/QGu9Xv4d7eDz9otdMac6y/HlvBcrX74uOt5eP5GE7veYOJ43jq2hJ8qP/ezzSZ2BpN/Lm/GrXxjE8yGpdIBUHccrJbKOFOt4Y9HF/H+8oP40cxMrHPMOA7mHRcrpTIeq1Twi9k5vL54Hz554DhenV8ILeLF1l7gccVx8Hy9HvKdP3DEdfGMIvjn7RZbuYApS6QNkqk8UCrhzcUllDSc66jr4ncLR/HO0jJmnWCp/t5u47Yixvn67MTzvVCrY0Y5jyoqNaY5MnUPxlGyteY61prrePZ6A7/f3sL3g/3A10+Uy3i8Uo18riea63juRgOvbG3i3d0d3FOWuacqVbxxbClQzD48fKzI8XiliuOl8Wqfq88FHm/u7+OfnXak68yDKG5E2uRzlAwAdr0BLnXaeG93Z+RrJ8rR3+f3AOwMBrja6+LtnTt4+eYmmvtBac9Ua3hJSaiLrXuBxw6As4pEPqulMk5VKoFjH7b2QHVxjOpE5FeRXCUDgPX9/six9pjNedTz/en29yPHL8wfCTz+ptfDt71e4Ni5Mctk2PEPFEGpEMeFWG0KrpI9VBpNq+/6vZDvjM4X3S6u9rqBYyfL5ZHnUiU5WS7jkZlgUgHAWUWwL3tdXOuP3hh5E9eB2H0wTpLNOS5OV2v49fxC4Pg/Om1810snGAD8p9sZOfZj5RXqR6099BFMSzWtfjJTGVmyL+7RS68kc5/oFw79J6LaK5v0C4P/6nTwh1vbWp7nprIPA4BjbnATf2swwKV2O9ATe7E+i7fu3jkU79xsULiu5+HTdkvLNeogTaik6uRzSjMAeHf3Ln67fXNqszMqbkif2sPoPae2GhZdF6drB/2uMhy8UAsKRqn3lXaOU//K9PAFUE00nwvzR7DslvDnO7dCNIjPcmn0/rwVIobfE1t0f/j+8/VZ/K3dwulaLXAcyL/3pTM4tL4X2WhccSik2lpzHU9f38ArW5v4StmI/3x2Dr+aWxjzk/F4IqSX9nXI3i6sJ3amWsOC647sx/LsfZmYPyMf+lAvMo9k63oerva6eG17C+8vP4ijQynxm4Uj+Ki1h63B6B4qKmuVKh5WXg1e6/exEdISAQ56Yi/PzR8+rjgOfjk7h2eVt4ay7H1lEQb/B206zrM4Nz2PAAAAAElFTkSuQmCC">
+<link rel="apple-touch-icon" sizes="167x167" href="data:image/png;base64,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">
+<link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,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">
+<link rel="icon" type="image/png" sizes="192x192" href="data:image/png;base64,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">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Rendez-vous</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--red:#E8334A;--dark:#1A1A2E;--bg:#eeeef5;--sur:#fff;--sur2:#f4f4f8;--tx:#111;--tx2:#555;--tx3:#aaa;--bd:rgba(0,0,0,0.09);--bd2:rgba(0,0,0,0.17)}
+@media(prefers-color-scheme:dark){:root{--bg:#0d0d1a;--sur:#1b1b2e;--sur2:#232336;--tx:#eeeefc;--tx2:#8888bb;--tx3:#44446a;--bd:rgba(255,255,255,0.07);--bd2:rgba(255,255,255,0.14)}}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);display:flex;justify-content:center;padding:2rem 1rem;min-height:100vh}
+@media(max-width:430px){body{padding:0}}
+.phone{width:390px;max-width:100vw;background:var(--sur);border-radius:44px;border:1px solid var(--bd2);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 32px 80px rgba(0,0,0,0.18);min-height:844px}
+@media(max-width:430px){.phone{border-radius:0;min-height:100vh;border:none}}
+.sb{background:var(--dark);padding:14px 28px 8px;display:flex;justify-content:space-between;align-items:center}
+.sb span{color:#fff;font-size:12px;font-weight:500}
+.ah{background:var(--dark);padding:10px 22px 14px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:22px;font-weight:700;color:#fff;letter-spacing:-.5px}
+.logo em{color:var(--red);font-style:normal}
+.hico{display:flex;gap:14px}
+.hico i{color:rgba(255,255,255,.7);font-size:21px;cursor:pointer}
+.cats{background:var(--dark);padding:0 16px 13px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.cats::-webkit-scrollbar{display:none}
+.pill{padding:6px 13px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;cursor:pointer;border:1.5px solid transparent;transition:all .2s;display:flex;align-items:center;gap:5px}
+.pill.on{color:#fff}
+.pill.off{background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);border-color:rgba(255,255,255,.09)}
+.mw{display:flex;flex-direction:column;flex:1;overflow:hidden}
+.mw.gone{display:none}
+.dw{display:none;flex-direction:column;flex:1;overflow:hidden}
+.dw.open{display:flex}
+.scr{flex:1;overflow-y:auto;scrollbar-width:none;display:flex;flex-direction:column}
+.scr::-webkit-scrollbar{display:none}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:14px 22px 9px}
+.cm{font-size:17px;font-weight:700;color:var(--tx)}
+.cnav{display:flex;gap:5px}
+.cnav button{background:none;border:none;cursor:pointer;color:var(--tx);font-size:26px;line-height:1;padding:0 6px}
+.cnav button:hover{color:var(--tx)}
+.vt{display:flex;border:1px solid var(--bd);border-radius:9px;overflow:hidden;margin:0 20px 11px}
+.vb{flex:1;padding:7px;font-size:12px;cursor:pointer;background:none;border:none;color:var(--tx2);font-family:inherit;font-weight:500}
+.vb.on{background:var(--dark);color:#fff}
+.cg{padding:0 12px}
+.chd{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:4px}
+.chd span{text-align:center;font-size:11px;color:var(--tx3);font-weight:600;padding:3px 0}
+.cd{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.dc{min-height:54px;display:flex;flex-direction:column;align-items:center;padding:4px 1px 3px;border-radius:9px;cursor:pointer;transition:background .12s}
+.dc:hover{background:var(--sur2)}
+.dc.sel{background:var(--sur2);outline:1.5px solid var(--bd2)}
+.dn{font-size:12px;color:var(--tx);line-height:23px;min-width:23px;text-align:center;font-weight:500}
+.dn.tod{background:var(--red);color:#fff;border-radius:50%;width:23px;height:23px;display:flex;align-items:center;justify-content:center;font-weight:700}
+.dn.dim{color:var(--tx3);font-weight:400}
+.dico{display:flex;flex-wrap:wrap;gap:1px;justify-content:center;margin-top:2px;max-width:46px}
+.ei{width:14px;height:14px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0}
+.els{padding:11px 15px;flex:1}
+.elt{font-size:11px;font-weight:700;color:var(--tx2);margin-bottom:9px;text-transform:uppercase;letter-spacing:.6px}
+.ec{background:var(--sur);border:1px solid var(--bd);border-radius:14px;padding:11px 13px;margin-bottom:8px;cursor:pointer;display:flex;align-items:flex-start;gap:10px;transition:all .15s}
+.ec:hover{border-color:var(--bd2);background:var(--sur2)}
+.eico{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.etm{font-size:10px;color:var(--tx3);text-align:center;margin-top:3px;font-weight:500}
+.en{font-size:13px;font-weight:700;color:var(--tx);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.es{font-size:11px;color:var(--tx2)}
+.eb{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600;margin-top:4px;display:inline-block}
+.srcb{font-size:9px;padding:1px 5px;border-radius:4px;background:var(--sur2);color:var(--tx3);border:1px solid var(--bd);margin-left:5px;font-weight:600}
+.bnav{background:var(--sur);border-top:1px solid var(--bd);display:flex;justify-content:space-around;padding:10px 0 22px;flex-shrink:0}
+.bni{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 16px}
+.bni i{font-size:24px;color:var(--tx3)}
+.bni span{font-size:10px;color:var(--tx3);font-weight:500}
+.bni.on i,.bni.on span{color:var(--red)}
+.dh{background:var(--dark);padding:11px 20px 15px;display:flex;align-items:center;gap:11px;flex-shrink:0}
+.dbk{background:none;border:none;color:#fff;cursor:pointer;font-size:24px;padding:4px;display:flex;align-items:center}
+.dhi{flex:1}
+.dhi h2{font-size:15px;font-weight:700;color:#fff}
+.dhi p{font-size:11px;color:rgba(255,255,255,.5)}
+.dhero{height:130px;display:flex;align-items:center;justify-content:center;font-size:54px;flex-shrink:0}
+.dscr{flex:1;overflow-y:auto;scrollbar-width:none}
+.dscr::-webkit-scrollbar{display:none}
+.dcon{padding:15px 18px}
+.dttl{font-size:19px;font-weight:700;margin-bottom:4px;color:var(--tx)}
+.ddes{font-size:13px;color:var(--tx2);margin-bottom:13px;line-height:1.6}
+.dr{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--bd)}
+.dr i{font-size:17px;color:var(--tx2);margin-top:1px;flex-shrink:0}
+.drt p{font-size:13px;color:var(--tx);font-weight:600}
+.drt span{font-size:11px;color:var(--tx2)}
+.dact{display:flex;gap:8px;padding:13px 16px;flex-shrink:0}
+.ab{flex:1;padding:10px 4px;border-radius:11px;border:1px solid var(--bd2);background:none;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;color:var(--tx);font-family:inherit}
+.ab:hover{background:var(--sur2)}
+.ab.pri{background:var(--red);border-color:var(--red);color:#fff}
+.rel{padding:0 18px 20px}
+.relt{font-size:11px;font-weight:700;color:var(--tx2);margin-bottom:9px;text-transform:uppercase;letter-spacing:.6px}
+.ri{display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid var(--bd);cursor:pointer}
+.rd{font-size:11px;color:var(--tx3);min-width:54px;font-weight:500}
+.rn{font-size:13px;color:var(--tx);flex:1;font-weight:500}
+.empty{text-align:center;padding:32px;color:var(--tx3);font-size:13px;line-height:1.8}
+
+/* ── Settings Screen ─────────────────────────────────────── */
+.sw{display:none;flex-direction:column;flex:1;overflow:hidden}
+.sw.open{display:flex}
+.sw-scr{flex:1;overflow-y:auto;scrollbar-width:none;padding-bottom:32px}
+.sw-scr::-webkit-scrollbar{display:none}
+.sw-section{padding:20px 20px 0}
+.sw-section-title{font-size:11px;font-weight:700;color:var(--tx2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px}
+.sw-card{background:var(--sur);border:1px solid var(--bd);border-radius:14px;overflow:hidden;margin-bottom:8px}
+.sw-row{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--bd);cursor:pointer;transition:background .12s}
+.sw-row:last-child{border-bottom:none}
+.sw-row:hover{background:var(--sur2)}
+.sw-row-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.sw-row-label{flex:1}
+.sw-row-label p{font-size:14px;font-weight:500;color:var(--tx)}
+.sw-row-label span{font-size:11px;color:var(--tx2)}
+.toggle{width:48px;height:28px;border-radius:14px;background:var(--bd2);position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;border:none;padding:0}
+.toggle.on{background:#34C759}
+.toggle::after{content:'';position:absolute;width:22px;height:22px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.toggle.on::after{transform:translateX(20px)}
+.sw-chip-wrap{display:flex;flex-wrap:wrap;gap:7px;padding:14px 16px}
+.sw-chip{padding:6px 13px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--bd2);background:none;color:var(--tx2);font-family:inherit;transition:all .2s}
+.sw-chip.on{color:#fff;border-color:transparent}
+.sw-profile-header{margin:20px 20px 0;display:flex;align-items:center;gap:14px;padding:16px;background:var(--sur);border:1px solid var(--bd);border-radius:14px}
+.sw-avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#E8334A,#1A1A2E);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.sw-avatar-info h3{font-size:16px;font-weight:600;color:var(--tx)}
+.sw-avatar-info p{font-size:12px;color:var(--tx2);margin-top:2px}
+.sw-save{margin:20px;padding:14px;background:var(--red);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;width:calc(100% - 40px);display:flex;align-items:center;justify-content:center;gap:8px}
+.sw-save:active{opacity:.85}
+.saved-toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:#1A1A2E;color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;font-weight:600;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;z-index:999}
+.saved-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.sw{display:none;flex-direction:column;flex:1;overflow:hidden}
+.sw.open{display:flex}
+.sw-scr{flex:1;overflow-y:auto;scrollbar-width:none;padding-bottom:32px}
+.sw-scr::-webkit-scrollbar{display:none}
+.sw-section{padding:20px 20px 0}
+.sw-section-title{font-size:11px;font-weight:700;color:var(--tx2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px}
+.sw-card{background:var(--sur);border:1px solid var(--bd);border-radius:14px;overflow:hidden;margin-bottom:8px}
+.sw-row{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--bd);transition:background .12s}
+.sw-row:last-child{border-bottom:none}
+.sw-row:hover{background:var(--sur2)}
+.sw-row-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.sw-row-label{flex:1}
+.sw-row-label p{font-size:14px;font-weight:500;color:var(--tx)}
+.sw-row-label span{font-size:11px;color:var(--tx2)}
+.toggle{width:48px;height:28px;border-radius:14px;background:var(--bd2);position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;border:none;padding:0}
+.toggle.on{background:#34C759}
+.toggle::after{content:'';position:absolute;width:22px;height:22px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.toggle.on::after{transform:translateX(20px)}
+.sw-chip-wrap{display:flex;flex-wrap:wrap;gap:7px;padding:14px 16px}
+.sw-chip{padding:6px 13px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--bd2);background:none;color:var(--tx2);font-family:inherit;transition:all .2s}
+.sw-chip.on{color:#fff;border-color:transparent}
+.sw-profile-header{margin:20px 20px 0;display:flex;align-items:center;gap:14px;padding:16px;background:var(--sur);border:1px solid var(--bd);border-radius:14px}
+.sw-avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#E8334A,#1A1A2E);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.sw-avatar-info h3{font-size:16px;font-weight:600;color:var(--tx)}
+.sw-avatar-info p{font-size:12px;color:var(--tx2);margin-top:2px}
+.sw-save{margin:20px;padding:14px;background:var(--red);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;width:calc(100% - 40px);display:flex;align-items:center;justify-content:center;gap:8px}
+.saved-toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:#1A1A2E;color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;font-weight:600;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;z-index:9999}
+.saved-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+</style>
+</head>
+<body>
+<div class="phone">
+<div class="sb">
+  <span id="clk">9:41</span>
+  <span style="display:flex;gap:5px;align-items:center">
+    <i class="ti ti-wifi" style="font-size:14px;color:#fff"></i>
+    <i class="ti ti-battery-2" style="font-size:14px;color:#fff"></i>
+  </span>
+</div>
+
+<div class="mw" id="mw">
+  <div class="ah">
+    <div class="logo">Rendez<em>-vous</em></div>
+    <div class="hico"><i class="ti ti-bell"></i><i class="ti ti-settings"></i></div>
+  </div>
+  <div class="cats">
+    <div class="pill on" style="background:#E8334A;border-color:#E8334A" onclick="sCat(this,'all')">✦ Tout</div>
+    <div class="pill off" onclick="sCat(this,'sport')">⚽ Sport</div>
+    <div class="pill off" onclick="sCat(this,'culture')">🎭 Culture</div>
+    <div class="pill off" onclick="sCat(this,'business')">💼 Business</div>
+    <div class="pill off" onclick="sCat(this,'tourisme')">🗺 Sorties</div>
+    <div class="pill off" onclick="sCat(this,'mode')">👗 Mode</div>
+  </div>
+  <div class="scr">
+    <div class="ch">
+      <span class="cm" id="cm"></span>
+      <div class="cnav">
+        <button onclick="chM(-1)">&#8592;</button>
+        <button onclick="chM(1)">&#8594;</button>
+      </div>
+    </div>
+    <div class="vt">
+      <button class="vb" onclick="sV(this)">Mois</button>
+      <button class="vb on" onclick="sV(this)">Semaine</button>
+      <button class="vb" onclick="sV(this)">Jour</button>
+    </div>
+    <div class="cg">
+      <div class="chd"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
+      <div class="cd" id="cd"></div>
+    </div>
+    <div class="els">
+      <div class="elt" id="elt"></div>
+      <div id="el"></div>
+    </div>
+  </div>
+  <div class="bnav">
+    <div class="bni on"><i class="ti ti-calendar"></i><span>Agenda</span></div>
+    <div class="bni"><i class="ti ti-map-pin"></i><span>Carte</span></div>
+    <div class="bni"><i class="ti ti-star"></i><span>Favoris</span></div>
+    <div class="bni" id="bni-settings" onclick="openSettings()"><i class="ti ti-settings"></i><span>Réglages</span></div>
+  </div>
+</div>
+
+<div class="sw" id="sw">
+  <div class="sb"><span id="clk3">9:41</span><span style="display:flex;gap:5px;align-items:center"><i class="ti ti-wifi" style="font-size:14px;color:#fff"></i><i class="ti ti-battery-2" style="font-size:14px;color:#fff"></i></span></div>
+  <div class="dh">
+    <button class="dbk" onclick="closeSettings()"><i class="ti ti-arrow-left"></i></button>
+    <div class="dhi"><h2>Mes pr&#233;f&#233;rences</h2><p>Personnalise ton Rendez-vous</p></div>
+  </div>
+  <div class="sw-scr">
+
+    <div class="sw-profile-header">
+      <div class="sw-avatar">&#128100;</div>
+      <div class="sw-avatar-info"><h3>Mon compte</h3><p>Pr&#233;f&#233;rences sauvegard&#233;es localement</p></div>
+    </div>
+
+    <div class="sw-section">
+      <div class="sw-section-title">Cat&#233;gories actives</div>
+      <div class="sw-card"><div class="sw-chip-wrap" id="sw-cats">
+        <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-cat="sport" onclick="toggleChip(this)">&#9917; Sport</button>
+        <button class="sw-chip on" style="background:#7C3AED;color:#fff" data-cat="culture" onclick="toggleChip(this)">&#127917; Culture</button>
+        <button class="sw-chip on" style="background:#B45309;color:#fff" data-cat="business" onclick="toggleChip(this)">&#128188; Business</button>
+        <button class="sw-chip on" style="background:#059669;color:#fff" data-cat="tourisme" onclick="toggleChip(this)">&#128506; Sorties</button>
+        <button class="sw-chip on" style="background:#DB2777;color:#fff" data-cat="mode" onclick="toggleChip(this)">&#128248; Mode</button>
+      </div></div>
+    </div>
+
+    <div class="sw-section">
+      <div class="sw-section-title">&#9917; Football &#8212; mes clubs</div>
+      <div class="sw-card"><div class="sw-chip-wrap" id="sw-foot">
+        <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="psg" onclick="toggleChip(this)">PSG</button>
+        <button class="sw-chip" data-pref="om" onclick="toggleChip(this)">OM</button>
+        <button class="sw-chip" data-pref="ol" onclick="toggleChip(this)">OL</button>
+        <button class="sw-chip" data-pref="monaco" onclick="toggleChip(this)">Monaco</button>
+        <button class="sw-chip" data-pref="rennes" onclick="toggleChip(this)">Rennes</button>
+        <button class="sw-chip" data-pref="lens" onclick="toggleChip(this)">Lens</button>
+        <button class="sw-chip" data-pref="nice" onclick="toggleChip(this)">Nice</button>
+        <button class="sw-chip" data-pref="juventus" onclick="toggleChip(this)">Juventus</button>
+        <button class="sw-chip" data-pref="arsenal" onclick="toggleChip(this)">Arsenal</button>
+        <button class="sw-chip" data-pref="barca" onclick="toggleChip(this)">FC Barcelone</button>
+        <button class="sw-chip" data-pref="real" onclick="toggleChip(this)">Real Madrid</button>
+      </div></div>
+    </div>
+
+    <div class="sw-section">
+      <div class="sw-section-title">&#127941; Autres sports</div>
+      <div class="sw-card"><div class="sw-chip-wrap" id="sw-sport">
+        <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="f1" onclick="toggleChip(this)">&#127950; F1</button>
+        <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="tennis" onclick="toggleChip(this)">&#127934; Tennis</button>
+        <button class="sw-chip" data-pref="basket" onclick="toggleChip(this)">&#127936; Basket / NBA</button>
+        <button class="sw-chip" data-pref="rugby" onclick="toggleChip(this)">&#127945; Rugby</button>
+        <button class="sw-chip" data-pref="cyclisme" onclick="toggleChip(this)">&#128692; Cyclisme</button>
+        <button class="sw-chip" data-pref="golf" onclick="toggleChip(this)">&#9971; Golf</button>
+        <button class="sw-chip" data-pref="running" onclick="toggleChip(this)">&#127939; Running</button>
+        <button class="sw-chip" data-pref="natation" onclick="toggleChip(this)">&#127946; Natation</button>
+        <button class="sw-chip" data-pref="handball" onclick="toggleChip(this)">Handball</button>
+        <button class="sw-chip" data-pref="volley" onclick="toggleChip(this)">&#127944; Volley</button>
+        <button class="sw-chip" data-pref="ski" onclick="toggleChip(this)">&#9971; Ski alpin</button>
+        <button class="sw-chip" data-pref="athletisme" onclick="toggleChip(this)">&#127939; Athl&#233;tisme</button>
+        <button class="sw-chip" data-pref="moto" onclick="toggleChip(this)">&#127949; MotoGP</button>
+      </div></div>
+    </div>
+
+    <div class="sw-section">
+      <div class="sw-section-title">&#129354; Sports de combat</div>
+      <div class="sw-card"><div class="sw-chip-wrap" id="sw-combat">
+        <button class="sw-chip" data-pref="ufc" onclick="toggleChip(this)">&#129354; UFC / MMA</button>
+        <button class="sw-chip" data-pref="boxe" onclick="toggleChip(this)">&#129354; Boxe</button>
+        <button class="sw-chip" data-pref="kickboxing" onclick="toggleChip(this)">Kickboxing</button>
+        <button class="sw-chip" data-pref="judo" onclick="toggleChip(this)">&#129354; Judo</button>
+        <button class="sw-chip" data-pref="karate" onclick="toggleChip(this)">Karat&#233;</button>
+        <button class="sw-chip" data-pref="lutte" onclick="toggleChip(this)">Lutte</button>
+        <button class="sw-chip" data-pref="muay-thai" onclick="toggleChip(this)">Muay Thai</button>
+        <button class="sw-chip" data-pref="sumo" onclick="toggleChip(this)">Sumo</button>
+      </div></div>
+    </div>
+
+    <div class="sw-section">
+      <div class="sw-section-title">&#127917; Culture &#8212; mes int&#233;r&#234;ts</div>
+      <div class="sw-card"><div class="sw-chip-wrap" id="sw-culture">
+        <button class="sw-chip on" style="background:#7C3AED;color:#fff" data-pref="cinema" onclick="toggleChip(this)">&#127902; Cin&#233;ma</button>
+        <button class="sw-chip on" style="background:#7C3AED;color:#fff" data-pref="concerts" onclick="toggleChip(this)">&#127925; Concerts</button>
+        <button class="sw-chip" data-pref="musees" onclick="toggleChip(this)">&#127963; Mus&#233;es</button>
+        <button class="sw-chip" data-pref="festivals" onclick="toggleChip(this)">&#127914; Festivals</button>
+        <button class="sw-chip" data-pref="theatre" onclick="toggleChip(this)">&#127917; Th&#233;&#226;tre</button>
+        <button class="sw-chip" data-pref="opera" onclick="toggleChip(this)">&#127908; Op&#233;ra</button>
+        <button class="sw-chip" data-pref="jeux-video" onclick="toggleChip(this)">&#127918; Jeux vid&#233;o</button>
+        <button class="sw-chip" data-pref="bd" onclick="toggleChip(this)">&#128214; BD / Manga</button>
+        <button class="sw-chip" data-pref="photo" onclick="toggleChip(this)">&#128247; Photo</button>
+      </div></div>
+    </div>
+
+    <div class="sw-section">
+      <div class="sw-section-title">&#128248; Mode &#8212; mes marques</div>
+      <div class="sw-card"><div class="sw-chip-wrap" id="sw-mode">
+        <button class="sw-chip on" style="background:#DB2777;color:#fff" data-pref="sezane" onclick="toggleChip(this)">S&#233;zane</button>
+        <button class="sw-chip on" style="background:#DB2777;color:#fff" data-pref="rouje" onclick="toggleChip(this)">Rouje</button>
+        <button class="sw-chip" data-pref="balzac" onclick="toggleChip(this)">Balzac Paris</button>
+        <button class="sw-chip" data-pref="saaj" onclick="toggleChip(this)">SAAJ Paris</button>
+        <button class="sw-chip" data-pref="maison-stella" onclick="toggleChip(this)">Maison Stella</button>
+        <button class="sw-chip" data-pref="suzie" onclick="toggleChip(this)">Suzie</button>
+        <button class="sw-chip" data-pref="fashion-week" onclick="toggleChip(this)">Fashion Week</button>
+        <button class="sw-chip" data-pref="soldes" onclick="toggleChip(this)">&#128717; Soldes</button>
+      </div></div>
+    </div>
+
+    <div class="sw-section">
+      <div class="sw-section-title">&#128205; Ma ville</div>
+      <div class="sw-card"><div class="sw-chip-wrap" id="sw-villes">
+        <button class="sw-chip on" style="background:#E8334A;color:#fff" data-pref="paris" onclick="toggleVille(this)">Paris</button>
+        <button class="sw-chip" data-pref="lyon" onclick="toggleVille(this)">Lyon</button>
+        <button class="sw-chip" data-pref="marseille" onclick="toggleVille(this)">Marseille</button>
+        <button class="sw-chip" data-pref="bordeaux" onclick="toggleVille(this)">Bordeaux</button>
+        <button class="sw-chip" data-pref="nantes" onclick="toggleVille(this)">Nantes</button>
+        <button class="sw-chip" data-pref="toulouse" onclick="toggleVille(this)">Toulouse</button>
+        <button class="sw-chip" data-pref="lille" onclick="toggleVille(this)">Lille</button>
+        <button class="sw-chip" data-pref="nice" onclick="toggleVille(this)">Nice</button>
+        <button class="sw-chip" data-pref="toute-france" onclick="toggleVille(this)">&#127467;&#127479; Toute la France</button>
+      </div></div>
+    </div>
+
+    <div class="sw-section">
+      <div class="sw-section-title">&#128276; Notifications</div>
+      <div class="sw-card">
+        <div class="sw-row">
+          <div class="sw-row-icon" style="background:#fee2e2">&#128276;</div>
+          <div class="sw-row-label"><p>Rappels &#233;v&#233;nements</p><span>24h avant chaque &#233;v&#233;nement favori</span></div>
+          <button class="toggle on" onclick="toggleSwitch(this)"></button>
+        </div>
+        <div class="sw-row">
+          <div class="sw-row-icon" style="background:#dbeafe">&#128197;</div>
+          <div class="sw-row-label"><p>Nouveaux &#233;v&#233;nements</p><span>Quand un &#233;v&#233;nement de ta cat&#233;gorie est ajout&#233;</span></div>
+          <button class="toggle" onclick="toggleSwitch(this)"></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sw-section">
+      <div class="sw-section-title">&#8505;&#65039; &#192; propos</div>
+      <div class="sw-card">
+        <div class="sw-row">
+          <div class="sw-row-icon" style="background:#f3e8ff">&#128084;</div>
+          <div class="sw-row-label"><p>Conditions d&#8217;utilisation</p></div>
+          <i class="ti ti-chevron-right" style="color:var(--tx3);font-size:16px"></i>
+        </div>
+        <div class="sw-row">
+          <div class="sw-row-icon" style="background:#dcfce7">&#128274;</div>
+          <div class="sw-row-label"><p>Politique de confidentialit&#233;</p></div>
+          <i class="ti ti-chevron-right" style="color:var(--tx3);font-size:16px"></i>
+        </div>
+        <div class="sw-row">
+          <div class="sw-row-icon" style="background:#fef3c7">&#10084;&#65039;</div>
+          <div class="sw-row-label"><p>Version</p><span>Rendez-vous v1.0 &#8212; Beta</span></div>
+        </div>
+      </div>
+    </div>
+
+    <button class="sw-save" onclick="saveSettings()">&#10003; Sauvegarder mes pr&#233;f&#233;rences</button>
+  </div>
+</div>
+<div class="saved-toast" id="savedToast">&#10003; Pr&#233;f&#233;rences sauvegard&#233;es !</div>
+
+
+<div class="dw" id="dw">
+  <div class="sb"><span id="clk2">9:41</span><span><i class="ti ti-wifi" style="font-size:14px;color:#fff"></i></span></div>
+  <div class="dh">
+    <button class="dbk" onclick="closeD()"><i class="ti ti-arrow-left"></i></button>
+    <div class="dhi"><h2 id="dcat"></h2><p id="ddate"></p></div>
+    <i class="ti ti-share" style="color:#fff;font-size:21px;cursor:pointer"></i>
+  </div>
+  <div class="dscr">
+    <div class="dhero" id="dhero"></div>
+    <div class="dcon">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
+        <div class="dttl" id="dttl" style="flex:1"></div>
+        <span class="srcb" id="dsrc"></span>
+      </div>
+      <div class="ddes" id="ddes"></div>
+      <div class="dr"><i class="ti ti-calendar"></i><div class="drt"><p id="d1"></p><span id="d2"></span></div></div>
+      <div class="dr"><i class="ti ti-map-pin"></i><div class="drt"><p id="d3"></p><span id="d4"></span></div></div>
+      <div class="dr"><i class="ti ti-ticket"></i><div class="drt"><p id="d5"></p><span id="d6"></span></div></div>
+    </div>
+    <div class="dact">
+      <button class="ab"><i class="ti ti-calendar-plus"></i> Exporter</button>
+      <button class="ab"><i class="ti ti-bell"></i> Rappel</button>
+      <button class="ab pri"><i class="ti ti-external-link"></i> En savoir +</button>
+    </div>
+    <div class="rel"><div class="relt">Voir aussi</div><div id="rl"></div></div>
+  </div>
+</div>
+</div>
+
+<script>
+const MO=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+const DJ=['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+const now=new Date();
+let cM=now.getMonth(),cY=now.getFullYear(),sDay=now.getDate(),cat='all';
+
+// ─── DONNÉES VÉRIFIÉES 2026 ───────────────────────────────────────────────────
+// F1 : source formula1.com officiel (22 GP, Bahreïn & Arabie Saoudite annulés)
+// UCL : source UEFA officiel — finale PSG-Arsenal le 30/05 à Budapest
+// Jours fériés : source data.gouv.fr officiel
+const EVT=[
+
+// ══ F1 2026 — calendrier officiel formula1.com ══
+{id:'f1-01',d:8,m:2,y:2026,cat:'sport',i:'🏎',c:'#DC2626',bg:'#fee2e2',
+ t:'F1 — GP d\'Australie',s:'Formule 1 · Melbourne',h:'07h00',
+ dt:'Dimanche 8 mars',lieu:'Albert Park Circuit',v:'Melbourne, Australie',px:'Canal+ / Sky',
+ desc:'Ouverture de la saison 2026 à Melbourne. Russell s\'impose devant Antonelli et Leclerc. Première victoire de la saison pour Mercedes.',
+ rel:[{d:'15 mars',n:'GP Chine (Sprint)'},{d:'29 mars',n:'GP Japon'}],src:'F1 Officiel'},
+
+{id:'f1-02',d:15,m:2,y:2026,cat:'sport',i:'🏎',c:'#DC2626',bg:'#fee2e2',
+ t:'F1 — GP de Chine ★ Sprint',s:'Formule 1 · Shanghai',h:'09h00',
+ dt:'Dimanche 15 mars',lieu:'Shanghai International Circuit',v:'Shanghai, Chine',px:'Canal+ / Sky',
+ desc:'Kimi Antonelli remporte le Grand Prix de Chine devant Russell. Weekend sprint. Premier titre de victoire pour le jeune prodige Mercedes.',
+ rel:[{d:'29 mars',n:'GP Japon'},{d:'3 mai',n:'GP Miami (Sprint)'}],src:'F1 Officiel'},
+
+{id:'f1-03',d:29,m:2,y:2026,cat:'sport',i:'🏎',c:'#DC2626',bg:'#fee2e2',
+ t:'F1 — GP du Japon',s:'Formule 1 · Suzuka',h:'07h00',
+ dt:'Dimanche 29 mars',lieu:'Suzuka International Racing Course',v:'Suzuka, Japon',px:'Canal+ / Sky',
+ desc:'Suzuka, circuit mythique en forme de 8. Antonelli s\'impose une nouvelle fois au Japon devant Piastri et Leclerc.',
+ rel:[{d:'3 mai',n:'GP Miami (Sprint)'},{d:'24 mai',n:'GP Canada (Sprint)'}],src:'F1 Officiel'},
+
+{id:'f1-04',d:3,m:4,y:2026,cat:'sport',i:'🏎',c:'#DC2626',bg:'#fee2e2',
+ t:'F1 — GP de Miami ★ Sprint',s:'Formule 1 · Miami',h:'22h00',
+ dt:'Dimanche 3 mai',lieu:'Miami International Autodrome',v:'Miami Gardens, Floride',px:'Canal+ / Sky',
+ desc:'Le Grand Prix de Miami, 4e manche de la saison. Format Sprint. Le circuit urbain autour du Hard Rock Stadium offre un show à l\'américaine.',
+ rel:[{d:'24 mai',n:'GP Canada (Sprint)'},{d:'7 juin',n:'GP Monaco'}],src:'F1 Officiel'},
+
+{id:'f1-05',d:24,m:4,y:2026,cat:'sport',i:'🏎',c:'#DC2626',bg:'#fee2e2',
+ t:'F1 — GP du Canada ★ Sprint',s:'Formule 1 · Montréal',h:'20h00',
+ dt:'Dimanche 24 mai',lieu:'Circuit Gilles-Villeneuve',v:'Montréal, Canada',px:'Canal+ / Sky',
+ desc:'Le Grand Prix du Canada sur l\'île Notre-Dame — avancé en mai 2026 pour rationaliser le calendrier. Format Sprint. Wall of Champions toujours aussi redouté.',
+ rel:[{d:'7 juin',n:'GP Monaco'},{d:'14 juin',n:'GP Barcelone'}],src:'F1 Officiel'},
+
+{id:'f1-06',d:7,m:5,y:2026,cat:'sport',i:'🏎',c:'#DC2626',bg:'#fee2e2',
+ t:'F1 — GP de Monaco',s:'Formule 1 · Monaco',h:'15h00',
+ dt:'Dimanche 7 juin',lieu:'Circuit de Monaco',v:'Principauté de Monaco',px:'Canal+ / Sky',
+ desc:'La course la plus mythique du monde. 78 tours dans les ruelles de la Principauté. Zéro droit à l\'erreur, précision absolue. Accord renouvelé jusqu\'en 2031.',
+ rel:[{d:'14 juin',n:'GP Barcelone'},{d:'28 juin',n:'GP Autriche'}],src:'F1 Officiel'},
+
+{id:'f1-07',d:14,m:5,y:2026,cat:'sport',i:'🏎',c:'#DC2626',bg:'#fee2e2',
+ t:'F1 — GP d\'Espagne (Barcelone)',s:'Formule 1 · Barcelone',h:'15h00',
+ dt:'Dimanche 14 juin',lieu:'Circuit de Barcelona-Catalunya',v:'Barcelone, Espagne',px:'Canal+ / Sky',
+ desc:'Première des deux manches espagnoles 2026. Course stratégique sur le circuit catalan, idéale pour les dépassements.',
+ rel:[{d:'28 juin',n:'GP Autriche'},{d:'5 juil.',n:'GP Grande-Bretagne (Sprint)'}],src:'F1 Officiel'},
+
+{id:'f1-08',d:28,m:5,y:2026,cat:'sport',i:'🏎',c:'#DC2626',bg:'#fee2e2',
+ t:'F1 — GP d\'Autriche',s:'Formule 1 · Spielberg',h:'15h00',
+ dt:'Dimanche 28 juin',lieu:'Red Bull Ring',v:'Spielberg, Autriche',px:'Canal+ / Sky',
+ desc:'Le Red Bull Ring, circuit court et spectaculaire dans les montagnes autrichiennes. Ambiance festive garantie.',
+ rel:[{d:'5 juil.',n:'GP Grande-Bretagne (Sprint)'},{d:'19 juil.',n:'GP Belgique'}],src:'F1 Officiel'},
+
+{id:'f1-09',d:5,m:6,y:2026,cat:'sport',i:'🏎',c:'#DC2626',bg:'#fee2e2',
+ t:'F1 — GP de Grande-Bretagne ★ Sprint',s:'Formule 1 · Silverstone',h:'16h00',
+ dt:'Dimanche 5 juillet',lieu:'Silverstone Circuit',v:'Northamptonshire, Royaume-Uni',px:'Canal+ / Sky',
+ desc:'Le temple de la F1 anglaise. Virage Copse à pleine vitesse, support massif du public. Format Sprint.',
+ rel:[{d:'19 juil.',n:'GP Belgique'},{d:'26 juil.',n:'GP Hongrie'}],src:'F1 Officiel'},
+
+{id:'f1-10',d:19,m:6,y:2026,cat:'sport',i:'🏎',c:'#DC2626',bg:'#fee2e2',
+ t:'F1 — GP de Belgique',s:'Formule 1 · Spa-Francorchamps',h:'15h00',
+ dt:'Dimanche 19 juillet',lieu:'Circuit de Spa-Francorchamps',v:'Spa, Belgique',px:'Canal+ / Sky',
+ desc:'Spa-Francorchamps, circuit préféré des pilotes. Eau Rouge, Raidillon, Pouhon... météo capricieuse garantie.',
+ rel:[{d:'26 juil.',n:'GP Hongrie'},{d:'23 août',n:'GP Pays-Bas (Sprint)'}],src:'F1 Officiel'},
+
+{id:'f1-11',d:26,m:6,y:2026,cat:'sport',i:'🏎',c:'#DC2626',bg:'#fee2e2',
+ t:'F1 — GP de Hongrie',s:'Formule 1 · Budapest',h:'15h00',
+ dt:'Dimanche 26 juillet',lieu:'Hungaroring',v:'Budapest, Hongrie',px:'Canal+ / Sky',
+ desc:'Le Hungaroring, surnommé "Monaco sans les glissières". Piste tortueuse, difficile à dépasser, avant la pause estivale.',
+ rel:[{d:'23 août',n:'GP Pays-Bas (Sprint)'},{d:'6 sept.',n:'GP Italie (Monza)'}],src:'F1 Officiel'},
+
+{id:'f1-12',d:23,m:7,y:2026,cat:'sport',i:'🏎',c:'#DC2626',bg:'#fee2e2',
+ t:'F1 — GP des Pays-Bas ★ Sprint',s:'Formule 1 · Zandvoort',h:'15h00',
+ dt:'Dimanche 23 août',lieu:'Circuit Zandvoort',v:'Zandvoort, Pays-Bas',px:'Canal+ / Sky',
+ desc:'Retour à Zandvoort après la pause estivale. Ambiance fantastique avec l\'armée orange néerlandaise. Format Sprint.',
+ rel:[{d:'6 sept.',n:'GP Italie (Monza)'},{d:'13 sept.',n:'GP Espagne-Madrid (nouveau!)'}],src:'F1 Officiel'},
+
+{id:'f1-13',d:6,m:8,y:2026,cat:'sport',i:'🏎',c:'#DC2626',bg:'#fee2e2',
+ t:'F1 — GP d\'Italie (Monza)',s:'Formule 1 · Monza',h:'15h00',
+ dt:'Dimanche 6 septembre',lieu:'Autodromo Nazionale Monza',v:'Monza, Italie',px:'Canal+ / Sky',
+ desc:'Le Temple de la Vitesse ! Le circuit le plus rapide du calendrier, les tifosi en délire. Une atmosphère unique au monde.',
+ rel:[{d:'13 sept.',n:'GP Espagne-Madrid'},{d:'26 sept.',n:'GP Azerbaïdjan'}],src:'F1 Officiel'},
+
+{id:'f1-14',d:13,m:8,y:2026,cat:'sport',i:'🏎',c:'#DC2626',bg:'#fee2e2',
+ t:'F1 — GP d\'Espagne (Madrid) 🆕',s:'Formule 1 · Madrid',h:'15h00',
+ dt:'Dimanche 13 septembre',lieu:'Madring Circuit',v:'Madrid, Espagne',px:'Canal+ / Sky',
+ desc:'NOUVEAU ! Le Grand Prix de Madrid fait son entrée au calendrier 2026. Circuit urbain inédit autour du Palacio de Comunicaciones. Grande première.',
+ rel:[{d:'26 sept.',n:'GP Azerbaïdjan'},{d:'11 oct.',n:'GP Singapour (Sprint)'}],src:'F1 Officiel'},
+
+{id:'f1-15',d:26,m:8,y:2026,cat:'sport',i:'🏎',c:'#DC2626',bg:'#fee2e2',
+ t:'F1 — GP d\'Azerbaïdjan',s:'Formule 1 · Bakou',h:'14h00',
+ dt:'Vendredi 26 septembre',lieu:'Baku City Circuit',v:'Bakou, Azerbaïdjan',px:'Canal+ / Sky',
+ desc:'Le circuit urbain de Bakou, l\'un des plus imprévisibles du calendrier. La longue ligne droite avant l\'épingle génère des dépassements spectaculaires.',
+ rel:[{d:'11 oct.',n:'GP Singapour (Sprint)'},{d:'25 oct.',n:'GP États-Unis (Austin)'}],src:'F1 Officiel'},
+
+// ══ FOOTBALL & COUPES ══
+{id:'l1-01',d:3,m:4,y:2026,cat:'sport',i:'⚽',c:'#1D4ED8',bg:'#dbeafe',
+ t:'PSG — Marseille (Le Classique)',s:'Ligue 1 · J34',h:'21h00',
+ dt:'Dimanche 3 mai',lieu:'Parc des Princes',v:'Paris 16e',px:'DAZN / Canal+',
+ desc:'LE Classique de la Ligue 1 ! PSG reçoit l\'OM pour l\'avant-dernière ligne droite du championnat.',
+ rel:[{d:'10 mai',n:'PSG — OL'},{d:'17 mai',n:'Monaco — PSG'}],src:'Ligue 1'},
+
+{id:'l1-02',d:10,m:4,y:2026,cat:'sport',i:'⚽',c:'#1D4ED8',bg:'#dbeafe',
+ t:'PSG — Olympique Lyonnais',s:'Ligue 1 · J35',h:'21h00',
+ dt:'Dimanche 10 mai',lieu:'Parc des Princes',v:'Paris 16e',px:'DAZN',
+ desc:'PSG vs OL — avant-dernière journée de Ligue 1. Enjeux titres et maintien au maximum.',
+ rel:[{d:'17 mai',n:'Monaco — PSG'}],src:'Ligue 1'},
+
+{id:'l1-03',d:17,m:4,y:2026,cat:'sport',i:'⚽',c:'#1D4ED8',bg:'#dbeafe',
+ t:'Monaco — PSG',s:'Ligue 1 · J36',h:'17h05',
+ dt:'Dimanche 17 mai',lieu:'Stade Louis-II',v:'Monaco',px:'DAZN',
+ desc:'Dernière journée de Ligue 1 2025-2026. Monaco peut encore prétendre à la 2e place.',
+ rel:[],src:'Ligue 1'},
+
+{id:'ucl-1',d:30,m:4,y:2026,cat:'sport',i:'🏆',c:'#1D4ED8',bg:'#dbeafe',
+ t:'Finale Champions League : PSG — Arsenal',s:'UEFA · Puskás Aréna Budapest',h:'18h00',
+ dt:'Samedi 30 mai',lieu:'Puskás Aréna',v:'Budapest, Hongrie',px:'Canal+ / beIN Sports',
+ desc:'PSG contre Arsenal ! Première finale de l\'histoire de la C1 entre un club français et un club anglais. Coup d\'envoi à 18h00, nouveau format décidé par l\'UEFA.',
+ rel:[],src:'UEFA Officiel'},
+
+{id:'cdf-1',d:30,m:5,y:2026,cat:'sport',i:'🥇',c:'#1D4ED8',bg:'#dbeafe',
+ t:'Finale Coupe de France',s:'FFF · Stade de France',h:'21h00',
+ dt:'Samedi 6 juin',lieu:'Stade de France',v:'Saint-Denis',px:'À partir de 25€',
+ desc:'La grande finale de la Coupe de France, le trophée le plus populaire du football français.',
+ rel:[],src:'FFF'},
+
+// ══ TENNIS ══
+{id:'rg-01',d:18,m:4,y:2026,cat:'sport',i:'🎾',c:'#16A34A',bg:'#dcfce7',
+ t:'Roland-Garros — Qualifications',s:'Grand Chelem · Paris 16e',h:'10h00',
+ dt:'Lundi 18 mai',lieu:'Stade Roland Garros',v:'Paris 16e',px:'Accès libre qualifs',
+ desc:'Début des qualifications Roland-Garros 2026, 125e édition. Le tableau principal débute le dimanche 24 mai.',
+ rel:[{d:'24 mai',n:'1er tour tableau principal'},{d:'6 juin',n:'Finale Dames'},{d:'7 juin',n:'Finale Messieurs'}],src:'Roland-Garros Officiel'},
+
+{id:'rg-02',d:24,m:4,y:2026,cat:'sport',i:'🎾',c:'#16A34A',bg:'#dcfce7',
+ t:'Roland-Garros — 1er tour',s:'Grand Chelem · Paris 16e',h:'11h00',
+ dt:'Dimanche 24 mai',lieu:'Stade Roland Garros',v:'Paris 16e',px:'À partir de 15€',
+ desc:'Début du tableau principal Roland-Garros 2026. Sinner, Djokovic, Zverev en messieurs ; Gauff et Sabalenka en dames.',
+ rel:[{d:'6 juin',n:'Finale Dames'},{d:'7 juin',n:'Finale Messieurs'}],src:'Roland-Garros Officiel'},
+
+{id:'rg-03',d:6,m:5,y:2026,cat:'sport',i:'🎾',c:'#16A34A',bg:'#dcfce7',
+ t:'Roland-Garros — Finale Dames',s:'Grand Chelem · Philippe-Chatrier',h:'15h00',
+ dt:'Samedi 6 juin',lieu:'Court Philippe-Chatrier',v:'Paris 16e',px:'À partir de 120€',
+ desc:'La finale du simple dames sur le court central Philippe-Chatrier.',
+ rel:[{d:'7 juin',n:'Finale Messieurs'}],src:'Roland-Garros Officiel'},
+
+{id:'rg-04',d:7,m:5,y:2026,cat:'sport',i:'🎾',c:'#16A34A',bg:'#dcfce7',
+ t:'Roland-Garros — Finale Messieurs',s:'Grand Chelem · Philippe-Chatrier',h:'15h00',
+ dt:'Dimanche 7 juin',lieu:'Court Philippe-Chatrier',v:'Paris 16e',px:'À partir de 120€',
+ desc:'La finale du simple messieurs. Sinner est le grand favori pour décrocher la Coupe des Mousquetaires.',
+ rel:[],src:'Roland-Garros Officiel'},
+
+// ══ BASKET ══
+{id:'nba-1',d:1,m:4,y:2026,cat:'sport',i:'🏀',c:'#EA580C',bg:'#ffedd5',
+ t:'NBA Playoffs — Conférence Ouest',s:'NBA · Playoffs',h:'03h30',
+ dt:'Jeudi 1 mai',lieu:'Crypto.com Arena',v:'Los Angeles',px:'NBA League Pass',
+ desc:'Lakers vs Warriors en demi-finale de Conférence Ouest. Le choc californien en playoffs NBA.',
+ rel:[{d:'4 mai',n:'Game 6'},{d:'7 mai',n:'Game 7 (si néc.)'}],src:'NBA'},
+
+// ══ JOURS FÉRIÉS 2026 — data.gouv.fr (dates exactes) ══
+{id:'jf-01',d:1,m:0,y:2026,cat:'business',i:'🎉',c:'#B45309',bg:'#fef3c7',
+ t:'Jour de l\'An 🇫🇷',s:'Jour férié · France',h:'Journée',
+ dt:'Jeudi 1 janvier',lieu:'France entière',v:'',px:'Férié',
+ desc:'Premier jour de l\'année. Jour chômé et payé.',
+ rel:[{d:'6 avr.',n:'Lundi de Pâques'},{d:'1 mai',n:'Fête du Travail'}],src:'data.gouv.fr'},
+
+{id:'jf-02',d:6,m:2,y:2026,cat:'business',i:'✝️',c:'#B45309',bg:'#fef3c7',
+ t:'Lundi de Pâques 🇫🇷',s:'Jour férié · France',h:'Journée',
+ dt:'Lundi 6 avril',lieu:'France entière',v:'',px:'Férié',
+ desc:'Lundi suivant le dimanche de Pâques (date mobile). Jour férié légal.',
+ rel:[{d:'1 mai',n:'Fête du Travail'}],src:'data.gouv.fr'},
+
+{id:'jf-03',d:1,m:4,y:2026,cat:'business',i:'🌹',c:'#B45309',bg:'#fef3c7',
+ t:'Fête du Travail 🇫🇷',s:'Jour férié · France',h:'Journée',
+ dt:'Vendredi 1 mai',lieu:'France entière',v:'',px:'Férié',
+ desc:'Fête internationale des travailleurs. Seul jour chômé et payé de droit. Tradition du muguet.',
+ rel:[{d:'8 mai',n:'Victoire 1945'}],src:'data.gouv.fr'},
+
+{id:'jf-04',d:8,m:4,y:2026,cat:'business',i:'🕊',c:'#B45309',bg:'#fef3c7',
+ t:'Victoire 1945 🇫🇷',s:'Jour férié · France',h:'Journée',
+ dt:'Vendredi 8 mai',lieu:'France entière',v:'',px:'Férié',
+ desc:'Commémoration de la capitulation de l\'Allemagne nazie le 8 mai 1945.',
+ rel:[{d:'21 mai',n:'Ascension'}],src:'data.gouv.fr'},
+
+{id:'jf-05',d:21,m:4,y:2026,cat:'business',i:'✝️',c:'#B45309',bg:'#fef3c7',
+ t:'Ascension 🇫🇷',s:'Jour férié · France',h:'Journée',
+ dt:'Jeudi 21 mai',lieu:'France entière',v:'',px:'Férié',
+ desc:'40 jours après Pâques. Le fameux pont du jeudi est une tradition française bien installée.',
+ rel:[{d:'1 juin',n:'Lundi de Pentecôte'}],src:'data.gouv.fr'},
+
+{id:'jf-06',d:1,m:5,y:2026,cat:'business',i:'🕊',c:'#B45309',bg:'#fef3c7',
+ t:'Lundi de Pentecôte 🇫🇷',s:'Jour férié · France',h:'Journée',
+ dt:'Lundi 1 juin',lieu:'France entière',v:'',px:'Férié',
+ desc:'50 jours après Pâques. Journée de solidarité pour certains salariés.',
+ rel:[{d:'14 juil.',n:'Fête Nationale'}],src:'data.gouv.fr'},
+
+{id:'jf-07',d:14,m:6,y:2026,cat:'business',i:'🇫🇷',c:'#B45309',bg:'#fef3c7',
+ t:'Fête Nationale 🇫🇷',s:'Jour férié · France',h:'Journée',
+ dt:'Mardi 14 juillet',lieu:'Champs-Élysées & toute la France',v:'France',px:'Gratuit',
+ desc:'Défilé militaire sur les Champs-Élysées, feux d\'artifice à la Tour Eiffel et bals populaires partout en France.',
+ rel:[],src:'data.gouv.fr'},
+
+{id:'jf-08',d:15,m:7,y:2026,cat:'business',i:'✨',c:'#B45309',bg:'#fef3c7',
+ t:'Assomption 🇫🇷',s:'Jour férié · France',h:'Journée',
+ dt:'Samedi 15 août',lieu:'France entière',v:'',px:'Férié',
+ desc:'Fête catholique de l\'Assomption de la Vierge Marie. Jour férié légal.',
+ rel:[{d:'1 nov.',n:'Toussaint'}],src:'data.gouv.fr'},
+
+{id:'jf-09',d:1,m:10,y:2026,cat:'business',i:'🕯',c:'#B45309',bg:'#fef3c7',
+ t:'Toussaint 🇫🇷',s:'Jour férié · France',h:'Journée',
+ dt:'Dimanche 1 novembre',lieu:'France entière',v:'',px:'Férié',
+ desc:'Fête de tous les saints. Tradition de visiter les cimetières.',
+ rel:[{d:'11 nov.',n:'Armistice'}],src:'data.gouv.fr'},
+
+{id:'jf-10',d:11,m:10,y:2026,cat:'business',i:'🎖',c:'#B45309',bg:'#fef3c7',
+ t:'Armistice 🇫🇷',s:'Jour férié · France',h:'Journée',
+ dt:'Mercredi 11 novembre',lieu:'France entière',v:'',px:'Férié',
+ desc:'Commémoration de l\'armistice du 11 novembre 1918.',
+ rel:[{d:'25 déc.',n:'Noël'}],src:'data.gouv.fr'},
+
+{id:'jf-11',d:25,m:11,y:2026,cat:'business',i:'🎄',c:'#B45309',bg:'#fef3c7',
+ t:'Noël 🇫🇷',s:'Jour férié · France',h:'Journée',
+ dt:'Vendredi 25 décembre',lieu:'France entière',v:'',px:'Férié',
+ desc:'Fête de Noël. Le 26 décembre est également férié en Alsace-Moselle.',
+ rel:[],src:'data.gouv.fr'},
+
+// ══ DATES FISCALES & PRATIQUES ══
+{id:'biz-1',d:29,m:2,y:2026,cat:'business',i:'🕐',c:'#B45309',bg:'#fef3c7',
+ t:'Changement d\'heure — Été',s:'Vie pratique · Europe',h:'2h → 3h du matin',
+ dt:'Dimanche 29 mars',lieu:'France & Europe',v:'',px:'',
+ desc:'On avance les montres d\'une heure dans la nuit du samedi au dimanche. On perd une heure de sommeil mais on gagne la lumière du soir.',
+ rel:[{d:'25 oct.',n:'Retour heure hiver'}],src:'Officiel'},
+
+{id:'biz-2',d:14,m:4,y:2026,cat:'business',i:'📋',c:'#B45309',bg:'#fef3c7',
+ t:'Déclaration revenus — Zone B',s:'Impôts · DGFiP',h:'Avant minuit',
+ dt:'Jeudi 14 mai',lieu:'impots.gouv.fr',v:'En ligne',px:'Gratuit',
+ desc:'Date limite déclaration des revenus 2025 pour la Zone B (liste officielle DGFiP). Ne ratez pas cette échéance.',
+ rel:[{d:'21 mai',n:'Date limite Zone C'},{d:'15 sept.',n:'1er acompte IR'}],src:'DGFiP'},
+
+{id:'biz-3',d:21,m:4,y:2026,cat:'business',i:'📋',c:'#B45309',bg:'#fef3c7',
+ t:'Déclaration revenus — Zone C',s:'Impôts · DGFiP',h:'Avant minuit',
+ dt:'Jeudi 21 mai',lieu:'impots.gouv.fr',v:'En ligne',px:'Gratuit',
+ desc:'Date limite déclaration des revenus 2025 pour la Zone C (dép. 50 à 976). Dernière chance !',
+ rel:[{d:'15 sept.',n:'1er acompte IR'},{d:'15 déc.',n:'2e acompte IR'}],src:'DGFiP'},
+
+{id:'biz-4',d:31,m:4,y:2026,cat:'business',i:'💐',c:'#B45309',bg:'#fef3c7',
+ t:'Fête des Mères',s:'Vie pratique',h:'Dimanche',
+ dt:'Dimanche 31 mai',lieu:'France',v:'',px:'',
+ desc:'Fête des Mères 2026 : 1er dimanche de juin (pas de Pentecôte ce jour).',
+ rel:[{d:'21 juin',n:'Fête des Pères'}],src:'Officiel'},
+
+{id:'biz-5',d:21,m:5,y:2026,cat:'business',i:'👨',c:'#B45309',bg:'#fef3c7',
+ t:'Fête des Pères',s:'Vie pratique',h:'Dimanche',
+ dt:'Dimanche 21 juin',lieu:'France',v:'',px:'',
+ desc:'Fête des Pères, 3e dimanche de juin.',
+ rel:[],src:'Officiel'},
+
+
+
+// ══ CINÉMA 2026 — dates vérifiées ══
+
+{id:'ci-01',d:1,m:2,y:2026,cat:'culture',i:'🎬',c:'#7C3AED',bg:'#f3e8ff',
+ t:'Super Mario Galaxy',s:'Cinéma · Animation · Sortie nationale',h:'Journée',
+ dt:'Mercredi 1 avril',lieu:'Toutes les salles',v:'France',px:'~12€',
+ desc:'Nouvelle aventure animée de Mario et Luigi. Le précédent film avait fait 7 millions d\'entrées en France en 2023, record de l\'année.',
+ rel:[{d:'29 avr.',n:'Le Diable s\'habille en Prada 2'},{d:'20 mai',n:'Star Wars : The Mandalorian & Grogu'}],src:'AlloCiné'},
+
+{id:'ci-02',d:29,m:2,y:2026,cat:'culture',i:'🎬',c:'#7C3AED',bg:'#f3e8ff',
+ t:'Le Diable s\'habille en Prada 2',s:'Cinéma · Comédie · Sortie nationale',h:'Journée',
+ dt:'Mercredi 29 avril',lieu:'Toutes les salles',v:'France',px:'~12€',
+ desc:'Meryl Streep, Anne Hathaway et Emily Blunt reprennent leurs rôles 20 ans après. La bande-annonce a battu le record de vues en 24h avec 222 millions de vues.',
+ rel:[{d:'20 mai',n:'Star Wars : The Mandalorian & Grogu'},{d:'16 déc.',n:'Avengers : Doomsday'}],src:'Disney FR / UGC'},
+
+{id:'ci-03',d:13,m:4,y:2026,cat:'culture',i:'🎬',c:'#7C3AED',bg:'#f3e8ff',
+ t:'Festival de Cannes — Ouverture (79e)',s:'Cinéma · Palais des Festivals',h:'19h30',
+ dt:'Mercredi 13 mai',lieu:'Palais des Festivals',v:'Cannes',px:'Sur invitation',
+ desc:'79e édition du Festival de Cannes. Red carpet, Palme d\'Or et stars mondiales sur la Croisette. Film d\'ouverture : The Electric Kiss.',
+ rel:[{d:'24 mai',n:'Palme d\'Or — Clôture'}],src:'Festival de Cannes'},
+
+{id:'ci-04',d:20,m:4,y:2026,cat:'culture',i:'🎬',c:'#7C3AED',bg:'#f3e8ff',
+ t:'Star Wars : The Mandalorian & Grogu',s:'Cinéma · Aventure · Sortie nationale',h:'Journée',
+ dt:'Mercredi 20 mai',lieu:'Toutes les salles',v:'France',px:'~14€ (IMAX dispo)',
+ desc:'Le premier film Star Wars en salles depuis 2019. Pedro Pascal reprend son rôle de Din Djarin avec Grogu, dans une aventure inédite réalisée par Jon Favreau. Sigourney Weaver au casting.',
+ rel:[{d:'15 juil.',n:'L\'Odyssée — Nolan'},{d:'29 juil.',n:'Spider-Man : Brand New Day'}],src:'Lucasfilm / Disney'},
+
+{id:'ci-05',d:1,m:5,y:2026,cat:'culture',i:'🎬',c:'#7C3AED',bg:'#f3e8ff',
+ t:'Toy Story 5',s:'Cinéma · Animation Pixar · Sortie nationale',h:'Journée',
+ dt:'Mercredi 3 juin',lieu:'Toutes les salles',v:'France',px:'~12€',
+ desc:'Le retour de Woody, Buzz et toute la bande dans un 5e opus Pixar très attendu. Réalisé par Pierre Coffin.',
+ rel:[{d:'15 juil.',n:'L\'Odyssée — Nolan'},{d:'29 juil.',n:'Spider-Man : Brand New Day'}],src:'Pixar / Disney'},
+
+{id:'ci-06',d:15,m:6,y:2026,cat:'culture',i:'🎬',c:'#7C3AED',bg:'#f3e8ff',
+ t:'L\'Odyssée — Christopher Nolan',s:'Cinéma · Aventure · Sortie nationale',h:'Journée',
+ dt:'Mercredi 15 juillet',lieu:'Toutes les salles (IMAX)',v:'France',px:'~16€ IMAX',
+ desc:'L\'adaptation grandiose du poème d\'Homère par Christopher Nolan, filmée en IMAX dans le monde entier. Avec Matt Damon, Tom Holland et Zendaya.',
+ rel:[{d:'29 juil.',n:'Spider-Man : Brand New Day'},{d:'16 déc.',n:'Avengers : Doomsday'}],src:'AlloCiné / Cinéhorizons'},
+
+{id:'ci-07',d:29,m:6,y:2026,cat:'culture',i:'🎬',c:'#7C3AED',bg:'#f3e8ff',
+ t:'Spider-Man : Brand New Day',s:'Cinéma · Action Marvel · Sortie nationale',h:'Journée',
+ dt:'Mercredi 29 juillet',lieu:'Toutes les salles',v:'France',px:'~14€ (IMAX dispo)',
+ desc:'Tom Holland reprend son rôle de Peter Parker pour un nouveau chapitre de Spider-Man dans le MCU.',
+ rel:[{d:'16 déc.',n:'Avengers : Doomsday'}],src:'Marvel / Disney'},
+
+{id:'ci-08',d:16,m:11,y:2026,cat:'culture',i:'🎬',c:'#7C3AED',bg:'#f3e8ff',
+ t:'Avengers : Doomsday',s:'Cinéma · Action Marvel · Sortie nationale',h:'Journée',
+ dt:'Mercredi 16 décembre',lieu:'Toutes les salles',v:'France',px:'~14€ (IMAX dispo)',
+ desc:'Le grand retour des Avengers, X-Men et 4 Fantastiques face à Doctor Doom (Robert Downey Jr.). Réalisé par les frères Russo. La plus grosse sortie de la fin 2026.',
+ rel:[],src:'Marvel / AlloCiné'},
+
+// ══ CONCERTS & MUSIQUE ══
+{id:'co-01',d:21,m:4,y:2026,cat:'culture',i:'🎵',c:'#7C3AED',bg:'#f3e8ff',
+ t:'Coldplay — Music of the Spheres',s:'Concert · Stade de France',h:'20h00',
+ dt:'Jeudi 21 mai',lieu:'Stade de France',v:'Saint-Denis (93)',px:'À partir de 65€',
+ desc:'Coldplay en concert au Stade de France pour leur tournée mondiale. Show immersif avec bracelets LED, confettis et pyrotechnie spectaculaire.',
+ rel:[{d:'22 mai',n:'Coldplay — Nuit 2'},{d:'23 mai',n:'Coldplay — Nuit 3'}],src:'Live Nation'},
+
+{id:'co-02',d:22,m:4,y:2026,cat:'culture',i:'🎵',c:'#7C3AED',bg:'#f3e8ff',
+ t:'Coldplay — Nuit 2',s:'Concert · Stade de France',h:'20h00',
+ dt:'Vendredi 22 mai',lieu:'Stade de France',v:'Saint-Denis (93)',px:'À partir de 65€',
+ desc:'2e soirée Coldplay au Stade de France.',
+ rel:[{d:'23 mai',n:'Coldplay — Nuit 3'}],src:'Live Nation'},
+
+{id:'co-03',d:13,m:5,y:2026,cat:'culture',i:'🎵',c:'#7C3AED',bg:'#f3e8ff',
+ t:'Beyoncé — Renaissance World Tour',s:'Concert · Accor Arena',h:'20h30',
+ dt:'Samedi 13 juin',lieu:'Accor Arena',v:'Paris 12e',px:'À partir de 89€',
+ desc:'Queen B à Paris pour sa tournée mondiale Renaissance. 3 heures de show épique, tenues spectaculaires et chorégraphies millimétrées.',
+ rel:[{d:'15 juin',n:'Beyoncé — Nuit 2'}],src:'Live Nation'},
+
+
+
+// ══ EXPOS & MUSÉES ══
+{id:'ex-01',d:23,m:4,y:2026,cat:'culture',i:'🏛',c:'#7C3AED',bg:'#f3e8ff',
+ t:'Nuit des Musées',s:'Culture · France entière',h:'19h00 - 00h00',
+ dt:'Samedi 23 mai',lieu:'Musées nationaux',v:'France',px:'Gratuit',
+ desc:'La Nuit européenne des Musées : accès gratuit et nocturne à des centaines de musées en France et en Europe.',
+ rel:[{d:'19 sept.',n:'Journées du Patrimoine'}],src:'Min. Culture'},
+
+// ══ TOURISME & SORTIES ══
+{id:'to-01',d:17,m:4,y:2026,cat:'tourisme',i:'🎡',c:'#059669',bg:'#d1fae5',
+ t:'Foire du Trône — Dernier w-e',s:'Sorties · Paris 12e',h:'14h00 - 00h00',
+ dt:'Samedi 17 mai',lieu:'Pelouse de Reuilly',v:'Paris 12e',px:'Entrée libre',
+ desc:'Dernier week-end du plus grand parc d\'attractions forain d\'Europe. 350 attractions, 500 forains.',
+ rel:[{d:'18 mai',n:'Dernier dimanche'}],src:'OpenAgenda'},
+
+{id:'to-02',d:20,m:1,y:2026,cat:'tourisme',i:'🌾',c:'#059669',bg:'#d1fae5',
+ t:'Salon de l\'Agriculture — Paris',s:'Salon · Porte de Versailles',h:'09h00 - 19h00',
+ dt:'Ouverture 21 février',lieu:'Paris Expo Porte de Versailles',v:'Paris 15e',px:'À partir de 16€',
+ desc:'Le plus grand salon agricole d\'Europe. 1 000 exposants, 4 000 animaux, 600 000 visiteurs.',
+ rel:[{d:'2 mars',n:'Clôture Salon Agriculture'}],src:'Comexposium'},
+
+{id:'to-03',d:24,m:4,y:2026,cat:'tourisme',i:'🏄',c:'#059669',bg:'#d1fae5',
+ t:'Mud Day Paris',s:'Running · Roissy-en-France',h:'09h00',
+ dt:'Dimanche 24 mai',lieu:'Parc de Roissy',v:'Roissy-en-France (95)',px:'À partir de 59€',
+ desc:'Le parcours obstacle le plus fun de France. 13 km, 30 obstacles et 100% dans la boue.',
+ rel:[{d:'7 juin',n:'Mud Day Lyon'}],src:'OpenAgenda'},
+
+{id:'to-04',d:19,m:8,y:2026,cat:'tourisme',i:'🏛',c:'#059669',bg:'#d1fae5',
+ t:'Journées du Patrimoine (19-20 sept.)',s:'Culture · France entière',h:'09h00 - 18h00',
+ dt:'Samedi 19 septembre',lieu:'Monuments & musées',v:'France',px:'Gratuit',
+ desc:'Accès exceptionnel gratuit à des milliers de lieux habituellement fermés ou payants : Élysée, ministères, monuments historiques.',
+ rel:[],src:'Min. Culture'},
+
+{id:'to-05',d:3,m:9,y:2026,cat:'tourisme',i:'🍷',c:'#059669',bg:'#d1fae5',
+ t:'Vendanges de Montmartre',s:'Fête · Paris 18e',h:'10h00',
+ dt:'Samedi 3 octobre',lieu:'Clos Montmartre',v:'Paris 18e',px:'Gratuit (cortège)',
+ desc:'La plus ancienne fête des vendanges de Paris. Cortège folklorique, animations, marché artisanal.',
+ rel:[],src:'Mairie 18e'},
+
+{id:'to-06',d:5,m:11,y:2026,cat:'tourisme',i:'💡',c:'#059669',bg:'#d1fae5',
+ t:'Fête des Lumières — Lyon',s:'Festival · Lyon',h:'20h00 - 00h00',
+ dt:'Samedi 5 décembre',lieu:'Lyon centre',v:'Lyon',px:'Gratuit',
+ desc:'Le plus grand festival de lumières d\'Europe. 4 nuits, 2 millions de visiteurs, installations époustouflantes dans toute la ville.',
+ rel:[{d:'8 déc.',n:'Fête des Lumières — Clôture'}],src:'Ville de Lyon'},
+// ══ JUIN 2026 ══
+
+// Sport
+{id:'jun-s1',d:20,m:5,y:2026,cat:'sport',i:'🏆',c:'#1D4ED8',bg:'#dbeafe',
+ t:'Finale Europa League : Istanbul',s:'UEFA · Beşiktaş Stadium',h:'21h00',
+ dt:'Mercredi 20 mai',lieu:'Beşiktaş Stadium',v:'Istanbul, Turquie',px:'Sur Canal+',
+ desc:'Finale de l\'UEFA Europa League 2025-2026 à Istanbul. Le 2e trophée européen de clubs se décide en Turquie.',
+ rel:[{d:'30 mai',n:'Finale Champions League (Budapest)'}],src:'UEFA Officiel'},
+
+{id:'jun-s2',d:29,m:5,y:2026,cat:'sport',i:'🎾',c:'#16A34A',bg:'#dcfce7',
+ t:'Wimbledon — 1er tour',s:'Tennis Grand Chelem · Londres',h:'12h00',
+ dt:'Lundi 29 juin',lieu:'All England Lawn Tennis Club',v:'Wimbledon, Londres',px:'Sur beIN Sports',
+ desc:'Début de Wimbledon 2026, 139e édition du Grand Chelem sur gazon. Sinner, Djokovic et les meilleures raquettes mondiales s\'affrontent sur le gazon de Church Road.',
+ rel:[{d:'12 juil.',n:'Finale Wimbledon'}],src:'Wimbledon Officiel'},
+
+{id:'jun-s3',d:12,m:6,y:2026,cat:'sport',i:'🎾',c:'#16A34A',bg:'#dcfce7',
+ t:'Wimbledon — Finale',s:'Tennis Grand Chelem · Centre Court',h:'15h00',
+ dt:'Dimanche 12 juillet',lieu:'Centre Court',v:'Wimbledon, Londres',px:'Sur beIN Sports',
+ desc:'Finale de Wimbledon 2026 sur le mythique Centre Court. L\'un des moments les plus prestigieux du tennis mondial.',
+ rel:[],src:'Wimbledon Officiel'},
+
+// Culture / Festivals
+{id:'jun-c1',d:18,m:5,y:2026,cat:'culture',i:'🤘',c:'#7C3AED',bg:'#f3e8ff',
+ t:'Hellfest 2026',s:'Festival · Clisson (44)',h:'Journée',
+ dt:'Jeudi 18 juin',lieu:'Hellfest Grounds',v:'Clisson (Loire-Atlantique)',px:'À partir de 99€/jour',
+ desc:'L\'un des plus grands festivals de metal au monde. 4 jours, 6 scènes, plus de 150 groupes. Iron Maiden, The Offspring, Limp Bizkit, Bring Me The Horizon à l\'affiche.',
+ rel:[{d:'19 juin',n:'Hellfest J2'},{d:'20 juin',n:'Hellfest J3'},{d:'21 juin',n:'Hellfest J4 — Clôture'}],src:'Hellfest Officiel'},
+
+{id:'jun-c2',d:26,m:5,y:2026,cat:'culture',i:'🎵',c:'#7C3AED',bg:'#f3e8ff',
+ t:'Solidays 2026',s:'Festival · Paris Longchamp',h:'Journée',
+ dt:'Vendredi 26 juin',lieu:'Hippodrome Paris-Longchamp',v:'Paris 16e',px:'À partir de 45€/jour',
+ desc:'Le festival engagé de Paris. 3 jours, 100 000 festivaliers, Orelsan, Major Lazer, Zara Larsson, Gims, BigFlo & Oli. Tout le bénéfice reversé à la lutte contre le SIDA.',
+ rel:[{d:'27 juin',n:'Solidays J2'},{d:'28 juin',n:'Solidays — Clôture'}],src:'Solidays Officiel'},
+
+{id:'jun-c3',d:26,m:5,y:2026,cat:'culture',i:'🎵',c:'#7C3AED',bg:'#f3e8ff',
+ t:'Garorock 2026 — 30 ans !',s:'Festival · Marmande (47)',h:'Journée',
+ dt:'Vendredi 26 juin',lieu:'Plaine de la Filhole',v:'Marmande (Lot-et-Garonne)',px:'À partir de 55€/jour',
+ desc:'Garorock fête ses 30 ans ! Plus de 150 000 festivaliers attendus. Major Lazer, Tom Odell, Kaytranada, Maître Gims, PLK au programme.',
+ rel:[{d:'27 juin',n:'Garorock J2'},{d:'28 juin',n:'Garorock — Clôture'}],src:'Garorock Officiel'},
+
+// Tourisme / Sorties juin
+{id:'jun-t1',d:21,m:5,y:2026,cat:'tourisme',i:'🎵',c:'#059669',bg:'#d1fae5',
+ t:'Fête de la Musique',s:'Sorties · France entière',h:'18h00 - 02h00',
+ dt:'Dimanche 21 juin',lieu:'Rues & places publiques',v:'France',px:'Gratuit',
+ desc:'Chaque 21 juin, la France se transforme en scène géante. Des milliers de concerts gratuits dans toutes les villes de France et d\'Europe. Tous les styles, toutes les rues.',
+ rel:[],src:'Min. Culture'},
+
+// Business juin
+{id:'jun-b1',d:24,m:5,y:2026,cat:'business',i:'🛍',c:'#B45309',bg:'#fef3c7',
+ t:'Ouverture Soldes d\'Été',s:'Commerce · France',h:'8h00',
+ dt:'Mercredi 24 juin',lieu:'Tous les commerces',v:'France',px:'-20% à -80%',
+ desc:'Début officiel des soldes d\'été 2026. Du 24 juin au 21 juillet, 4 semaines de promotions légales encadrées par la loi, en boutiques et en ligne.',
+ rel:[{d:'21 juil.',n:'Fin des soldes'}],src:'Min. Économie'},
+
+// ══ JUILLET 2026 ══
+
+// Sport
+{id:'jul-s1',d:4,m:6,y:2026,cat:'sport',i:'🚴',c:'#1D4ED8',bg:'#dbeafe',
+ t:'Tour de France — Grand Départ (Barcelone)',s:'Cyclisme · Grand Départ Espagne',h:'14h00',
+ dt:'Samedi 4 juillet',lieu:'Barcelone',v:'Espagne',px:'Sur France TV',
+ desc:'Grand Départ du Tour de France 2026 depuis Barcelone ! 113e édition, 21 étapes, 3 333 km. Contre-la-montre par équipes sur 19 km pour lancer la Grande Boucle.',
+ rel:[{d:'5 juil.',n:'Étape 2 — Barcelone'},{d:'26 juil.',n:'Arrivée Champs-Élysées'}],src:'Tour de France Officiel'},
+
+{id:'jul-s2',d:26,m:6,y:2026,cat:'sport',i:'🚴',c:'#1D4ED8',bg:'#dbeafe',
+ t:'Tour de France — Arrivée Champs-Élysées',s:'Cyclisme · Paris',h:'17h00',
+ dt:'Dimanche 26 juillet',lieu:'Avenue des Champs-Élysées',v:'Paris 8e',px:'Gratuit (bord de route) / Sur France TV',
+ desc:'L\'arrivée du Tour de France 2026 sur les Champs-Élysées ! La dernière étape mythique sous les yeux de millions de spectateurs. Alpe d\'Huez sera au programme cette année.',
+ rel:[],src:'Tour de France Officiel'},
+
+{id:'jul-s3',d:2,m:6,y:2026,cat:'sport',i:'🎵',c:'#1D4ED8',bg:'#dbeafe',
+ t:'Nuit de l\'Erdre 2026',s:'Festival · Nort-sur-Erdre (44)',h:'Journée',
+ dt:'Jeudi 2 juillet',lieu:'Bords de l\'Erdre',v:'Nort-sur-Erdre (Loire-Atlantique)',px:'À partir de 55€/jour',
+ desc:'L\'un des plus grands festivals gratuits puis payants de France. 100 000 festivaliers. Lenny Kravitz, Orelsan, Damso, Vanessa Paradis au programme.',
+ rel:[{d:'3 juil.',n:'Nuit de l\'Erdre J2'},{d:'4 juil.',n:'Nuit de l\'Erdre J3'},{d:'5 juil.',n:'Nuit de l\'Erdre — Clôture'}],src:'Festival Officiel'},
+
+{id:'jul-s4',d:14,m:6,y:2026,cat:'tourisme',i:'🇫🇷',c:'#059669',bg:'#d1fae5',
+ t:'Fête Nationale — 14 Juillet',s:'Sorties · France entière',h:'Journée',
+ dt:'Mardi 14 juillet',lieu:'Champs-Élysées & toute la France',v:'France',px:'Gratuit',
+ desc:'Défilé militaire sur les Champs-Élysées, feux d\'artifice à la Tour Eiffel à 23h, bals populaires partout en France. La grande fête nationale française.',
+ rel:[],src:'Officiel'},
+
+{id:'jul-s5',d:11,m:6,y:2026,cat:'culture',i:'🎵',c:'#7C3AED',bg:'#f3e8ff',
+ t:'Festival de Nîmes',s:'Festival · Arènes de Nîmes',h:'20h30',
+ dt:'Samedi 11 juillet',lieu:'Arènes de Nîmes',v:'Nîmes (Gard)',px:'À partir de 45€',
+ desc:'Le Festival de Nîmes dans les arènes romaines — un cadre unique au monde. Aya Nakamura, Tyler the Creator, Mika parmi les têtes d\'affiche juin-juillet 2026.',
+ rel:[],src:'Festival de Nîmes'},
+
+// ══ MODE 2026 — Fashion Weeks officielles (source FHCM) + marques françaises ══
+
+// Fashion Week Paris — Prêt-à-porter Femme AH 2026-2027
+{id:'mod-01',d:2,m:1,y:2026,cat:'mode',i:'👗',c:'#DB2777',bg:'#fce7f3',
+ t:'Fashion Week Paris — Prêt-à-porter Femme AH',s:'Mode · Paris Fashion Week',h:'10h00',
+ dt:'Lundi 2 mars',lieu:'Divers lieux — Paris',v:'Paris',px:'Sur invitation',
+ desc:'Paris Fashion Week Automne-Hiver 2026-2027. Dior, Saint Laurent, Chanel, Hermès, Loewe, Valentino… Les plus grandes maisons présentent leurs collections féminines. Du 2 au 10 mars 2026.',
+ rel:[{d:'10 mars',n:'Clôture Fashion Week Femme AH'},{d:'23 juin',n:'Fashion Week Homme PE 2027'}],src:'FHCM Officiel'},
+
+// Haute Couture Week Printemps-Été 2026
+{id:'mod-02',d:26,m:0,y:2026,cat:'mode',i:'✨',c:'#DB2777',bg:'#fce7f3',
+ t:'Haute Couture Week — Printemps-Été',s:'Mode · Haute Couture Paris',h:'10h00',
+ dt:'Lundi 26 janvier',lieu:'Divers lieux — Paris',v:'Paris',px:'Sur invitation',
+ desc:'La Semaine de la Haute Couture Printemps-Été 2026. Les créations les plus exclusives au monde présentées par Dior, Chanel, Givenchy, Iris Van Herpen… Du 26 au 29 janvier.',
+ rel:[{d:'2 mars',n:'Fashion Week Femme AH'},{d:'6 juil.',n:'Haute Couture AH 2026-27'}],src:'FHCM Officiel'},
+
+// Fashion Week Homme Printemps-Été 2027
+{id:'mod-03',d:23,m:5,y:2026,cat:'mode',i:'🕴',c:'#DB2777',bg:'#fce7f3',
+ t:'Fashion Week Homme — Printemps-Été 2027',s:'Mode · Paris Fashion Week',h:'10h00',
+ dt:'Mardi 23 juin',lieu:'Divers lieux — Paris',v:'Paris',px:'Sur invitation',
+ desc:'Défilés de mode masculine pour la collection Printemps-Été 2027. Louis Vuitton, Dior Homme, Hermès, Valentino… Du 23 au 28 juin 2026.',
+ rel:[{d:'28 juin',n:'Clôture Fashion Week Homme'},{d:'6 juil.',n:'Haute Couture AH 2026-27'}],src:'FHCM Officiel'},
+
+// Haute Couture Week Automne-Hiver 2026-2027
+{id:'mod-04',d:6,m:6,y:2026,cat:'mode',i:'✨',c:'#DB2777',bg:'#fce7f3',
+ t:'Haute Couture Week — Automne-Hiver',s:'Mode · Haute Couture Paris',h:'10h00',
+ dt:'Lundi 6 juillet',lieu:'Divers lieux — Paris',v:'Paris',px:'Sur invitation',
+ desc:'La Semaine de la Haute Couture Automne-Hiver 2026-2027. Du 6 au 9 juillet. Stéphane Rolland investit la scène de l\'Olympia pour un défilé exceptionnel.',
+ rel:[{d:'28 sept.',n:'Fashion Week Femme PE 2027'}],src:'FHCM Officiel'},
+
+// Fashion Week Paris — Prêt-à-porter Femme PE 2027
+{id:'mod-05',d:28,m:8,y:2026,cat:'mode',i:'👗',c:'#DB2777',bg:'#fce7f3',
+ t:'Fashion Week Paris — Prêt-à-porter Femme PE',s:'Mode · Paris Fashion Week',h:'10h00',
+ dt:'Lundi 28 septembre',lieu:'Divers lieux — Paris',v:'Paris',px:'Sur invitation',
+ desc:'Paris Fashion Week Printemps-Été 2027. Les collections printemps des grandes maisons parisiennes. Du 28 septembre au 6 octobre 2026.',
+ rel:[{d:'6 oct.',n:'Clôture Fashion Week Femme PE'}],src:'FHCM Officiel'},
+
+// Ouverture Soldes d\'Hiver
+{id:'mod-06',d:7,m:0,y:2026,cat:'mode',i:'🏷',c:'#DB2777',bg:'#fce7f3',
+ t:'Ouverture Soldes d\'Hiver',s:'Mode · Commerce · France',h:'8h00',
+ dt:'Mercredi 7 janvier',lieu:'Tous les commerces',v:'France',px:'-20% à -80%',
+ desc:'Début des soldes d\'hiver 2026. 4 semaines de promotions légales du 7 janvier au 4 février. Boutiques et sites en ligne.',
+ rel:[{d:'4 févr.',n:'Fin des soldes hiver'}],src:'Min. Économie'},
+
+// Sézane — rythme de drops trimestriels
+{id:'mod-10',d:1,m:1,y:2026,cat:'mode',i:'🌸',c:'#DB2777',bg:'#fce7f3',
+ t:'Sézane — Collection Printemps',s:'Mode · Drop en ligne · sezane.com',h:'9h30',
+ dt:'Début février',lieu:'sezane.com',v:'En ligne + boutiques Paris',px:'Prix habituels',
+ desc:'Sézane lance sa collection Printemps. La marque parisienne fondée par Morgane Sézalory sort ses nouvelles pièces par drops réguliers tout au long du trimestre. À suivre sur Instagram et newsletter.',
+ rel:[{d:'Mars',n:'Nouveaux drops Sézane'},{d:'Juin',n:'Collection Été Sézane'}],src:'Sézane'},
+
+{id:'mod-11',d:1,m:5,y:2026,cat:'mode',i:'☀️',c:'#DB2777',bg:'#fce7f3',
+ t:'Sézane — Collection Été',s:'Mode · Drop en ligne · sezane.com',h:'9h30',
+ dt:'Début juin',lieu:'sezane.com',v:'En ligne + boutiques Paris',px:'Prix habituels',
+ desc:'Sézane dévoile sa collection Été avec robes légères, mailles, accessoires et essentiels de la saison. Drops réguliers tout l\'été. Newsletter indispensable pour ne rien rater.',
+ rel:[{d:'Sept.',n:'Collection Automne Sézane'}],src:'Sézane'},
+
+// Balzac Paris — rythme de collections
+{id:'mod-12',d:15,m:1,y:2026,cat:'mode',i:'🌿',c:'#DB2777',bg:'#fce7f3',
+ t:'Balzac Paris — Collection Printemps',s:'Mode · Drop en ligne · balzac-paris.com',h:'Journée',
+ dt:'Mi-février',lieu:'balzac-paris.com',v:'En ligne + boutiques',px:'Prix habituels',
+ desc:'Balzac Paris, marque éco-responsable fondée par Chrysoline de Gastines, lance sa collection printemps. Pièces iconiques comme le pull Doudou, la chemise Léonor. Fabrication européenne.',
+ rel:[{d:'Juin',n:'Collection Été Balzac Paris'}],src:'Balzac Paris'},
+
+// Rouje — collections
+{id:'mod-13',d:1,m:2,y:2026,cat:'mode',i:'🌹',c:'#DB2777',bg:'#fce7f3',
+ t:'Rouje — Nouvelle Collection Printemps',s:'Mode · Drop en ligne · rouje.com',h:'Journée',
+ dt:'Début mars',lieu:'rouje.com',v:'En ligne',px:'Prix habituels',
+ desc:'Rouje, la marque de Jeanne Damas, sort sa nouvelle collection printemps. Robes romantiques, imprimés floraux, la signature parisienne et féminine de la marque.',
+ rel:[{d:'Juin',n:'Collection Été Rouje'}],src:'Rouje'},
+
+// SAAJ Paris
+{id:'mod-14',d:15,m:2,y:2026,cat:'mode',i:'💫',c:'#DB2777',bg:'#fce7f3',
+ t:'SAAJ Paris — Nouvelle Collection',s:'Mode · Drop en ligne · saaj.paris',h:'Journée',
+ dt:'Mi-mars',lieu:'saaj.paris',v:'En ligne',px:'Prix habituels',
+ desc:'SAAJ Paris sort ses nouvelles pièces de la saison. La marque parisienne propose des créations épurées et contemporaines. À suivre sur Instagram pour les drops.',
+ rel:[],src:'SAAJ Paris'},
+
+// Maison Stella
+{id:'mod-15',d:1,m:3,y:2026,cat:'mode',i:'⭐',c:'#DB2777',bg:'#fce7f3',
+ t:'Maison Stella — Nouvelle Collection',s:'Mode · Drop en ligne',h:'Journée',
+ dt:'Début avril',lieu:'En ligne',v:'En ligne',px:'Prix habituels',
+ desc:'Maison Stella présente sa nouvelle collection de la saison. À suivre sur les réseaux et par newsletter pour ne pas rater les drops.',
+ rel:[],src:'Maison Stella'},
+
+// Suzie
+{id:'mod-16',d:15,m:3,y:2026,cat:'mode',i:'🎀',c:'#DB2777',bg:'#fce7f3',
+ t:'Suzie — Nouvelle Collection',s:'Mode · Drop en ligne',h:'Journée',
+ dt:'Mi-avril',lieu:'En ligne',v:'En ligne',px:'Prix habituels',
+ desc:'Suzie sort sa nouvelle collection de la saison. À suivre sur Instagram et par newsletter pour être alerté des nouveaux drops.',
+ rel:[],src:'Suzie'},
+
+];
+
+// ─── LOGIQUE APP ──────────────────────────────────────────────────────────────
+function filt(){return cat==='all'?EVT:EVT.filter(e=>e.cat===cat)}
+
+function sCat(el,c){
+  cat=c;
+  document.querySelectorAll('.pill').forEach(p=>{p.className='pill off';p.style.background='';p.style.borderColor='';});
+  el.className='pill on';
+  const cols={all:'#E8334A',sport:'#1D4ED8',culture:'#7C3AED',business:'#B45309',tourisme:'#059669',mode:'#DB2777'};
+  el.style.background=cols[c]||'#555';
+  el.style.borderColor=cols[c]||'#555';
+  rAll();
+}
+
+function rCal(){
+  const fe=filt().filter(e=>e.m===cM&&e.y===cY);
+  const fd=(new Date(cY,cM,1).getDay()+6)%7;
+  const dim=new Date(cY,cM+1,0).getDate();
+  const dp=new Date(cY,cM,0).getDate();
+  document.getElementById('cm').textContent=MO[cM]+' '+cY;
+  let h='';
+  const cell=(d,oth)=>{
+    const ev=oth?[]:fe.filter(e=>e.d===d);
+    const tod=!oth&&d===now.getDate()&&cM===now.getMonth()&&cY===now.getFullYear();
+    const sel=!oth&&d===sDay;
+    const nc='dn'+(tod?' tod':oth?' dim':'');
+    const ic=ev.length?'<div class="dico">'+ev.slice(0,4).map(e=>'<div class="ei" style="background:'+e.bg+'" title="'+e.t+'">'+e.i+'</div>').join('')+'</div>':'';
+    return '<div class="dc'+(sel?' sel':'')+'"'+(oth?'':' onclick="sD('+d+')"')+'>'+
+      '<span class="'+nc+'">'+d+'</span>'+ic+'</div>';
+  };
+  for(let i=0;i<fd;i++) h+=cell(dp-fd+1+i,true);
+  for(let d=1;d<=dim;d++) h+=cell(d,false);
+  document.getElementById('cd').innerHTML=h;
+}
+
+function rEvts(){
+  const fe=filt();
+  const de=fe.filter(e=>e.d===sDay&&e.m===cM&&e.y===cY);
+  const up=fe.filter(e=>new Date(e.y,e.m,e.d)>new Date(cY,cM,sDay))
+    .sort((a,b)=>new Date(a.y,a.m,a.d)-new Date(b.y,b.m,b.d)).slice(0,5);
+  const show=de.length?de:up;
+  const dn=new Date(cY,cM,sDay);
+  document.getElementById('elt').textContent=
+    de.length?DJ[dn.getDay()]+' '+sDay+' '+MO[cM]:'Prochains événements';
+  document.getElementById('el').innerHTML=show.map(e=>`
+    <div class="ec" onclick="openD('${e.id}')">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;min-width:38px">
+        <div class="eico" style="background:${e.bg}">${e.i}</div>
+        <div class="etm">${e.h.split(' ')[0]}</div>
+      </div>
+      <div style="flex:1;min-width:0">
+        <div class="en">${e.t}</div>
+        <div class="es">${e.s}</div>
+        <div style="display:flex;align-items:center;margin-top:4px;flex-wrap:wrap;gap:3px">
+          <span class="eb" style="background:${e.bg};color:${e.c}">${e.h}</span>
+          <span class="srcb">${e.src}</span>
+        </div>
+      </div>
+      <i class="ti ti-chevron-right" style="font-size:16px;color:var(--tx3);flex-shrink:0;align-self:center"></i>
+    </div>`).join('')
+  ||'<div class="empty">Aucun événement ce jour<br><span style="font-size:11px;opacity:.7">Navigue dans le calendrier ↑</span></div>';
+}
+
+function rAll(){rCal();rEvts();}
+function sD(d){sDay=d;rAll();}
+function chM(dir){cM+=dir;if(cM>11){cM=0;cY++;}if(cM<0){cM=11;cY--;}rAll();}
+function sV(b){document.querySelectorAll('.vb').forEach(x=>x.classList.remove('on'));b.classList.add('on');}
+
+function openD(id){
+  const e=EVT.find(x=>x.id===id);if(!e)return;
+  document.getElementById('mw').classList.add('gone');
+  const dw=document.getElementById('dw');dw.classList.add('open');
+  document.getElementById('dcat').textContent=e.cat.charAt(0).toUpperCase()+e.cat.slice(1)+' · '+e.s.split(' · ')[0];
+  document.getElementById('ddate').textContent=e.dt+' · '+e.h;
+  const h=document.getElementById('dhero');h.textContent=e.i;h.style.background=e.bg;
+  document.getElementById('dttl').textContent=e.t;
+  document.getElementById('dsrc').textContent=e.src;
+  document.getElementById('ddes').textContent=e.desc;
+  document.getElementById('d1').textContent=e.dt;
+  document.getElementById('d2').textContent=e.h;
+  document.getElementById('d3').textContent=e.lieu||'—';
+  document.getElementById('d4').textContent=e.v||'';
+  document.getElementById('d5').textContent=e.px||'—';
+  document.getElementById('d6').textContent='Voir sur le site officiel';
+  document.getElementById('rl').innerHTML=(e.rel||[]).map(r=>`
+    <div class="ri">
+      <div class="rd">${r.d}</div>
+      <div class="rn">${r.n}</div>
+      <i class="ti ti-chevron-right" style="font-size:14px;color:var(--tx3)"></i>
+    </div>`).join('');
+  dw.querySelector('.dscr').scrollTop=0;
+}
+
+function closeD(){
+  document.getElementById('dw').classList.remove('open');
+  document.getElementById('mw').classList.remove('gone');
+}
+
+function tick(){
+  const n=new Date(),s=n.getHours()+':'+String(n.getMinutes()).padStart(2,'0');
+  document.getElementById('clk').textContent=s;
+  document.getElementById('clk2').textContent=s;
+}
+setInterval(tick,10000);tick();
+rAll();
+</script>
+
+<style>
+.install-banner{position:fixed;bottom:0;left:50%;transform:translate(-50%,100%);width:390px;max-width:100vw;background:#1A1A2E;padding:14px 20px;display:flex;align-items:center;gap:12px;z-index:9999;transition:transform .35s cubic-bezier(.34,1.56,.64,1);border-top:1px solid rgba(255,255,255,.12);border-radius:16px 16px 0 0;box-shadow:0 -8px 32px rgba(0,0,0,.3)}
+.install-banner.show{transform:translate(-50%,0)}
+.install-banner-icon{width:44px;height:44px;border-radius:10px;flex-shrink:0}
+.install-banner-text{flex:1}
+.install-banner-text strong{display:block;color:#fff;font-size:14px;font-weight:600}
+.install-banner-text span{color:rgba(255,255,255,.5);font-size:11px;line-height:1.4;display:block;margin-top:2px}
+.install-btn{background:#E8334A;color:#fff;border:none;padding:8px 14px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;flex-shrink:0;white-space:nowrap}
+.install-close{background:none;border:none;color:rgba(255,255,255,.35);font-size:20px;cursor:pointer;padding:0 2px;flex-shrink:0;line-height:1}
+.offline-bar{position:fixed;top:0;left:0;right:0;background:#F59E0B;color:#fff;text-align:center;font-size:12px;font-weight:600;padding:7px;z-index:9998;display:none;font-family:-apple-system,sans-serif}
+.offline-bar.show{display:block}
+
+/* ── Settings Screen ─────────────────────────────────────── */
+.sw{display:none;flex-direction:column;flex:1;overflow:hidden}
+.sw.open{display:flex}
+.sw-scr{flex:1;overflow-y:auto;scrollbar-width:none;padding-bottom:32px}
+.sw-scr::-webkit-scrollbar{display:none}
+.sw-section{padding:20px 20px 0}
+.sw-section-title{font-size:11px;font-weight:700;color:var(--tx2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px}
+.sw-card{background:var(--sur);border:1px solid var(--bd);border-radius:14px;overflow:hidden;margin-bottom:8px}
+.sw-row{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--bd);cursor:pointer;transition:background .12s}
+.sw-row:last-child{border-bottom:none}
+.sw-row:hover{background:var(--sur2)}
+.sw-row-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.sw-row-label{flex:1}
+.sw-row-label p{font-size:14px;font-weight:500;color:var(--tx)}
+.sw-row-label span{font-size:11px;color:var(--tx2)}
+.toggle{width:48px;height:28px;border-radius:14px;background:var(--bd2);position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;border:none;padding:0}
+.toggle.on{background:#34C759}
+.toggle::after{content:'';position:absolute;width:22px;height:22px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.toggle.on::after{transform:translateX(20px)}
+.sw-chip-wrap{display:flex;flex-wrap:wrap;gap:7px;padding:14px 16px}
+.sw-chip{padding:6px 13px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--bd2);background:none;color:var(--tx2);font-family:inherit;transition:all .2s}
+.sw-chip.on{color:#fff;border-color:transparent}
+.sw-profile-header{margin:20px 20px 0;display:flex;align-items:center;gap:14px;padding:16px;background:var(--sur);border:1px solid var(--bd);border-radius:14px}
+.sw-avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#E8334A,#1A1A2E);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.sw-avatar-info h3{font-size:16px;font-weight:600;color:var(--tx)}
+.sw-avatar-info p{font-size:12px;color:var(--tx2);margin-top:2px}
+.sw-save{margin:20px;padding:14px;background:var(--red);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;width:calc(100% - 40px);display:flex;align-items:center;justify-content:center;gap:8px}
+.sw-save:active{opacity:.85}
+.saved-toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:#1A1A2E;color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;font-weight:600;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;z-index:999}
+.saved-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+<div class="offline-bar" id="offlineBar">📵 Mode hors ligne — données en cache</div>
+<div class="install-banner" id="installBanner">
+  <img class="install-banner-icon" src="data:image/png;base64,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" alt="icône Rendez-vous">
+  <div class="install-banner-text">
+    <strong>Rendez-vous</strong>
+    <span id="installHint">Installer sur votre écran d'accueil</span>
+  </div>
+  <button class="install-btn" id="installBtn">Installer</button>
+  <button class="install-close" id="installClose">✕</button>
+</div>
+
+<script>
+// Service Worker (inline blob)
+if('serviceWorker' in navigator){
+  const sw=`const C='rdv-v2';
+self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.add('/')));self.skipWaiting();});
+self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==C).map(k=>caches.delete(k)))));self.clients.claim();});
+self.addEventListener('fetch',e=>{e.respondWith(fetch(e.request).catch(()=>caches.match(e.request)));});`;
+  const url=URL.createObjectURL(new Blob([sw],{type:'application/javascript'}));
+  navigator.serviceWorker.register(url).catch(()=>{});
+}
+
+// Offline bar
+function chkOnline(){document.getElementById('offlineBar').classList.toggle('show',!navigator.onLine);}
+window.addEventListener('online',chkOnline);window.addEventListener('offline',chkOnline);chkOnline();
+
+// Install banner
+let prompt=null;
+const banner=document.getElementById('installBanner');
+const btn=document.getElementById('installBtn');
+const closeBtn=document.getElementById('installClose');
+const hint=document.getElementById('installHint');
+
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault(); prompt=e;
+  if(!localStorage.getItem('rdv-dismissed'))
+    setTimeout(()=>banner.classList.add('show'),2500);
+});
+
+btn.addEventListener('click',async()=>{
+  banner.classList.remove('show');
+  if(prompt){await prompt.prompt();prompt=null;}
+});
+
+closeBtn.addEventListener('click',()=>{
+  banner.classList.remove('show');
+  localStorage.setItem('rdv-dismissed','1');
+});
+
+window.addEventListener('appinstalled',()=>banner.classList.remove('show'));
+
+// iOS Safari hint
+const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+const standalone=window.navigator.standalone||window.matchMedia('(display-mode:standalone)').matches;
+if(isIOS&&!standalone&&!localStorage.getItem('rdv-ios')){
+  setTimeout(()=>{
+    hint.innerHTML='Appuie sur <strong style="color:#fff">Partager</strong> puis <strong style="color:#fff">Sur l\'écran d\'accueil</strong>';
+    btn.textContent='OK, merci';
+    btn.onclick=()=>{banner.classList.remove('show');localStorage.setItem('rdv-ios','1');};
+    banner.classList.add('show');
+  },2500);
+}
+
+// SETTINGS
+function openSettings(){
+  document.getElementById('mw').classList.add('gone');
+  document.getElementById('dw').classList.remove('open');
+  document.getElementById('sw').classList.add('open');
+  loadSettings();
+}
+function closeSettings(){
+  document.getElementById('sw').classList.remove('open');
+  document.getElementById('mw').classList.remove('gone');
+}
+function toggleChip(el){
+  const isOn=el.classList.contains('on');
+  if(isOn){el.classList.remove('on');el.style.background='';el.style.color='';}
+  else{
+    el.classList.add('on');
+    const colors={sport:'#1D4ED8',culture:'#7C3AED',business:'#B45309',tourisme:'#059669',mode:'#DB2777'};
+    const wrap=el.closest('.sw-chip-wrap');
+    const secId=wrap?wrap.id:'';
+    const cat=secId.replace('sw-','');
+    el.style.background=colors[cat]||'#E8334A';
+    el.style.color='#fff';
+  }
+}
+function toggleVille(el){
+  document.querySelectorAll('#sw-villes .sw-chip').forEach(c=>{c.classList.remove('on');c.style.background='';c.style.color='';});
+  el.classList.add('on');el.style.background='#E8334A';el.style.color='#fff';
+}
+function toggleSwitch(el){el.classList.toggle('on');}
+function saveSettings(){
+  const cats=[];
+  document.querySelectorAll('#sw-cats .sw-chip.on').forEach(c=>cats.push(c.dataset.cat));
+  const prefs=[];
+  document.querySelectorAll('.sw-chip.on[data-pref]').forEach(c=>prefs.push(c.dataset.pref));
+  const ville=document.querySelector('#sw-villes .sw-chip.on')?.dataset?.pref||'paris';
+  localStorage.setItem('rdv-settings',JSON.stringify({cats,prefs,ville,savedAt:new Date().toISOString()}));
+  const toast=document.getElementById('savedToast');
+  toast.classList.add('show');
+  setTimeout(()=>toast.classList.remove('show'),2500);
+  setTimeout(()=>closeSettings(),1200);
+}
+function loadSettings(){
+  const saved=localStorage.getItem('rdv-settings');
+  if(!saved)return;
+  const s=JSON.parse(saved);
+  const colors={sport:'#1D4ED8',culture:'#7C3AED',business:'#B45309',tourisme:'#059669',mode:'#DB2777'};
+  if(s.cats){
+    document.querySelectorAll('#sw-cats .sw-chip').forEach(c=>{
+      const on=s.cats.includes(c.dataset.cat);
+      c.classList.toggle('on',on);
+      c.style.background=on?(colors[c.dataset.cat]||'#E8334A'):'';
+      c.style.color=on?'#fff':'';
+    });
+  }
+  if(s.prefs){
+    document.querySelectorAll('.sw-chip[data-pref]').forEach(c=>{
+      if(c.closest('#sw-villes'))return;
+      const on=s.prefs.includes(c.dataset.pref);
+      c.classList.toggle('on',on);
+      const wrap=c.closest('.sw-chip-wrap');
+      const cat=wrap?wrap.id.replace('sw-',''):'';
+      c.style.background=on?(colors[cat]||'#E8334A'):'';
+      c.style.color=on?'#fff':'';
+    });
+  }
+  if(s.ville){
+    document.querySelectorAll('#sw-villes .sw-chip').forEach(c=>{
+      const on=c.dataset.pref===s.ville;
+      c.classList.toggle('on',on);
+      c.style.background=on?'#E8334A':'';
+      c.style.color=on?'#fff':'';
+    });
+  }
+}
+
+</script>
+</body>
+</html>
