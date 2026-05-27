@@ -25,9 +25,9 @@
 @media(prefers-color-scheme:dark){:root{--bg:#0d0d1a;--sur:#1b1b2e;--sur2:#232336;--tx:#eeeefc;--tx2:#8888bb;--tx3:#44446a;--bd:rgba(255,255,255,0.07);--bd2:rgba(255,255,255,0.14)}}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--dark);display:flex;justify-content:center;align-items:flex-start;padding:0;margin:0;min-height:100vh;min-height:100dvh}
 @media(max-width:430px){body{padding:0}}
-.phone{width:390px;max-width:100vw;background:var(--sur);border-radius:44px;border:1px solid var(--bd2);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 32px 80px rgba(0,0,0,0.18);min-height:844px;position:relative}
+.phone{width:390px;max-width:100vw;background:var(--sur);border-radius:44px;border:1px solid var(--bd2);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 32px 80px rgba(0,0,0,0.18);min-height:844px}
 @media(max-width:430px){.phone{border-radius:0;min-height:100vh;min-height:100dvh;border:none;width:100vw;max-width:100vw}}
-.sb{background:var(--dark);padding:calc(env(safe-area-inset-top,14px) + 4px) 28px 8px;display:flex;justify-content:space-between;align-items:center}
+.sb{background:var(--dark);padding:calc(env(safe-area-inset-top,0px) + 14px) 28px 8px;display:flex;justify-content:space-between;align-items:center}
 .sb span{color:#fff;font-size:12px;font-weight:500}
 .ah{background:var(--dark);padding:10px 22px 14px;display:flex;align-items:center;justify-content:space-between}
 .logo{font-size:22px;font-weight:700;color:#fff;letter-spacing:-.5px}
@@ -39,9 +39,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .pill{padding:6px 13px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;cursor:pointer;border:1.5px solid transparent;transition:all .2s;display:flex;align-items:center;gap:5px}
 .pill.on{color:#fff}
 .pill.off{background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);border-color:rgba(255,255,255,.09)}
-.mw{display:flex;flex-direction:column;position:absolute;inset:0;overflow:hidden;background:var(--sur)}
-.mw.gone{display:none!important}
-.dw{display:none;flex-direction:column;position:absolute;inset:0;overflow:hidden;z-index:10;background:var(--sur)}
+.mw{display:flex;flex-direction:column;flex:1;overflow:hidden;min-height:0}
+.mw.gone{display:none}
+.dw{display:none;flex-direction:column;flex:1;overflow:hidden;min-height:0}
 .dw.open{display:flex}
 .scr{flex:1;overflow-y:auto;scrollbar-width:none;display:flex;flex-direction:column}
 .scr::-webkit-scrollbar{display:none}
@@ -107,7 +107,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .empty{text-align:center;padding:32px;color:var(--tx3);font-size:13px;line-height:1.8}
 
 /* ── Settings Screen ─────────────────────────────────────── */
-.sw{display:none;flex-direction:column;position:absolute;inset:0;overflow:hidden;z-index:10;background:var(--sur)}
+.sw{display:none;flex-direction:column;flex:1;overflow:hidden;min-height:0}
 .sw.open{display:flex}
 .sw-scr{flex:1;overflow-y:auto;scrollbar-width:none;padding-bottom:32px}
 .sw-scr::-webkit-scrollbar{display:none}
@@ -137,7 +137,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .saved-toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:#1A1A2E;color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;font-weight:600;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;z-index:999}
 .saved-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-.sw{display:none;flex-direction:column;position:absolute;inset:0;overflow:hidden;z-index:10;background:var(--sur)}
+.sw{display:none;flex-direction:column;flex:1;overflow:hidden;min-height:0}
 .sw.open{display:flex}
 .sw-scr{flex:1;overflow-y:auto;scrollbar-width:none;padding-bottom:32px}
 .sw-scr::-webkit-scrollbar{display:none}
@@ -195,7 +195,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 
 /* ── MAP SCREEN ──────────────────────────────────────────────────────────── */
-.mapw{display:none;flex-direction:column;position:absolute;inset:0;overflow:hidden;z-index:10;background:var(--sur)}
+.mapw{display:none;flex-direction:column;flex:1;overflow:hidden;min-height:0}
 .mapw.open{display:flex}
 #leaflet-map{flex:1;width:100%;min-height:0}
 .map-filter{background:var(--dark);padding:8px 14px;display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;flex-shrink:0}
@@ -209,6 +209,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .map-event-info{flex:1;min-width:0}
 .map-event-title{font-size:13px;font-weight:600;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .map-event-sub{font-size:11px;color:var(--tx2)}
+
+
+.screens-wrap{flex:1;display:flex;flex-direction:column;overflow:hidden;min-height:0;position:relative}
+.screen-panel{display:none;flex-direction:column;flex:1;overflow:hidden;position:absolute;inset:0;background:var(--sur)}
+.screen-panel.active{display:flex}
 
 </style>
 </head>
@@ -1487,7 +1492,7 @@ loadLiveAPIs();
 .offline-bar.show{display:block}
 
 /* ── Settings Screen ─────────────────────────────────────── */
-.sw{display:none;flex-direction:column;position:absolute;inset:0;overflow:hidden;z-index:10;background:var(--sur)}
+.sw{display:none;flex-direction:column;flex:1;overflow:hidden;min-height:0}
 .sw.open{display:flex}
 .sw-scr{flex:1;overflow-y:auto;scrollbar-width:none;padding-bottom:32px}
 .sw-scr::-webkit-scrollbar{display:none}
