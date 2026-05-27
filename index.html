@@ -164,6 +164,212 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .saved-toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:#1A1A2E;color:#fff;padding:10px 20px;border-radius:20px;font-size:13px;font-weight:600;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;z-index:9999}
 .saved-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
+
+/* ── DESKTOP LAYOUT ──────────────────────────────────────────────────────── */
+@media(min-width:768px){
+
+  body{
+    background:var(--bg);
+    padding:0;
+    display:block;
+  }
+
+  .phone{
+    width:100vw;
+    max-width:100vw;
+    min-height:100vh;
+    border-radius:0;
+    border:none;
+    box-shadow:none;
+    display:grid;
+    grid-template-columns:260px 1fr 360px;
+    grid-template-rows:64px auto 1fr;
+    background:var(--bg);
+  }
+
+  /* ── TOP NAV BAR ── */
+  .sb{ display:none }
+
+  .ah{
+    grid-column:1/4;
+    grid-row:1;
+    display:flex;
+    align-items:center;
+    padding:0 28px;
+    height:64px;
+    border-bottom:1px solid var(--bd);
+    background:var(--dark);
+    position:sticky;
+    top:0;
+    z-index:100;
+    gap:24px;
+    width:100%;
+  }
+
+  .logo{ font-size:24px }
+
+  .hico{ margin-left:auto; display:flex; gap:16px }
+  .hico i{ font-size:22px }
+
+  /* Categories become a left sidebar */
+  .cats{
+    grid-column:1;
+    grid-row:3;
+    flex-direction:column;
+    align-items:flex-start;
+    padding:20px 16px;
+    gap:4px;
+    overflow-y:auto;
+    height:calc(100vh - 64px);
+    position:sticky;
+    top:64px;
+    background:var(--dark);
+    border-right:1px solid rgba(255,255,255,.08);
+  }
+
+  .pill{
+    width:100%;
+    padding:10px 14px;
+    border-radius:10px;
+    font-size:13px;
+    justify-content:flex-start;
+  }
+
+  /* Main content area */
+  .mw{
+    grid-column:2;
+    grid-row:3;
+    overflow:hidden;
+    height:calc(100vh - 64px);
+  }
+
+  .scr{
+    height:100%;
+    overflow-y:auto;
+  }
+
+  /* Calendar */
+  .ch{ padding:20px 24px 12px }
+  .cm{ font-size:20px }
+  .vt{ margin:0 24px 14px }
+  .cg{ padding:0 20px }
+
+  .dc{ min-height:72px; padding:6px 4px }
+  .dn{ font-size:13px }
+  .ei{ width:16px; height:16px; font-size:11px }
+
+  .els{ padding:16px 24px }
+  .elt{ font-size:12px }
+
+  .ec{ padding:13px 16px; border-radius:14px }
+  .en{ font-size:14px }
+  .es{ font-size:12px }
+
+  .bnav{ display:none !important; }
+
+  /* Right panel — detail view */
+  .dw{
+    grid-column:3;
+    grid-row:3;
+    display:flex !important;
+    flex-direction:column;
+    height:calc(100vh - 64px);
+    border-left:1px solid var(--bd);
+    overflow:hidden;
+    transform:none !important;
+    background:var(--sur);
+  }
+
+  /* Detail empty state */
+  .dw-empty{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    flex:1;
+    gap:12px;
+    color:var(--tx3);
+    font-size:14px;
+  }
+  .dw-empty-icon{ font-size:48px; opacity:.4 }
+
+  /* Settings and notif panels */
+  .sw{
+    z-index:200;
+    position:fixed;
+    inset:0;
+    display:none;
+  }
+  .sw.open{
+    display:grid;
+    grid-template-columns:280px 1fr;
+    grid-template-rows:64px 1fr;
+    background:var(--bg);
+  }
+  .sw .sb{ display:none }
+  .sw .dh{
+    grid-column:1/3;
+    grid-row:1;
+    height:64px;
+    padding:0 28px;
+    display:flex;
+    align-items:center;
+    border-bottom:1px solid rgba(255,255,255,.1);
+  }
+  .sw .sw-scr{
+    grid-column:1/3;
+    grid-row:2;
+    max-width:760px;
+    margin:0 auto;
+    width:100%;
+    padding:0 24px;
+  }
+
+  #nw{
+    z-index:200;
+    position:fixed;
+    inset:0;
+    background:var(--bg);
+  }
+  #nw .sb{ display:none }
+  #nw .dh{
+    height:64px;
+    padding:0 28px;
+    display:flex;
+    align-items:center;
+    border-bottom:1px solid rgba(255,255,255,.1);
+  }
+  #nw .sw-scr{
+    max-width:680px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  /* Detail header on desktop */
+  .dh{
+    padding:14px 20px 14px;
+    flex-shrink:0;
+  }
+
+  /* Install banner desktop */
+  .install-banner{
+    width:380px;
+    border-radius:16px 16px 0 0;
+  }
+
+  /* API bar */
+  #api-bar{
+    grid-column:1/4;
+    grid-row:2;
+    z-index:99;
+  }
+}
+
+@media(min-width:768px){
+  /* Detail right panel — always visible, show empty state when no event */
+  .dw.open .dw-empty{ display:none }
+}
+
 </style>
 </head>
 <body>
@@ -413,6 +619,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 
 <div class="dw" id="dw">
+
+  <div class="dw-empty" id="dwEmpty">
+    <div class="dw-empty-icon">📅</div>
+    <div>Clique sur un événement<br>pour voir les détails</div>
+  </div>
   <div class="sb"><span id="clk2">9:41</span><span><i class="ti ti-wifi" style="font-size:14px;color:#fff"></i></span></div>
   <div class="dh">
     <button class="dbk" onclick="closeD()"><i class="ti ti-arrow-left"></i></button>
@@ -1070,22 +1281,29 @@ function chM(dir){cM+=dir;if(cM>11){cM=0;cY++;}if(cM<0){cM=11;cY--;}rAll();}
 function sV(b){document.querySelectorAll('.vb').forEach(x=>x.classList.remove('on'));b.classList.add('on');}
 
 function openD(id){
-  const e=EVT.find(x=>x.id===id);if(!e)return;
-  document.getElementById('mw').classList.add('gone');
+  const e=EVT.find(x=>x.id===id);
+  // Also search live events
+  const eLive = EVT_LIVE.find(x=>x.id===id);
+  const ev = e || eLive;
+  if(!ev) return;
+  const isDesktop = window.innerWidth >= 768;
+  if(!isDesktop) document.getElementById('mw').classList.add('gone');
   const dw=document.getElementById('dw');dw.classList.add('open');
-  document.getElementById('dcat').textContent=e.cat.charAt(0).toUpperCase()+e.cat.slice(1)+' · '+e.s.split(' · ')[0];
-  document.getElementById('ddate').textContent=e.dt+' · '+e.h;
-  const h=document.getElementById('dhero');h.textContent=e.i;h.style.background=e.bg;
-  document.getElementById('dttl').textContent=e.t;
-  document.getElementById('dsrc').textContent=e.src;
-  document.getElementById('ddes').textContent=e.desc;
-  document.getElementById('d1').textContent=e.dt;
-  document.getElementById('d2').textContent=e.h;
-  document.getElementById('d3').textContent=e.lieu||'—';
-  document.getElementById('d4').textContent=e.v||'';
-  document.getElementById('d5').textContent=e.px||'—';
+  if(document.getElementById('dwEmpty')) document.getElementById('dwEmpty').style.display='none';
+  const eRef = ev;
+  document.getElementById('dcat').textContent=eRef.cat.charAt(0).toUpperCase()+eRef.cat.slice(1)+' · '+eRef.s.split(' · ')[0];
+  document.getElementById('ddate').textContent=eRef.dt+' · '+eRef.h;
+  const h=document.getElementById('dhero');h.textContent=eRef.i;h.style.background=eRef.bg;
+  document.getElementById('dttl').textContent=eRef.t;
+  document.getElementById('dsrc').textContent=eRef.src;
+  document.getElementById('ddes').textContent=eRef.desc;
+  document.getElementById('d1').textContent=eRef.dt;
+  document.getElementById('d2').textContent=eRef.h;
+  document.getElementById('d3').textContent=eRef.lieu||'—';
+  document.getElementById('d4').textContent=eRef.v||'';
+  document.getElementById('d5').textContent=eRef.px||'—';
   document.getElementById('d6').textContent='Voir sur le site officiel';
-  document.getElementById('rl').innerHTML=(e.rel||[]).map(r=>`
+  document.getElementById('rl').innerHTML=(eRef.rel||[]).map(r=>`
     <div class="ri">
       <div class="rd">${r.d}</div>
       <div class="rn">${r.n}</div>
@@ -1094,9 +1312,12 @@ function openD(id){
   dw.querySelector('.dscr').scrollTop=0;
 }
 
+
 function closeD(){
+  const isDesktop = window.innerWidth >= 768;
   document.getElementById('dw').classList.remove('open');
-  document.getElementById('mw').classList.remove('gone');
+  if(!isDesktop) document.getElementById('mw').classList.remove('gone');
+  if(document.getElementById('dwEmpty')) document.getElementById('dwEmpty').style.display='';
 }
 
 
