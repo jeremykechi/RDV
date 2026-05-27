@@ -1482,10 +1482,122 @@ function showApiBanner(loaded, total) {
   }
 }
 
+
+// ── PHASE 2 APIs ─────────────────────────────────────────────────────────────
+
+// ── TMDB — Sorties cinéma France (clé développeur) ───────────────────────────
+async function fetchCinema() {
+  try {
+    const KEY = 'cc442daf8a4c37cb44aae83b498d9616';
+    const MO2 = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+    const DJ2 = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+
+    // Upcoming movies in France
+    const r = await fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${KEY}&language=fr-FR&region=FR&page=1`);
+    const data = await r.json();
+
+    if (!data.results) throw new Error('No TMDB data');
+
+    const evts = data.results
+      .filter(f => f.release_date)
+      .map((f, i) => {
+        const dt = new Date(f.release_date);
+        return {
+          id: `tmdb-${f.id}`,
+          d: dt.getDate(), m: dt.getMonth(), y: dt.getFullYear(),
+          cat: 'culture', i: '🎬', c: '#7C3AED', bg: '#f3e8ff',
+          t: f.title,
+          s: 'Cinéma · Sortie nationale',
+          h: 'Journée',
+          dt: DJ2[dt.getDay()] + ' ' + dt.getDate() + ' ' + MO2[dt.getMonth()],
+          lieu: 'Toutes les salles', v: 'France',
+          px: '~12€',
+          desc: f.overview ? f.overview.slice(0, 200) + (f.overview.length > 200 ? '…' : '') : 'Film à découvrir en salle.',
+          rel: [],
+          src: 'TMDB'
+        };
+      });
+
+    EVT_LIVE = EVT_LIVE.filter(e => !e.id.startsWith('tmdb-'));
+    EVT_LIVE.push(...evts);
+    console.log(`✅ Cinéma TMDB: ${evts.length} films chargés`);
+  } catch(e) {
+    console.log('❌ TMDB error:', e.message);
+  }
+}
+
+// ── FOOTBALL-DATA.ORG — Ligue 1 + Champions League ───────────────────────────
+async function fetchFootball() {
+  try {
+    const KEY = '3d6f02d1e8484597aa6d61e23bdcc14c';
+    const MO2 = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+    const DJ2 = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+
+    const headers = { 'X-Auth-Token': KEY };
+
+    // Fetch Ligue 1 (id: 2015) and Champions League (id: 2001) matches
+    const competitions = [
+      { id: 2015, name: 'Ligue 1', icon: '⚽' },
+      { id: 2001, name: 'Champions League', icon: '🏆' },
+    ];
+
+    let allEvts = [];
+
+    for (const comp of competitions) {
+      try {
+        const today = new Date();
+        const in60 = new Date(today.getTime() + 60 * 24 * 60 * 60 * 1000);
+        const dateFrom = today.toISOString().split('T')[0];
+        const dateTo = in60.toISOString().split('T')[0];
+
+        const r = await fetch(
+          `https://api.football-data.org/v4/competitions/${comp.id}/matches?dateFrom=${dateFrom}&dateTo=${dateTo}&status=SCHEDULED`,
+          { headers }
+        );
+        const data = await r.json();
+        if (!data.matches) continue;
+
+        const evts = data.matches.map((m, i) => {
+          const dt = new Date(m.utcDate);
+          // Convert UTC to Paris time
+          const dtParis = new Date(dt.toLocaleString('en-US', { timeZone: 'Europe/Paris' }));
+          const h = String(dtParis.getHours()).padStart(2,'0') + 'h' + String(dtParis.getMinutes()).padStart(2,'0');
+          const home = m.homeTeam.shortName || m.homeTeam.name;
+          const away = m.awayTeam.shortName || m.awayTeam.name;
+          return {
+            id: `foot-${m.id}`,
+            d: dtParis.getDate(), m: dtParis.getMonth(), y: dtParis.getFullYear(),
+            cat: 'sport', i: comp.icon, c: '#1D4ED8', bg: '#dbeafe',
+            t: `${home} — ${away}`,
+            s: `${comp.name} · ${m.stage || m.matchday ? 'J' + m.matchday : ''}`,
+            h: h === '00h00' ? 'Horaire TBD' : h,
+            dt: DJ2[dtParis.getDay()] + ' ' + dtParis.getDate() + ' ' + MO2[dtParis.getMonth()],
+            lieu: m.venue || (home + ' (domicile)'),
+            v: 'France',
+            px: 'DAZN / Canal+',
+            desc: `${comp.name} — ${home} reçoit ${away}. Match à suivre en direct.`,
+            rel: [],
+            src: comp.name
+          };
+        });
+        allEvts.push(...evts);
+      } catch(compErr) {
+        console.log(`❌ Football ${comp.name}:`, compErr.message);
+      }
+    }
+
+    EVT_LIVE = EVT_LIVE.filter(e => !e.id.startsWith('foot-'));
+    EVT_LIVE.push(...allEvts);
+    console.log(`✅ Football: ${allEvts.length} matchs chargés`);
+  } catch(e) {
+    console.log('❌ Football-data error:', e.message);
+  }
+}
+
 // ── BOOT LIVE APIS ───────────────────────────────────────────────────────────
 async function loadLiveAPIs() {
   let loaded = 0;
-  const total = 3;
+  const total = 5;
   showApiBanner(0, total);
 
   // Override filt to use live data
@@ -1493,7 +1605,7 @@ async function loadLiveAPIs() {
     const all = [...EVT, ...EVT_LIVE];
     const seen = new Set();
     const deduped = all.filter(e => {
-      const key = `${e.d}-${e.m}-${e.y}-${e.cat}`;
+      const key = `${e.d}-${e.m}-${e.y}-${e.t}`;
       if (seen.has(key)) return false;
       seen.add(key);
       return true;
@@ -1501,12 +1613,12 @@ async function loadLiveAPIs() {
     return cat === 'all' ? deduped : deduped.filter(e => e.cat === cat);
   };
 
-  const apis = [fetchMeteo, fetchFeries, fetchF1];
+  const apis = [fetchMeteo, fetchFeries, fetchF1, fetchCinema, fetchFootball];
   for (const api of apis) {
     await api().catch(console.error);
     loaded++;
     showApiBanner(loaded, total);
-    rAll(); // Re-render after each API loads
+    rAll();
   }
 }
 
