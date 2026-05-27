@@ -242,6 +242,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="pill off" onclick="sCat(this,'tourisme')">🗺 Sorties</div>
     <div class="pill off" onclick="sCat(this,'mode')">👗 Mode</div>
     <div class="pill off" onclick="sCat(this,'meteo')">🌤 Météo</div>
+    <div class="pill off" onclick="sCat(this,'enfants')">👶 Enfants</div>
   </div>
   <div class="scr">
     <div class="ch">
@@ -355,6 +356,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="sw-chip on" style="background:#10B981;color:#fff" data-cat="tourisme" onclick="toggleChip(this)">&#128506; Sorties</button>
         <button class="sw-chip on" style="background:#DB2777;color:#fff" data-cat="mode" onclick="toggleChip(this)">&#128248; Mode</button>
         <button class="sw-chip on" style="background:#0EA5E9;color:#fff" data-cat="meteo" onclick="toggleChip(this)">&#127780; M&#233;t&#233;o</button>
+        <button class="sw-chip on" style="background:#F97316;color:#fff" data-cat="enfants" onclick="toggleChip(this)">&#128118; Enfants</button>
       </div></div>
     </div>
 
@@ -649,6 +651,38 @@ const EVT=[
 {id:'mod-06',d:1,m:5,y:2026,cat:'mode',i:'🌸',c:'#DB2777',bg:'#fce7f3',t:'Sézane — Collection Été',s:'Mode · sezane.com',h:'9h30',dt:'Début juin',lieu:'sezane.com',v:'En ligne + boutiques',px:'Prix habituels',desc:'Sézane lance sa collection Été. Drops réguliers. Newsletter indispensable.',rel:[],src:'Sézane'},
 {id:'mod-07',d:15,m:1,y:2026,cat:'mode',i:'🌹',c:'#DB2777',bg:'#fce7f3',t:'Rouje — Collection Printemps',s:'Mode · rouje.com',h:'Journée',dt:'Début mars',lieu:'rouje.com',v:'En ligne',px:'Prix habituels',desc:'Rouje par Jeanne Damas. Nouvelle collection printemps, robes romantiques et imprimés floraux.',rel:[],src:'Rouje'},
 
+
+// ══ ENFANTS 2026 — vacances scolaires, sorties famille, activités ══
+// Source : education.gouv.fr + vacances-scolaires-gouv.com (dates officielles)
+
+// Vacances scolaires — communes toutes zones
+{id:'enf-01',d:4,m:6,y:2026,cat:'enfants',i:'☀️',c:'#F97316',bg:'#ffedd5',t:'Grandes Vacances — Début',s:'Scolaire · Toutes zones',h:'Après les cours',dt:'Samedi 4 juillet',lieu:'France',v:'',px:'',desc:'Début des grandes vacances d\'été 2026 pour toutes les zones (A, B et C). La rentrée scolaire 2026 est fixée au mardi 1er septembre.',rel:[{d:'1er sept.',n:'Rentrée scolaire 2026'}],src:'education.gouv.fr'},
+{id:'enf-02',d:0,m:8,y:2026,cat:'enfants',i:'🎒',c:'#F97316',bg:'#ffedd5',t:'Rentrée Scolaire 2026',s:'Scolaire · Toutes zones',h:'Matin',dt:'Mardi 1er septembre',lieu:'France',v:'',px:'',desc:'Rentrée scolaire 2026-2027 pour toutes les zones. Prérentrée enseignants : lundi 31 août.',rel:[{d:'17 oct.',n:'Vacances Toussaint'}],src:'education.gouv.fr'},
+{id:'enf-03',d:16,m:9,y:2026,cat:'enfants',i:'🍂',c:'#F97316',bg:'#ffedd5',t:'Vacances Toussaint 2026',s:'Scolaire · Toutes zones',h:'Après les cours',dt:'Samedi 17 octobre',lieu:'France',v:'',px:'',desc:'Vacances de la Toussaint 2026 : du 17 octobre au 2 novembre. Communes à toutes les zones.',rel:[{d:'2 nov.',n:'Rentrée après Toussaint'}],src:'education.gouv.fr'},
+{id:'enf-04',d:18,m:11,y:2026,cat:'enfants',i:'🎄',c:'#F97316',bg:'#ffedd5',t:'Vacances de Noël 2026',s:'Scolaire · Toutes zones',h:'Après les cours',dt:'Samedi 19 décembre',lieu:'France',v:'',px:'',desc:'Vacances de Noël 2026-2027 : du 19 décembre au 4 janvier 2027. Communes à toutes les zones.',rel:[{d:'4 jan.',n:'Rentrée janvier 2027'}],src:'education.gouv.fr'},
+
+// Vacances scolaires — zone A (Lyon, Bordeaux, Besançon, Clermont, Dijon, Grenoble, Limoges, Poitiers)
+{id:'enf-05',d:6,m:1,y:2026,cat:'enfants',i:'❄️',c:'#F97316',bg:'#ffedd5',t:'Vacances Hiver — Zone A',s:'Scolaire · Zone A',h:'Après les cours',dt:'Samedi 7 février',lieu:'Zone A',v:'Lyon, Bordeaux, Grenoble...',px:'',desc:'Vacances d\'hiver zone A : du 7 au 23 février 2026. Zone A : Lyon, Bordeaux, Besançon, Clermont-Ferrand, Dijon, Grenoble, Limoges, Poitiers.',rel:[{d:'23 fév.',n:'Rentrée zone A'}],src:'education.gouv.fr'},
+{id:'enf-06',d:3,m:3,y:2026,cat:'enfants',i:'🌸',c:'#F97316',bg:'#ffedd5',t:'Vacances Printemps — Zone A',s:'Scolaire · Zone A',h:'Après les cours',dt:'Samedi 4 avril',lieu:'Zone A',v:'Lyon, Bordeaux, Grenoble...',px:'',desc:'Vacances de printemps zone A : du 4 au 20 avril 2026.',rel:[{d:'20 avr.',n:'Rentrée zone A'}],src:'education.gouv.fr'},
+
+// Vacances scolaires — zone B (Marseille, Lille, Nantes, Rennes, Strasbourg, Nice...)
+{id:'enf-07',d:13,m:1,y:2026,cat:'enfants',i:'❄️',c:'#F97316',bg:'#ffedd5',t:'Vacances Hiver — Zone B',s:'Scolaire · Zone B',h:'Après les cours',dt:'Samedi 14 février',lieu:'Zone B',v:'Marseille, Lille, Nantes, Nice...',px:'',desc:'Vacances d\'hiver zone B : du 14 février au 2 mars 2026. Zone B : Aix-Marseille, Amiens, Lille, Nancy-Metz, Nantes, Nice, Rennes, Strasbourg...',rel:[{d:'2 mars',n:'Rentrée zone B'}],src:'education.gouv.fr'},
+{id:'enf-08',d:10,m:3,y:2026,cat:'enfants',i:'🌸',c:'#F97316',bg:'#ffedd5',t:'Vacances Printemps — Zone B',s:'Scolaire · Zone B',h:'Après les cours',dt:'Samedi 11 avril',lieu:'Zone B',v:'Marseille, Lille, Nantes, Nice...',px:'',desc:'Vacances de printemps zone B : du 11 au 27 avril 2026.',rel:[{d:'27 avr.',n:'Rentrée zone B'}],src:'education.gouv.fr'},
+
+// Vacances scolaires — zone C (Paris, Créteil, Versailles, Montpellier, Toulouse)
+{id:'enf-09',d:20,m:1,y:2026,cat:'enfants',i:'❄️',c:'#F97316',bg:'#ffedd5',t:'Vacances Hiver — Zone C',s:'Scolaire · Zone C',h:'Après les cours',dt:'Samedi 21 février',lieu:'Zone C',v:'Paris, Créteil, Versailles, Montpellier...',px:'',desc:'Vacances d\'hiver zone C : du 21 février au 9 mars 2026. Zone C : Paris, Créteil, Versailles, Montpellier, Toulouse.',rel:[{d:'9 mars',n:'Rentrée zone C'}],src:'education.gouv.fr'},
+{id:'enf-10',d:17,m:3,y:2026,cat:'enfants',i:'🌸',c:'#F97316',bg:'#ffedd5',t:'Vacances Printemps — Zone C',s:'Scolaire · Zone C',h:'Après les cours',dt:'Samedi 18 avril',lieu:'Zone C',v:'Paris, Créteil, Versailles, Montpellier...',px:'',desc:'Vacances de printemps zone C : du 18 avril au 4 mai 2026.',rel:[{d:'4 mai',n:'Rentrée zone C'}],src:'education.gouv.fr'},
+
+// Activités et sorties enfants
+{id:'enf-11',d:2,m:0,y:2026,cat:'enfants',i:'🎪',c:'#F97316',bg:'#ffedd5',t:'Salon du Livre de Paris',s:'Culture famille · Paris',h:'10h00',dt:'Jeudi 19 mars',lieu:'Paris Expo Porte de Versailles',v:'Paris 15e',px:'Adulte ~12€ / Enfant gratuit',desc:'Le plus grand salon littéraire francophone. Idéal en famille avec une offre jeunesse très riche : dédicaces, ateliers, lectures.',rel:[],src:'Salon du Livre'},
+{id:'enf-12',d:16,m:4,y:2026,cat:'enfants',i:'🏛',c:'#F97316',bg:'#ffedd5',t:'Nuit des Musées — Entrée gratuite',s:'Culture famille · France',h:'19h00',dt:'Samedi 23 mai',lieu:'Musées nationaux',v:'France',px:'Gratuit',desc:'La Nuit des Musées est idéale en famille ! Entrée gratuite partout, animations spéciales enfants dans de nombreux musées.',rel:[],src:'Min. Culture'},
+{id:'enf-13',d:21,m:5,y:2026,cat:'enfants',i:'🎵',c:'#F97316',bg:'#ffedd5',t:'Fête de la Musique — Concerts gratuits',s:'Sorties famille · France',h:'18h00',dt:'Dimanche 21 juin',lieu:'Rues & places publiques',v:'France',px:'Gratuit',desc:'La Fête de la Musique est parfaite en famille ! Concerts gratuits partout, tous les styles, toute la soirée.',rel:[],src:'Min. Culture'},
+{id:'enf-14',d:13,m:6,y:2026,cat:'enfants',i:'🇫🇷',c:'#F97316',bg:'#ffedd5',t:'Fête Nationale — Feux d\'artifice',s:'Sorties famille · France',h:'23h00',dt:'Mardi 14 juillet',lieu:'Tour Eiffel & toute la France',v:'France',px:'Gratuit',desc:'Les feux d\'artifice du 14 juillet sont un moment magique pour les enfants ! Tour Eiffel à Paris, et dans toutes les villes de France.',rel:[],src:'Officiel'},
+{id:'enf-15',d:19,m:8,y:2026,cat:'enfants',i:'🏛',c:'#F97316',bg:'#ffedd5',t:'Journées du Patrimoine — Famille',s:'Culture famille · France',h:'09h00',dt:'Samedi 19 septembre',lieu:'Monuments & musées',v:'France',px:'Gratuit',desc:'Les Journées du Patrimoine sont idéales pour faire découvrir l\'histoire aux enfants. Accès gratuit à des centaines de lieux.',rel:[],src:'Min. Culture'},
+{id:'enf-16',d:3,m:9,y:2026,cat:'enfants',i:'🎃',c:'#F97316',bg:'#ffedd5',t:'Halloween — Sorties et déguisements',s:'Sorties famille · France',h:'Soirée',dt:'Samedi 31 octobre',lieu:'France',v:'',px:'',desc:'Halloween le 31 octobre ! Chasses aux bonbons, soirées déguisées, parcs à thème spéciaux. Parfait pour les enfants.',rel:[],src:'Tradition'},
+{id:'enf-17',d:1,m:2,y:2026,cat:'enfants',i:'🎬',c:'#F97316',bg:'#ffedd5',t:'Super Mario Galaxy — Cinéma',s:'Cinéma famille · Sortie nationale',h:'Journée',dt:'Mercredi 1 avril',lieu:'Toutes les salles',v:'France',px:'~12€',desc:'Le nouveau film Mario & Luigi, idéal pour toute la famille. Animations et aventures pour petits et grands.',rel:[],src:'AlloCiné'},
+{id:'enf-18',d:3,m:5,y:2026,cat:'enfants',i:'🎬',c:'#F97316',bg:'#ffedd5',t:'Toy Story 5 — Cinéma famille',s:'Cinéma famille · Sortie nationale',h:'Journée',dt:'Mercredi 3 juin',lieu:'Toutes les salles',v:'France',px:'~12€',desc:'Le retour de Woody, Buzz Lightyear et toute la bande dans un 5e opus Pixar. Incontournable en famille.',rel:[],src:'AlloCiné / Pixar'},
+{id:'enf-19',d:4,m:6,y:2026,cat:'enfants',i:'☀️',c:'#F97316',bg:'#ffedd5',t:'Grandes Vacances — Activités été',s:'Famille · France',h:'Journée',dt:'Juillet-Août 2026',lieu:'France',v:'',px:'',desc:'Pendant les grandes vacances : centres de loisirs, colonies, stages sportifs, parcs d\'attractions, plages, randonnées. 8 semaines de liberté !',rel:[],src:'Officiel'},
 ];
 
 
@@ -659,7 +693,7 @@ function sCat(el,c){
   cat=c;
   document.querySelectorAll('.pill').forEach(p=>{p.className='pill off';p.style.background='';p.style.borderColor='';});
   el.className='pill on';
-  const cols={all:'#E8334A',feries:'#6366F1',sport:'#1D4ED8',culture:'#7C3AED',business:'#059669',tourisme:'#10B981',mode:'#DB2777',meteo:'#0EA5E9'};
+  const cols={all:'#E8334A',feries:'#6366F1',sport:'#1D4ED8',culture:'#7C3AED',business:'#059669',tourisme:'#10B981',mode:'#DB2777',meteo:'#0EA5E9',enfants:'#F97316'};
   el.style.background=cols[c]||'#555';
   el.style.borderColor=cols[c]||'#555';
   rAll();
@@ -1397,7 +1431,7 @@ function toggleChip(el){
   if(isOn){el.classList.remove('on');el.style.background='';el.style.color='';}
   else{
     el.classList.add('on');
-    const colors={feries:'#6366F1',sport:'#1D4ED8',culture:'#7C3AED',business:'#059669',tourisme:'#10B981',mode:'#DB2777',meteo:'#0EA5E9'};
+    const colors={feries:'#6366F1',sport:'#1D4ED8',culture:'#7C3AED',business:'#059669',tourisme:'#10B981',mode:'#DB2777',meteo:'#0EA5E9',enfants:'#F97316'};
     const wrap=el.closest('.sw-chip-wrap');
     const secId=wrap?wrap.id:'';
     const cat=secId.replace('sw-','');
@@ -1426,7 +1460,7 @@ function loadSettings(){
   const saved=localStorage.getItem('rdv-settings');
   if(!saved)return;
   const s=JSON.parse(saved);
-  const colors={feries:'#6366F1',sport:'#1D4ED8',culture:'#7C3AED',business:'#059669',tourisme:'#10B981',mode:'#DB2777',meteo:'#0EA5E9'};
+  const colors={feries:'#6366F1',sport:'#1D4ED8',culture:'#7C3AED',business:'#059669',tourisme:'#10B981',mode:'#DB2777',meteo:'#0EA5E9',enfants:'#F97316'};
   if(s.cats){
     document.querySelectorAll('#sw-cats .sw-chip').forEach(c=>{
       const on=s.cats.includes(c.dataset.cat);
