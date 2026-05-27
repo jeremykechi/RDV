@@ -168,6 +168,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </head>
 <body>
 <div class="phone">
+<div id="api-bar" style="display:none;background:#1A1A2E;color:rgba(255,255,255,0.7);text-align:center;font-size:11px;padding:5px;font-family:-apple-system,sans-serif;font-weight:500"></div>
 <div class="sb">
   <span id="clk">9:41</span>
   <span style="display:flex;gap:5px;align-items:center">
@@ -1098,6 +1099,196 @@ function closeD(){
   document.getElementById('mw').classList.remove('gone');
 }
 
+
+// ─── LIVE APIs ────────────────────────────────────────────────────────────────
+
+// Status indicator
+function setApiStatus(id, state) {
+  // state: 'ok' | 'err' | 'loading'
+  // We'll show a subtle indicator in console for now
+  console.log(`API ${id}: ${state}`);
+}
+
+// ── 1. OPEN-METEO — Météo Paris 14 jours (sans clé) ─────────────────────────
+async function fetchMeteo() {
+  try {
+    const url = 'https://api.open-meteo.com/v1/forecast?latitude=48.8566&longitude=2.3522&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FParis&forecast_days=14';
+    const r = await fetch(url);
+    const d = await r.json();
+    const WC = {0:'☀️',1:'🌤',2:'⛅',3:'☁️',45:'🌫',48:'🌫',51:'🌦',53:'🌦',55:'🌧',61:'🌧',63:'🌧',65:'🌧',71:'❄️',80:'🌦',81:'🌧',95:'⛈'};
+    const evts = d.daily.time.map((dateStr, i) => {
+      const dt = new Date(dateStr);
+      const wc = d.daily.weathercode[i];
+      const tmax = Math.round(d.daily.temperature_2m_max[i]);
+      const tmin = Math.round(d.daily.temperature_2m_min[i]);
+      const rain = d.daily.precipitation_probability_max[i];
+      const ico = WC[wc] || '🌡';
+      const DJ2 = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+      return {
+        id: `meteo-${i}`,
+        d: dt.getDate(), m: dt.getMonth(), y: dt.getFullYear(),
+        cat: 'tourisme', i: ico, c: '#0EA5E9', bg: '#e0f2fe',
+        t: `Météo Paris — ${tmax}°C`,
+        s: `Prévision · ${tmin}°C / ${tmax}°C · Pluie ${rain}%`,
+        h: 'Journée',
+        dt: DJ2[dt.getDay()] + ' ' + dt.getDate() + ' ' + ['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Aoû','Sep','Oct','Nov','Déc'][dt.getMonth()],
+        lieu: 'Paris', v: 'Île-de-France', px: '',
+        desc: `Température max ${tmax}°C, min ${tmin}°C. Probabilité de pluie : ${rain}%. ${rain > 50 ? 'Prenez un parapluie !' : rain > 20 ? 'Risque de pluie possible.' : 'Belle journée en perspective !'}`,
+        rel: [], src: 'Open-Meteo'
+      };
+    });
+    // Remove old meteo events and add fresh ones
+    EVT_LIVE = EVT_LIVE.filter(e => !e.id.startsWith('meteo-'));
+    EVT_LIVE.push(...evts);
+    setApiStatus('meteo', 'ok');
+    console.log(`✅ Météo: ${evts.length} jours chargés`);
+  } catch(e) {
+    setApiStatus('meteo', 'err');
+    console.log('❌ Météo API error:', e.message);
+  }
+}
+
+// ── 2. DATA.GOUV.FR — Jours fériés officiels (sans clé) ─────────────────────
+async function fetchFeries() {
+  try {
+    const year = new Date().getFullYear();
+    const r = await fetch(`https://calendrier.api.gouv.fr/jours-feries/metropole/${year}.json`);
+    const data = await r.json();
+    const icons = {'01-01':'🎉','04-06':'✝️','05-01':'🌹','05-08':'🕊','05-21':'✝️','06-01':'🕊','07-14':'🇫🇷','08-15':'✨','11-01':'🕯','11-11':'🎖','12-25':'🎄'};
+    const DJ2 = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+    const MO2 = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+    const evts = Object.entries(data).map(([dateStr, name], i) => {
+      const dt = new Date(dateStr);
+      const mm = String(dt.getMonth()+1).padStart(2,'0');
+      const dd = String(dt.getDate()).padStart(2,'0');
+      const ico = icons[`${mm}-${dd}`] || '📅';
+      return {
+        id: `ferie-live-${i}`,
+        d: dt.getDate(), m: dt.getMonth(), y: dt.getFullYear(),
+        cat: 'business', i: ico, c: '#B45309', bg: '#fef3c7',
+        t: name + ' 🇫🇷',
+        s: 'Jour férié officiel · France',
+        h: 'Journée',
+        dt: DJ2[dt.getDay()] + ' ' + dt.getDate() + ' ' + MO2[dt.getMonth()],
+        lieu: 'France entière', v: '', px: 'Férié',
+        desc: `${name} — jour férié légal en France métropolitaine.`,
+        rel: [], src: 'data.gouv.fr'
+      };
+    });
+    // Replace static ferie events
+    EVT_LIVE = EVT_LIVE.filter(e => !e.id.startsWith('ferie-live-'));
+    EVT_LIVE.push(...evts);
+    setApiStatus('feries', 'ok');
+    console.log(`✅ Jours fériés: ${evts.length} chargés depuis data.gouv.fr`);
+  } catch(e) {
+    setApiStatus('feries', 'err');
+    console.log('❌ data.gouv.fr error:', e.message);
+  }
+}
+
+// ── 3. OPENF1 — Formule 1 temps réel (sans clé) ──────────────────────────────
+async function fetchF1() {
+  try {
+    const year = new Date().getFullYear();
+    // Get all meetings (race weekends) for current year
+    const r = await fetch(`https://api.openf1.org/v1/meetings?year=${year}`);
+    const meetings = await r.json();
+    if (!meetings || !meetings.length) throw new Error('No F1 data');
+
+    const DJ2 = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+    const MO2 = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+
+    const evts = meetings.map((m, i) => {
+      const dt = new Date(m.date_start);
+      const next = meetings[i+1];
+      return {
+        id: `f1-live-${m.meeting_key}`,
+        d: dt.getDate(), m: dt.getMonth(), y: dt.getFullYear(),
+        cat: 'sport', i: '🏎', c: '#DC2626', bg: '#fee2e2',
+        t: `F1 — ${m.meeting_name}`,
+        s: `Formule 1 · ${m.country_name}`,
+        h: '15h00',
+        dt: DJ2[dt.getDay()] + ' ' + dt.getDate() + ' ' + MO2[dt.getMonth()],
+        lieu: m.circuit_short_name || m.location,
+        v: m.country_name,
+        px: 'Sur Canal+ / F1 TV',
+        desc: `Grand Prix de Formule 1 ${m.meeting_name} sur le circuit ${m.circuit_short_name || m.location} à ${m.location}.`,
+        rel: next ? [{d: new Date(next.date_start).getDate() + ' ' + MO2[new Date(next.date_start).getMonth()].slice(0,3) + '.', n: 'GP ' + next.country_name}] : [],
+        src: 'OpenF1 API'
+      };
+    });
+
+    // Replace static F1 events
+    EVT_LIVE = EVT_LIVE.filter(e => !e.id.startsWith('f1-live-'));
+    EVT_LIVE.push(...evts);
+    setApiStatus('f1', 'ok');
+    console.log(`✅ F1: ${evts.length} GP chargés depuis OpenF1`);
+  } catch(e) {
+    setApiStatus('f1', 'err');
+    console.log('❌ OpenF1 error:', e.message);
+  }
+}
+
+// ── LIVE EVT ARRAY — extends static EVT ──────────────────────────────────────
+let EVT_LIVE = [];
+
+// Override filt() to include live events
+const _filtOrig = filt;
+window.filtAll = function() {
+  const all = [...EVT, ...EVT_LIVE];
+  // Deduplicate by date+title
+  const seen = new Set();
+  return all.filter(e => {
+    const key = `${e.d}-${e.m}-${e.y}-${e.t}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+};
+
+// ── API STATUS BANNER ────────────────────────────────────────────────────────
+function showApiBanner(loaded, total) {
+  const pct = Math.round((loaded / total) * 100);
+  const bar = document.getElementById('api-bar');
+  if (bar) {
+    if (pct < 100) {
+      bar.style.display = 'block';
+      bar.textContent = `⚡ Chargement des données live… ${pct}%`;
+    } else {
+      bar.textContent = '✅ Données live à jour';
+      setTimeout(() => { bar.style.display = 'none'; }, 2000);
+    }
+  }
+}
+
+// ── BOOT LIVE APIS ───────────────────────────────────────────────────────────
+async function loadLiveAPIs() {
+  let loaded = 0;
+  const total = 3;
+  showApiBanner(0, total);
+
+  // Override filt to use live data
+  window.filt = function() {
+    const all = [...EVT, ...EVT_LIVE];
+    const seen = new Set();
+    const deduped = all.filter(e => {
+      const key = `${e.d}-${e.m}-${e.y}-${e.cat}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+    return cat === 'all' ? deduped : deduped.filter(e => e.cat === cat);
+  };
+
+  const apis = [fetchMeteo, fetchFeries, fetchF1];
+  for (const api of apis) {
+    await api().catch(console.error);
+    loaded++;
+    showApiBanner(loaded, total);
+    rAll(); // Re-render after each API loads
+  }
+}
+
 function tick(){
   const n=new Date(),s=n.getHours()+':'+String(n.getMinutes()).padStart(2,'0');
   document.getElementById('clk').textContent=s;
@@ -1105,6 +1296,7 @@ function tick(){
 }
 setInterval(tick,10000);tick();
 rAll();
+loadLiveAPIs();
 </script>
 
 <style>
