@@ -268,7 +268,34 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 
 <!-- NOTIFICATIONS PANEL -->
-<div class="sw" id="nw" style="display:none">
+<!-- MAP SCREEN -->
+<div class="mapw" id="mapw">
+  <div class="sb"><span id="clk5">9:41</span><span style="display:flex;gap:5px;align-items:center"><i class="ti ti-wifi" style="font-size:14px;color:#fff"></i><i class="ti ti-battery-2" style="font-size:14px;color:#fff"></i></span></div>
+  <div class="ah" style="padding:10px 20px 14px">
+    <div class="logo">Rendez<em>-vous</em></div>
+    <div class="hico" style="margin-left:auto">
+      <i class="ti ti-bell" onclick="openNotifs()" style="cursor:pointer"></i>
+      <i class="ti ti-settings" onclick="openSettings()" style="cursor:pointer"></i>
+    </div>
+  </div>
+  <div class="map-filter" id="mapFilter">
+    <button class="map-pill on" style="background:#E8334A;border-color:#E8334A" onclick="filterMap(this,'all')">&#10022; Tout</button>
+    <button class="map-pill" onclick="filterMap(this,'sport')">&#9917; Sport</button>
+    <button class="map-pill" onclick="filterMap(this,'culture')">&#127917; Culture</button>
+    <button class="map-pill" onclick="filterMap(this,'tourisme')">&#128506; Sorties</button>
+    <button class="map-pill" onclick="filterMap(this,'mode')">&#128248; Mode</button>
+  </div>
+  <div id="leaflet-map"></div>
+  <div class="map-event-list" id="mapEventList"></div>
+  <div class="bnav">
+    <div class="bni" onclick="closeMap()"><i class="ti ti-calendar"></i><span>Agenda</span></div>
+    <div class="bni on"><i class="ti ti-map-pin"></i><span>Carte</span></div>
+    <div class="bni"><i class="ti ti-star"></i><span>Favoris</span></div>
+    <div class="bni" onclick="openSettings()"><i class="ti ti-settings"></i><span>R&#233;glages</span></div>
+  </div>
+</div>
+
+<div class="sw" id="nw">
   <div class="sb"><span id="clk4">9:41</span><span style="display:flex;gap:5px;align-items:center"><i class="ti ti-wifi" style="font-size:14px;color:#fff"></i><i class="ti ti-battery-2" style="font-size:14px;color:#fff"></i></span></div>
   <div class="dh">
     <button class="dbk" onclick="closeNotifs()"><i class="ti ti-arrow-left"></i></button>
@@ -1165,8 +1192,7 @@ function setApiStatus(id, state) {
 // ── 1. OPEN-METEO — Météo Paris 14 jours (sans clé) ─────────────────────────
 async function fetchMeteo() {
   try {
-    const url = 'https://api.open-meteo.com/v1/forecast?latitude=48.8566&longitude=2.3522&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Europe%2FParis&forecast_days=14';
-    const r = await fetch(url);
+    const r = await fetch('/.netlify/functions/proxy?api=meteo');
     const d = await r.json();
     const WC = {0:'☀️',1:'🌤',2:'⛅',3:'☁️',45:'🌫',48:'🌫',51:'🌦',53:'🌦',55:'🌧',61:'🌧',63:'🌧',65:'🌧',71:'❄️',80:'🌦',81:'🌧',95:'⛈'};
     const evts = d.daily.time.map((dateStr, i) => {
@@ -1204,8 +1230,7 @@ async function fetchMeteo() {
 // ── 2. DATA.GOUV.FR — Jours fériés officiels (sans clé) ─────────────────────
 async function fetchFeries() {
   try {
-    const year = new Date().getFullYear();
-    const r = await fetch(`https://calendrier.api.gouv.fr/jours-feries/metropole/${year}.json`);
+    const r = await fetch('/.netlify/functions/proxy?api=feries');
     const data = await r.json();
     const icons = {'01-01':'🎉','04-06':'✝️','05-01':'🌹','05-08':'🕊','05-21':'✝️','06-01':'🕊','07-14':'🇫🇷','08-15':'✨','11-01':'🕯','11-11':'🎖','12-25':'🎄'};
     const DJ2 = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
@@ -1242,9 +1267,7 @@ async function fetchFeries() {
 // ── 3. OPENF1 — Formule 1 temps réel (sans clé) ──────────────────────────────
 async function fetchF1() {
   try {
-    const year = new Date().getFullYear();
-    // Get all meetings (race weekends) for current year
-    const r = await fetch(`https://api.openf1.org/v1/meetings?year=${year}`);
+    const r = await fetch('/.netlify/functions/proxy?api=f1');
     const meetings = await r.json();
     if (!meetings || !meetings.length) throw new Error('No F1 data');
 
@@ -1320,12 +1343,10 @@ function showApiBanner(loaded, total) {
 // ── TMDB — Sorties cinéma France (clé développeur) ───────────────────────────
 async function fetchCinema() {
   try {
-    const KEY = 'cc442daf8a4c37cb44aae83b498d9616';
     const MO2 = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
     const DJ2 = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
 
-    // Upcoming movies in France
-    const r = await fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${KEY}&language=fr-FR&region=FR&page=1`);
+    const r = await fetch('/.netlify/functions/proxy?api=tmdb');
     const data = await r.json();
 
     if (!data.results) throw new Error('No TMDB data');
@@ -1361,11 +1382,8 @@ async function fetchCinema() {
 // ── FOOTBALL-DATA.ORG — Ligue 1 + Champions League ───────────────────────────
 async function fetchFootball() {
   try {
-    const KEY = '3d6f02d1e8484597aa6d61e23bdcc14c';
     const MO2 = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
     const DJ2 = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
-
-    const headers = { 'X-Auth-Token': KEY };
 
     // Fetch Ligue 1 (id: 2015) and Champions League (id: 2001) matches
     const competitions = [
@@ -1377,15 +1395,7 @@ async function fetchFootball() {
 
     for (const comp of competitions) {
       try {
-        const today = new Date();
-        const in60 = new Date(today.getTime() + 60 * 24 * 60 * 60 * 1000);
-        const dateFrom = today.toISOString().split('T')[0];
-        const dateTo = in60.toISOString().split('T')[0];
-
-        const r = await fetch(
-          `https://api.football-data.org/v4/competitions/${comp.id}/matches?dateFrom=${dateFrom}&dateTo=${dateTo}&status=SCHEDULED`,
-          { headers }
-        );
+        const r = await fetch(`/.netlify/functions/proxy?api=football&competition=${comp.id}`);
         const data = await r.json();
         if (!data.matches) continue;
 
@@ -1576,11 +1586,8 @@ function openNotifs(){
   document.getElementById('mw').classList.add('gone');
   document.getElementById('dw').classList.remove('open');
   document.getElementById('sw').classList.remove('open');
-  const nw = document.getElementById('nw');
-  nw.style.display = 'flex';
-  nw.style.flexDirection = 'column';
-  nw.style.flex = '1';
-  nw.style.overflow = 'hidden';
+  document.getElementById('mapw').classList.remove('open');
+  document.getElementById('nw').classList.add('open');
   // Populate with upcoming events
   const upcoming = EVT
     .filter(e => new Date(e.y, e.m, e.d) >= new Date())
@@ -1602,7 +1609,7 @@ function openNotifs(){
   }
 }
 function closeNotifs(){
-  document.getElementById('nw').style.display = 'none';
+  document.getElementById('nw').classList.remove('open');
   document.getElementById('mw').classList.remove('gone');
 }
 
@@ -1630,7 +1637,7 @@ const VENUES = {
   'Stade Louis-II': [43.7274, 7.4152],
   'Hippodrome Paris-Longchamp': [48.8560, 2.2340],
   'Hellfest Grounds': [47.0847, -1.2817],
-  'Bords de l'Erdre': [47.4378, -1.5002],
+  'Bords de l\'Erdre': [47.4378, -1.5002],
   'Arènes de Nîmes': [43.8370, 4.3601],
   'Plaine de la Filhole': [44.4993, 0.1556],
   'Parc de Roissy': [49.0097, 2.5479],
@@ -1691,6 +1698,9 @@ function getCoords(evt) {
 
 function openMap() {
   document.getElementById('mw').classList.add('gone');
+  document.getElementById('dw').classList.remove('open');
+  document.getElementById('nw').classList.remove('open');
+  document.getElementById('sw').classList.remove('open');
   document.getElementById('mapw').classList.add('open');
 
   // Init map if needed
@@ -1796,6 +1806,8 @@ function renderMapMarkers() {
 function openSettings(){
   document.getElementById('mw').classList.add('gone');
   document.getElementById('dw').classList.remove('open');
+  document.getElementById('nw').classList.remove('open');
+  document.getElementById('mapw').classList.remove('open');
   document.getElementById('sw').classList.add('open');
   loadSettings();
 }
