@@ -999,6 +999,11 @@ async function toggleFavorite(eventId) {
 
 // Init on load
 window.addEventListener('load', () => {
+  // Boot the calendar
+  rAll();
+  tick();
+  setInterval(tick, 30000);
+  // Connect to Supabase
   if (initSupabase()) {
     loadEventsFromDB();
   }
