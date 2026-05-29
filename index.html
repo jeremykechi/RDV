@@ -997,12 +997,22 @@ async function toggleFavorite(eventId) {
   }
 }
 
+// Clock update
+function tick(){
+  const n=new Date();
+  const s=n.getHours()+':'+String(n.getMinutes()).padStart(2,'0');
+  ['clk','clk2','clk3','clk4','clk5'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.textContent=s;
+  });
+}
+tick();
+setInterval(tick,30000);
+
 // Init on load
 window.addEventListener('load', () => {
   // Boot the calendar
   rAll();
-  tick();
-  setInterval(tick, 30000);
   // Connect to Supabase
   if (initSupabase()) {
     loadEventsFromDB();
