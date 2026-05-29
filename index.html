@@ -915,11 +915,11 @@ function loadSettings(){
 const SUPA_URL = 'https://lvgtjitlqxgqmzsgvfkl.supabase.co';
 const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx2Z3RqaXRscXhncW16c2d2ZmtsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAwNzMxMzUsImV4cCI6MjA5NTY0OTEzNX0.8o4oCKOa4qGxm3zqQY4xUCgiK9BKbYRomvCKNLZoH6I';
 
-let supabase = null;
+let supa = null;
 
 function initSupabase() {
   try {
-    supabase = window.supabase.createClient(SUPA_URL, SUPA_KEY);
+    supa = window.supabase.createClient(SUPA_URL, SUPA_KEY);
     console.log('✅ Supabase connecté');
     return true;
   } catch(e) {
@@ -930,9 +930,9 @@ function initSupabase() {
 
 // Load events from Supabase (replaces static EVT)
 async function loadEventsFromDB() {
-  if (!supabase) return;
+  if (!supa) return;
   try {
-    const { data, error } = await supabase
+    const { data, error } = await supa
       .from('events')
       .select('*')
       .order('date', { ascending: true });
@@ -975,13 +975,13 @@ async function loadEventsFromDB() {
 
 // Favorites management
 async function toggleFavorite(eventId) {
-  if (!supabase) return;
-  const user = (await supabase.auth.getUser()).data.user;
+  if (!supa) return;
+  const user = (await supa.auth.getUser()).data.user;
   if (!user) {
     console.log('Not logged in');
     return;
   }
-  const { data } = await supabase
+  const { data } = await supa
     .from('favorites')
     .select('id')
     .eq('user_id', user.id)
@@ -989,10 +989,10 @@ async function toggleFavorite(eventId) {
     .single();
 
   if (data) {
-    await supabase.from('favorites').delete().eq('id', data.id);
+    await supa.from('favorites').delete().eq('id', data.id);
     console.log('❤️ Retiré des favoris');
   } else {
-    await supabase.from('favorites').insert({ user_id: user.id, event_id: eventId });
+    await supa.from('favorites').insert({ user_id: user.id, event_id: eventId });
     console.log('❤️ Ajouté aux favoris');
   }
 }
