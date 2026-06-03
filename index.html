@@ -1103,17 +1103,22 @@ async function loadVacancesFromDB() {
 
     const vacEvents = [];
     filtered.forEach(v => {
-      // Générer un événement par jour
-      const start = new Date(v.date_debut);
-      const end = new Date(v.date_fin);
-      for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
-        const dateStr = d.toISOString().split('T')[0];
+      const [sy, sm, sd] = v.date_debut.split('-').map(Number);
+      const [ey, em, ed] = v.date_fin.split('-').map(Number);
+      const start = new Date(sy, sm - 1, sd);
+      const end = new Date(ey, em - 1, ed);
+      let cur = new Date(start);
+      while (cur <= end) {
+        const day = cur.getDate();
+        const month = cur.getMonth();
+        const year = cur.getFullYear();
+        const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
         vacEvents.push({
           id: `vac-${dateStr}-${v.zone}`,
           date: dateStr,
-          d: d.getDate(),
-          m: d.getMonth(),
-          y: d.getFullYear(),
+          d: day,
+          m: month,
+          y: year,
           cat: 'feries',
           i: getVacIcon(v.nom),
           c: '#fff',
@@ -1129,6 +1134,7 @@ async function loadVacancesFromDB() {
           rel: [],
           src: 'Officiel'
         });
+        cur.setDate(cur.getDate() + 1);
       }
     });
 
