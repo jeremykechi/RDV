@@ -930,17 +930,16 @@ function initSupabase() {
 
 // Load events from Supabase (replaces static EVT)
 async function loadEventsFromDB() {
-  if (!supa) return;
   try {
-    const { data, error } = await supa
-      .from('events')
-      .select('*')
-      .order('date', { ascending: true });
-
-    if (error) throw error;
+    const res = await fetch(`${SUPA_URL}/rest/v1/events?select=*&order=date.asc`, {
+      headers: {
+        'apikey': SUPA_KEY,
+        'Authorization': `Bearer ${SUPA_KEY}`
+      }
+    });
+    const data = await res.json();
     if (!data || !data.length) return;
 
-    // Map DB fields to app format
     const dbEvents = data.map(e => ({
       id: e.id,
       date: e.date,
@@ -963,14 +962,77 @@ async function loadEventsFromDB() {
       src: e.src
     }));
 
-    // Replace static EVT with DB events
     EVT.length = 0;
     EVT.push(...dbEvents);
     console.log(`✅ ${dbEvents.length} événements chargés depuis Supabase`);
-    rAll(); // Re-render with DB data
+    rAll();
   } catch(e) {
     console.log('❌ DB load error:', e.message, '— using static data');
   }
+}
+
+// Load meteo from Supabase
+async function loadMeteoFromDB() {
+  try {
+    const res = await fetch(`${SUPA_URL}/rest/v1/meteo?select=*&order=date.asc`, {
+      headers: {
+        'apikey': SUPA_KEY,
+        'Authorization': `Bearer ${SUPA_KEY}`
+      }
+    });
+    const data = await res.json();
+    if (!data || !data.length) return;
+
+    const meteoEvents = data.map(e => ({
+      id: e.id,
+      date: e.date,
+      d: parseInt(e.date.split('-')[2]),
+      m: parseInt(e.date.split('-')[1]) - 1,
+      y: parseInt(e.date.split('-')[0]),
+      cat: 'meteo',
+      i: getWeatherIcon(e.weathercode),
+      c: '#fff',
+      bg: '#0EA5E9',
+      t: getWeatherLabel(e.weathercode),
+      s: `${e.temp_max}° max · ${e.temp_min}° min`,
+      h: '',
+      dt: e.date,
+      lieu: 'Paris',
+      v: 'Paris',
+      px: '',
+      desc: `🌡️ Max : ${e.temp_max}°C · Min : ${e.temp_min}°C\n🌧️ Probabilité de pluie : ${e.precipitation_probability}%`,
+      rel: [],
+      src: 'Open-Meteo'
+    }));
+
+    EVT.push(...meteoEvents);
+    console.log(`✅ ${meteoEvents.length} jours météo chargés depuis Supabase`);
+    rAll();
+  } catch(e) {
+    console.log('❌ Meteo load error:', e.message);
+  }
+}
+
+function getWeatherIcon(code) {
+  if (code === 0) return '☀️';
+  if (code <= 3) return '🌤️';
+  if (code <= 49) return '🌫️';
+  if (code <= 67) return '🌧️';
+  if (code <= 77) return '❄️';
+  if (code <= 82) return '🌦️';
+  if (code <= 99) return '⛈️';
+  return '🌡️';
+}
+
+function getWeatherLabel(code) {
+  if (code === 0) return 'Ciel dégagé';
+  if (code <= 3) return 'Partiellement nuageux';
+  if (code <= 49) return 'Brumeux';
+  if (code <= 67) return 'Pluvieux';
+  if (code <= 77) return 'Neige';
+  if (code <= 82) return 'Averses';
+  if (code <= 99) return 'Orage';
+  return 'Météo';
 }
 
 // Favorites management
@@ -1016,6 +1078,7 @@ window.addEventListener('load', () => {
   // Connect to Supabase
   if (initSupabase()) {
     loadEventsFromDB();
+    loadMeteoFromDB();
   }
 });
 </script>
