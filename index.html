@@ -577,7 +577,8 @@ function srcMatchesPref(src,prefs){
   if(s.includes('cyclisme')&&prefs.includes('cyclisme'))return true;
   if(s.includes('golf')&&prefs.includes('golf'))return true;
   // Si la source ne correspond à aucun pref connu, on l'affiche quand même
-  const knownSrcs=['f1','motogp','tennis','foot','basket','rugby','cyclisme','golf'];
+  if(s.includes('cdm')&&prefs.includes('foot'))return true;
+  const knownSrcs=['f1','motogp','cdm','tennis','foot','basket','rugby','cyclisme','golf'];
   if(!knownSrcs.some(k=>s.includes(k)))return true;
   return false;
 }
@@ -1045,6 +1046,7 @@ async function loadEventsFromDB() {
     await loadVacancesFromDB();
     await loadF1FromDB();
     await loadMotoGPFromDB();
+    await loadCDMFromDB();
     rAll();
   } catch(e) {
     console.log('❌ DB load error:', e.message);
@@ -1053,6 +1055,7 @@ async function loadEventsFromDB() {
     await loadVacancesFromDB();
     await loadF1FromDB();
     await loadMotoGPFromDB();
+    await loadCDMFromDB();
     rAll();
   }
 }
@@ -1230,7 +1233,7 @@ async function loadF1FromDB() {
         d: parseInt(r.date_quali.split('-')[2], 10),
         m: parseInt(r.date_quali.split('-')[1], 10) - 1,
         y: parseInt(r.date_quali.split('-')[0], 10),
-        cat: 'sport', i: '🏎️', c: '#fff', bg: '#E10600',
+        cat: 'sport', i: '🏎️', c: '#fff', bg: '#CC0000',
         t: `Qualifications — ${r.nom}`,
         s: `${r.circuit} · ${r.ville}`,
         h: r.heure_quali, dt: r.date_quali,
@@ -1354,6 +1357,48 @@ async function loadMotoGPFromDB() {
     console.log(`✅ ${mgpEvents.length} événements MotoGP chargés`);
   } catch(e) {
     console.log('❌ MotoGP load error:', e.message);
+  }
+}
+
+// Load Coupe du Monde 2026 from Supabase
+async function loadCDMFromDB() {
+  try {
+    const res = await fetch(`${SUPA_URL}/rest/v1/cdm_2026?select=*&order=date_match.asc,heure_match.asc`, {
+      headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` }
+    });
+    const data = await res.json();
+    if (!data || !data.length) return;
+
+    const cdmEvents = data.map(m => {
+      const isFrance = m.equipe1 === 'France' || m.equipe2 === 'France';
+      const chaine = m.chaine;
+      return {
+        id: `cdm-${m.id}`,
+        date: m.date_match,
+        d: parseInt(m.date_match.split('-')[2], 10),
+        m: parseInt(m.date_match.split('-')[1], 10) - 1,
+        y: parseInt(m.date_match.split('-')[0], 10),
+        cat: 'sport',
+        i: isFrance ? '🇫🇷' : '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22"><path fill="#FFD700" d="M12 2C9 2 7 4 7 6v4c0 2 1 3.5 2.5 4.5L9 16h6l-.5-1.5C16 13.5 17 12 17 10V6c0-2-2-4-5-4z"/><rect fill="#FFD700" x="9" y="16" width="6" height="1.5" rx="0.5"/><rect fill="#8B6914" x="7.5" y="17.5" width="9" height="1" rx="0.5"/><rect fill="#8B6914" x="6" y="18.5" width="12" height="2.5" rx="1"/></svg>',
+        c: '#fff',
+        bg: isFrance ? '#002395' : '#006633',
+        t: `${m.equipe1} - ${m.equipe2}`,
+        s: `Groupe ${m.groupe} · ${chaine}`,
+        h: m.heure_match,
+        dt: m.date_match,
+        lieu: m.stade,
+        v: m.ville,
+        px: '',
+        desc: `⚽ Coupe du Monde 2026\n🏟️ Groupe ${m.groupe}\n${m.equipe1} vs ${m.equipe2}\n📍 ${m.stade}, ${m.ville}\n⏰ ${m.heure_match}\n📺 ${chaine}`,
+        rel: [],
+        src: 'CDM 2026'
+      };
+    });
+
+    EVT.push(...cdmEvents);
+    console.log(`✅ ${cdmEvents.length} matchs Coupe du Monde chargés`);
+  } catch(e) {
+    console.log('❌ CDM load error:', e.message);
   }
 }
 
