@@ -1001,14 +1001,20 @@ async function loadEventsFromDB() {
     }));
 
     EVT.length = 0;
-    EVT.push(...dbEvents);
+    if (dbEvents.length) EVT.push(...dbEvents);
     console.log(`✅ ${dbEvents.length} événements chargés depuis Supabase`);
     await loadMeteoFromDB();
     await loadFeriesFromDB();
     await loadVacancesFromDB();
+    await loadF1FromDB();
     rAll();
   } catch(e) {
-    console.log('❌ DB load error:', e.message, '— using static data');
+    console.log('❌ DB load error:', e.message);
+    await loadMeteoFromDB();
+    await loadFeriesFromDB();
+    await loadVacancesFromDB();
+    await loadF1FromDB();
+    rAll();
   }
 }
 
@@ -1165,6 +1171,82 @@ function getVacIcon(nom) {
   if (nom === 'Printemps') return '🌸';
   if (nom === 'Ascension') return '✝️';
   return '🏫';
+}
+
+// Load F1 from Supabase
+async function loadF1FromDB() {
+  try {
+    const res = await fetch(`${SUPA_URL}/rest/v1/f1_2026?select=*&order=round.asc`, {
+      headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` }
+    });
+    const data = await res.json();
+    if (!data || !data.length) return;
+
+    const f1Events = [];
+    data.forEach(r => {
+      // Qualification
+      f1Events.push({
+        id: `f1-${r.id}-quali`,
+        date: r.date_quali,
+        d: parseInt(r.date_quali.split('-')[2], 10),
+        m: parseInt(r.date_quali.split('-')[1], 10) - 1,
+        y: parseInt(r.date_quali.split('-')[0], 10),
+        cat: 'sport', i: '🏎️', c: '#fff', bg: '#E10600',
+        t: `Qualifications — ${r.nom}`,
+        s: `${r.circuit} · ${r.ville}`,
+        h: r.heure_quali, dt: r.date_quali,
+        lieu: r.circuit, v: r.ville, px: '',
+        desc: `🏎️ ${r.nom}
+🏁 Qualifications
+📍 ${r.circuit}, ${r.ville}
+⏰ ${r.heure_quali}`,
+        rel: [], src: 'F1 2026'
+      });
+      // Sprint
+      if (r.sprint && r.date_sprint) {
+        f1Events.push({
+          id: `f1-${r.id}-sprint`,
+          date: r.date_sprint,
+          d: parseInt(r.date_sprint.split('-')[2], 10),
+          m: parseInt(r.date_sprint.split('-')[1], 10) - 1,
+          y: parseInt(r.date_sprint.split('-')[0], 10),
+          cat: 'sport', i: '⚡', c: '#fff', bg: '#E10600',
+          t: `Sprint — ${r.nom}`,
+          s: `${r.circuit} · ${r.ville}`,
+          h: r.heure_sprint, dt: r.date_sprint,
+          lieu: r.circuit, v: r.ville, px: '',
+          desc: `🏎️ ${r.nom}
+⚡ Course Sprint
+📍 ${r.circuit}, ${r.ville}
+⏰ ${r.heure_sprint}`,
+          rel: [], src: 'F1 2026'
+        });
+      }
+      // Grand Prix
+      f1Events.push({
+        id: `f1-${r.id}-race`,
+        date: r.date_course,
+        d: parseInt(r.date_course.split('-')[2], 10),
+        m: parseInt(r.date_course.split('-')[1], 10) - 1,
+        y: parseInt(r.date_course.split('-')[0], 10),
+        cat: 'sport', i: '🏆', c: '#fff', bg: '#E10600',
+        t: r.nom,
+        s: `${r.circuit} · ${r.ville}`,
+        h: r.heure_course, dt: r.date_course,
+        lieu: r.circuit, v: r.ville, px: '',
+        desc: `🏎️ ${r.nom}
+🏆 Grand Prix — Round ${r.round}/22
+📍 ${r.circuit}, ${r.ville}
+⏰ ${r.heure_course}`,
+        rel: [], src: 'F1 2026'
+      });
+    });
+
+    EVT.push(...f1Events);
+    console.log(`✅ ${f1Events.length} événements F1 chargés`);
+  } catch(e) {
+    console.log('❌ F1 load error:', e.message);
+  }
 }
 
 function getWeatherIcon(code) {
