@@ -349,7 +349,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
 
     <div class="sw-section">
-      <div class="sw-section-title">Cat&#233;gories actives</div>
+      <div class="sw-section-title">✦ Affichage "Tout"</div>
+      <div style="padding:0 16px 10px;font-size:11px;color:var(--tx2)">Sélectionne les catégories visibles quand tu cliques sur "Tout"</div>
       <div class="sw-card"><div class="sw-chip-wrap" id="sw-cats">
         <button class="sw-chip on" style="background:#6366F1;color:#fff" data-cat="feries" onclick="toggleChip(this)">🏛 Fériés</button>
         <button class="sw-chip on" style="background:#8B5CF6;color:#fff" data-cat="vacances" onclick="toggleChip(this)">🏫 Vacances</button>
@@ -398,6 +399,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="sw-section-title">&#127941; Autres sports</div>
       <div class="sw-card"><div class="sw-chip-wrap" id="sw-sport">
         <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="f1" onclick="toggleChip(this)">&#127950; F1</button>
+        <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="motogp" onclick="toggleChip(this)">&#127949; MotoGP</button>
         <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="tennis" onclick="toggleChip(this)">&#127934; Tennis</button>
         <button class="sw-chip" data-pref="basket" onclick="toggleChip(this)">&#127936; Basket / NBA</button>
         <button class="sw-chip" data-pref="rugby" onclick="toggleChip(this)">&#127945; Rugby</button>
@@ -555,7 +557,44 @@ let cM=now.getMonth(),cY=now.getFullYear(),sDay=now.getDate(),cat='all';
 const EVT=[];
 
 // ─── LOGIQUE APP ──────────────────────────────────────────────────────────────
-function filt(){return cat==='all'?EVT:EVT.filter(e=>e.cat===cat)}
+function getActiveCats(){
+  const chips=document.querySelectorAll('#sw-cats .sw-chip.on');
+  return chips.length?[...chips].map(c=>c.dataset.cat):null;
+}
+function getActivePrefs(){
+  const chips=document.querySelectorAll('#sw-sport .sw-chip.on, #sw-foot .sw-chip.on');
+  return [...chips].map(c=>c.dataset.pref);
+}
+function srcMatchesPref(src,prefs){
+  if(!src)return true;
+  const s=src.toLowerCase();
+  if(s.includes('f1')&&prefs.includes('f1'))return true;
+  if(s.includes('motogp')&&prefs.includes('motogp'))return true;
+  if(s.includes('tennis')&&prefs.includes('tennis'))return true;
+  if(s.includes('foot')&&prefs.includes('foot'))return true;
+  if(s.includes('basket')&&prefs.includes('basket'))return true;
+  if(s.includes('rugby')&&prefs.includes('rugby'))return true;
+  if(s.includes('cyclisme')&&prefs.includes('cyclisme'))return true;
+  if(s.includes('golf')&&prefs.includes('golf'))return true;
+  // Si la source ne correspond à aucun pref connu, on l'affiche quand même
+  const knownSrcs=['f1','motogp','tennis','foot','basket','rugby','cyclisme','golf'];
+  if(!knownSrcs.some(k=>s.includes(k)))return true;
+  return false;
+}
+function filt(){
+  const activeCats=getActiveCats();
+  const activePrefs=getActivePrefs();
+  let evts=EVT;
+  if(cat==='all'){
+    if(activeCats)evts=evts.filter(e=>activeCats.includes(e.cat));
+  } else {
+    evts=evts.filter(e=>e.cat===cat);
+  }
+  if(cat==='sport'||cat==='all'){
+    evts=evts.filter(e=>e.cat!=='sport'||srcMatchesPref(e.src,activePrefs));
+  }
+  return evts;
+}
 
 function sCat(el,c){
   cat=c;
@@ -899,6 +938,7 @@ function saveSettings(){
   document.querySelectorAll('.sw-chip.on[data-pref]').forEach(c=>prefs.push(c.dataset.pref));
   const ville=document.querySelector('#sw-villes .sw-chip.on')?.dataset?.pref||'paris';
   localStorage.setItem('kalendi-settings',JSON.stringify({cats,prefs,ville,savedAt:new Date().toISOString()}));
+  rAll();
   const toast=document.getElementById('savedToast');
   toast.classList.add('show');
   setTimeout(()=>toast.classList.remove('show'),2500);
@@ -1004,6 +1044,7 @@ async function loadEventsFromDB() {
     await loadFeriesFromDB();
     await loadVacancesFromDB();
     await loadF1FromDB();
+    await loadMotoGPFromDB();
     rAll();
   } catch(e) {
     console.log('❌ DB load error:', e.message);
@@ -1011,6 +1052,7 @@ async function loadEventsFromDB() {
     await loadFeriesFromDB();
     await loadVacancesFromDB();
     await loadF1FromDB();
+    await loadMotoGPFromDB();
     rAll();
   }
 }
@@ -1243,6 +1285,75 @@ async function loadF1FromDB() {
     console.log(`✅ ${f1Events.length} événements F1 chargés`);
   } catch(e) {
     console.log('❌ F1 load error:', e.message);
+  }
+}
+
+// Load MotoGP from Supabase
+async function loadMotoGPFromDB() {
+  try {
+    const res = await fetch(`${SUPA_URL}/rest/v1/motogp_2026?select=*&order=round.asc`, {
+      headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` }
+    });
+    const data = await res.json();
+    if (!data || !data.length) return;
+
+    const mgpEvents = [];
+    data.forEach(r => {
+      // Qualification
+      if (r.date_quali && r.heure_quali) {
+        mgpEvents.push({
+          id: `mgp-${r.id}-quali`,
+          date: r.date_quali,
+          d: parseInt(r.date_quali.split('-')[2], 10),
+          m: parseInt(r.date_quali.split('-')[1], 10) - 1,
+          y: parseInt(r.date_quali.split('-')[0], 10),
+          cat: 'sport', i: '🏍️', c: '#fff', bg: '#CC0000',
+          t: `Qualifications — ${r.nom}`,
+          s: `${r.circuit} · ${r.ville}`,
+          h: r.heure_quali, dt: r.date_quali,
+          lieu: r.circuit, v: r.ville, px: '',
+          desc: `🏍️ ${r.nom}\n🏁 Qualifications\n📍 ${r.circuit}, ${r.ville}\n⏰ ${r.heure_quali}`,
+          rel: [], src: 'MotoGP 2026'
+        });
+      }
+      // Sprint
+      if (r.date_sprint && r.heure_sprint) {
+        mgpEvents.push({
+          id: `mgp-${r.id}-sprint`,
+          date: r.date_sprint,
+          d: parseInt(r.date_sprint.split('-')[2], 10),
+          m: parseInt(r.date_sprint.split('-')[1], 10) - 1,
+          y: parseInt(r.date_sprint.split('-')[0], 10),
+          cat: 'sport', i: '⚡', c: '#fff', bg: '#CC0000',
+          t: `Sprint — ${r.nom}`,
+          s: `${r.circuit} · ${r.ville}`,
+          h: r.heure_sprint, dt: r.date_sprint,
+          lieu: r.circuit, v: r.ville, px: '',
+          desc: `🏍️ ${r.nom}\n⚡ Course Sprint\n📍 ${r.circuit}, ${r.ville}\n⏰ ${r.heure_sprint}`,
+          rel: [], src: 'MotoGP 2026'
+        });
+      }
+      // Course
+      mgpEvents.push({
+        id: `mgp-${r.id}-race`,
+        date: r.date_course,
+        d: parseInt(r.date_course.split('-')[2], 10),
+        m: parseInt(r.date_course.split('-')[1], 10) - 1,
+        y: parseInt(r.date_course.split('-')[0], 10),
+        cat: 'sport', i: '🏆', c: '#fff', bg: '#CC0000',
+        t: r.nom,
+        s: `${r.circuit} · ${r.ville}`,
+        h: r.heure_course, dt: r.date_course,
+        lieu: r.circuit, v: r.ville, px: '',
+        desc: `🏍️ ${r.nom}\n🏆 Grand Prix — Round ${r.round}/22\n📍 ${r.circuit}, ${r.ville}\n⏰ ${r.heure_course}`,
+        rel: [], src: 'MotoGP 2026'
+      });
+    });
+
+    EVT.push(...mgpEvents);
+    console.log(`✅ ${mgpEvents.length} événements MotoGP chargés`);
+  } catch(e) {
+    console.log('❌ MotoGP load error:', e.message);
   }
 }
 
