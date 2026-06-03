@@ -130,6 +130,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .sw-chip{padding:6px 13px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--bd2);background:none;color:var(--tx2);font-family:inherit;transition:all .2s}
 .sw-cat-row{display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:12px}
 .sw-inall{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--bd2);background:none;color:var(--tx2);font-size:12px;cursor:pointer;flex-shrink:0;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.sw-pref-row{display:flex;align-items:center;gap:6px;padding:3px 8px}
+.sw-pref-inall{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--bd2);background:none;color:var(--tx2);font-size:10px;cursor:pointer;flex-shrink:0;transition:all .2s;font-family:inherit}
+.sw-pref-inall.on{background:#E8334A;color:#fff;border-color:transparent}
 .sw-inall.on{background:var(--cc,#E8334A);color:#fff;border-color:transparent}
 .sw-chip.on{color:#fff;border-color:transparent}
 .sw-profile-header{margin:20px 20px 0;display:flex;align-items:center;gap:14px;padding:16px;background:var(--sur);border:1px solid var(--bd);border-radius:14px}
@@ -410,58 +413,168 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
     <div class="sw-section">
       <div class="sw-section-title">&#9917; Football</div>
-      <div class="sw-card"><div class="sw-chip-wrap" id="sw-foot">
-        <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="cdm" onclick="toggleChip(this)">🏆 Coupe du Monde</button>
-        <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="psg" onclick="toggleChip(this)">PSG</button>
-        <button class="sw-chip" data-pref="om" onclick="toggleChip(this)">OM</button>
-        <button class="sw-chip" data-pref="ol" onclick="toggleChip(this)">OL</button>
-        <button class="sw-chip" data-pref="monaco" onclick="toggleChip(this)">Monaco</button>
-        <button class="sw-chip" data-pref="rennes" onclick="toggleChip(this)">Rennes</button>
-        <button class="sw-chip" data-pref="lens" onclick="toggleChip(this)">Lens</button>
-        <button class="sw-chip" data-pref="nice" onclick="toggleChip(this)">Nice</button>
-        <button class="sw-chip" data-pref="juventus" onclick="toggleChip(this)">Juventus</button>
-        <button class="sw-chip" data-pref="arsenal" onclick="toggleChip(this)">Arsenal</button>
-        <button class="sw-chip" data-pref="barca" onclick="toggleChip(this)">FC Barcelone</button>
-        <button class="sw-chip" data-pref="real" onclick="toggleChip(this)">Real Madrid</button>
-      </div></div>
+      <div class="sw-card" id="sw-foot" style="padding:4px 0">
+        <div class="sw-pref-row">
+          <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="cdm" onclick="toggleChip(this)">🏆 Coupe du Monde</button>
+          <button class="sw-pref-inall on" data-pref="cdm" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="psg" onclick="toggleChip(this)">PSG</button>
+          <button class="sw-pref-inall on" data-pref="psg" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="om" onclick="toggleChip(this)">OM</button>
+          <button class="sw-pref-inall" data-pref="om" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="ol" onclick="toggleChip(this)">OL</button>
+          <button class="sw-pref-inall" data-pref="ol" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="monaco" onclick="toggleChip(this)">Monaco</button>
+          <button class="sw-pref-inall" data-pref="monaco" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="rennes" onclick="toggleChip(this)">Rennes</button>
+          <button class="sw-pref-inall" data-pref="rennes" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="lens" onclick="toggleChip(this)">Lens</button>
+          <button class="sw-pref-inall" data-pref="lens" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="nice" onclick="toggleChip(this)">Nice</button>
+          <button class="sw-pref-inall" data-pref="nice" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="juventus" onclick="toggleChip(this)">Juventus</button>
+          <button class="sw-pref-inall" data-pref="juventus" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="arsenal" onclick="toggleChip(this)">Arsenal</button>
+          <button class="sw-pref-inall" data-pref="arsenal" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="barca" onclick="toggleChip(this)">FC Barcelone</button>
+          <button class="sw-pref-inall" data-pref="barca" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="real" onclick="toggleChip(this)">Real Madrid</button>
+          <button class="sw-pref-inall" data-pref="real" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+      </div>
     </div>
 
     <div class="sw-section">
       <div class="sw-section-title">&#127936; NBA — mes équipes</div>
-      <div class="sw-card"><div class="sw-chip-wrap" id="sw-nba">
-        <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="knicks" onclick="toggleChip(this)">🗽 Knicks</button>
-        <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="spurs" onclick="toggleChip(this)">🤠 Spurs</button>
-        <button class="sw-chip" data-pref="lakers" onclick="toggleChip(this)">💛 Lakers</button>
-        <button class="sw-chip" data-pref="celtics" onclick="toggleChip(this)">🍀 Celtics</button>
-        <button class="sw-chip" data-pref="warriors" onclick="toggleChip(this)">🌉 Warriors</button>
-        <button class="sw-chip" data-pref="bulls" onclick="toggleChip(this)">🐂 Bulls</button>
-        <button class="sw-chip" data-pref="heat" onclick="toggleChip(this)">🔥 Heat</button>
-        <button class="sw-chip" data-pref="nuggets" onclick="toggleChip(this)">⛏️ Nuggets</button>
-        <button class="sw-chip" data-pref="thunder" onclick="toggleChip(this)">⚡ Thunder</button>
-        <button class="sw-chip" data-pref="cavaliers" onclick="toggleChip(this)">⚔️ Cavaliers</button>
-        <button class="sw-chip" data-pref="76ers" onclick="toggleChip(this)">🔔 76ers</button>
-        <button class="sw-chip" data-pref="pistons" onclick="toggleChip(this)">🔧 Pistons</button>
-      </div></div>
+      <div class="sw-card" id="sw-nba" style="padding:4px 0">
+        <div class="sw-pref-row">
+          <button class="sw-chip  on" style="background:#1D4ED8;color:#fff" data-pref="knicks" onclick="toggleChip(this)">🗽 Knicks</button>
+          <button class="sw-pref-inall  on" data-pref="knicks" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip  on" style="background:#1D4ED8;color:#fff" data-pref="spurs" onclick="toggleChip(this)">🤠 Spurs</button>
+          <button class="sw-pref-inall  on" data-pref="spurs" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="lakers" onclick="toggleChip(this)">💛 Lakers</button>
+          <button class="sw-pref-inall" data-pref="lakers" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="celtics" onclick="toggleChip(this)">🍀 Celtics</button>
+          <button class="sw-pref-inall" data-pref="celtics" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="warriors" onclick="toggleChip(this)">🌉 Warriors</button>
+          <button class="sw-pref-inall" data-pref="warriors" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="bulls" onclick="toggleChip(this)">🐂 Bulls</button>
+          <button class="sw-pref-inall" data-pref="bulls" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="heat" onclick="toggleChip(this)">🔥 Heat</button>
+          <button class="sw-pref-inall" data-pref="heat" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="nuggets" onclick="toggleChip(this)">⛏️ Nuggets</button>
+          <button class="sw-pref-inall" data-pref="nuggets" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="thunder" onclick="toggleChip(this)">⚡ Thunder</button>
+          <button class="sw-pref-inall" data-pref="thunder" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="cavaliers" onclick="toggleChip(this)">⚔️ Cavaliers</button>
+          <button class="sw-pref-inall" data-pref="cavaliers" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="76ers" onclick="toggleChip(this)">🔔 76ers</button>
+          <button class="sw-pref-inall" data-pref="76ers" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="pistons" onclick="toggleChip(this)">🔧 Pistons</button>
+          <button class="sw-pref-inall" data-pref="pistons" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+      </div>
     </div>
 
     <div class="sw-section">
       <div class="sw-section-title">&#127941; Autres sports</div>
-      <div class="sw-card"><div class="sw-chip-wrap" id="sw-sport">
-        <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="f1" onclick="toggleChip(this)">&#127950; F1</button>
-        <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="motogp" onclick="toggleChip(this)">&#127949; MotoGP</button>
-        <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="tennis" onclick="toggleChip(this)">&#127934; Tennis</button>
-        <button class="sw-chip" data-pref="basket" onclick="toggleChip(this)">&#127936; Basket / NBA</button>
-        <button class="sw-chip" data-pref="rugby" onclick="toggleChip(this)">&#127945; Rugby</button>
-        <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="cyclisme" onclick="toggleChip(this)">&#128692; Cyclisme</button>
-        <button class="sw-chip" data-pref="golf" onclick="toggleChip(this)">&#9971; Golf</button>
-        <button class="sw-chip" data-pref="running" onclick="toggleChip(this)">&#127939; Running</button>
-        <button class="sw-chip" data-pref="natation" onclick="toggleChip(this)">&#127946; Natation</button>
-        <button class="sw-chip" data-pref="handball" onclick="toggleChip(this)">Handball</button>
-        <button class="sw-chip" data-pref="volley" onclick="toggleChip(this)">&#127944; Volley</button>
-        <button class="sw-chip" data-pref="ski" onclick="toggleChip(this)">&#9971; Ski alpin</button>
-        <button class="sw-chip" data-pref="athletisme" onclick="toggleChip(this)">&#127939; Athl&#233;tisme</button>
-        <button class="sw-chip" data-pref="moto" onclick="toggleChip(this)">&#127949; MotoGP</button>
-      </div></div>
+      <div class="sw-card" id="sw-sport" style="padding:4px 0">
+        <div class="sw-pref-row">
+          <button class="sw-chip  on" style="background:#1D4ED8;color:#fff" data-pref="f1" onclick="toggleChip(this)">🏎️ F1</button>
+          <button class="sw-pref-inall  on" data-pref="f1" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip  on" style="background:#1D4ED8;color:#fff" data-pref="motogp" onclick="toggleChip(this)">🏍️ MotoGP</button>
+          <button class="sw-pref-inall  on" data-pref="motogp" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip  on" style="background:#1D4ED8;color:#fff" data-pref="tennis" onclick="toggleChip(this)">🎾 Tennis</button>
+          <button class="sw-pref-inall  on" data-pref="tennis" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="basket" onclick="toggleChip(this)">🏀 Basket / NBA</button>
+          <button class="sw-pref-inall" data-pref="basket" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="rugby" onclick="toggleChip(this)">🏉 Rugby</button>
+          <button class="sw-pref-inall" data-pref="rugby" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip  on" style="background:#1D4ED8;color:#fff" data-pref="cyclisme" onclick="toggleChip(this)">🚴 Cyclisme</button>
+          <button class="sw-pref-inall  on" data-pref="cyclisme" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="golf" onclick="toggleChip(this)">⛳ Golf</button>
+          <button class="sw-pref-inall" data-pref="golf" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="running" onclick="toggleChip(this)">🏃 Running</button>
+          <button class="sw-pref-inall" data-pref="running" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="natation" onclick="toggleChip(this)">🏊 Natation</button>
+          <button class="sw-pref-inall" data-pref="natation" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="handball" onclick="toggleChip(this)">Handball</button>
+          <button class="sw-pref-inall" data-pref="handball" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="volley" onclick="toggleChip(this)">🏐 Volley</button>
+          <button class="sw-pref-inall" data-pref="volley" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="ski" onclick="toggleChip(this)">⛷️ Ski alpin</button>
+          <button class="sw-pref-inall" data-pref="ski" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="athletisme" onclick="toggleChip(this)">🏃 Athlétisme</button>
+          <button class="sw-pref-inall" data-pref="athletisme" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+      </div>
     </div>
 
     <div class="sw-section">
@@ -480,31 +593,82 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
     <div class="sw-section">
       <div class="sw-section-title">&#127917; Culture &#8212; mes int&#233;r&#234;ts</div>
-      <div class="sw-card"><div class="sw-chip-wrap" id="sw-culture">
-        <button class="sw-chip on" style="background:#7C3AED;color:#fff" data-pref="cinema" onclick="toggleChip(this)">&#127902; Cin&#233;ma</button>
-        <button class="sw-chip on" style="background:#7C3AED;color:#fff" data-pref="concerts" onclick="toggleChip(this)">&#127925; Concerts</button>
-        <button class="sw-chip" data-pref="musees" onclick="toggleChip(this)">&#127963; Mus&#233;es</button>
-        <button class="sw-chip" data-pref="festivals" onclick="toggleChip(this)">&#127914; Festivals</button>
-        <button class="sw-chip" data-pref="theatre" onclick="toggleChip(this)">&#127917; Th&#233;&#226;tre</button>
-        <button class="sw-chip" data-pref="opera" onclick="toggleChip(this)">&#127908; Op&#233;ra</button>
-        <button class="sw-chip" data-pref="jeux-video" onclick="toggleChip(this)">&#127918; Jeux vid&#233;o</button>
-        <button class="sw-chip" data-pref="bd" onclick="toggleChip(this)">&#128214; BD / Manga</button>
-        <button class="sw-chip" data-pref="photo" onclick="toggleChip(this)">&#128247; Photo</button>
-      </div></div>
+      <div class="sw-card" id="sw-culture" style="padding:4px 0">
+        <div class="sw-pref-row">
+          <button class="sw-chip  on" style="background:#7C3AED;color:#fff" data-pref="cinema" onclick="toggleChip(this)">🎬 Cinéma</button>
+          <button class="sw-pref-inall  on" data-pref="cinema" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip  on" style="background:#7C3AED;color:#fff" data-pref="concerts" onclick="toggleChip(this)">🎵 Concerts</button>
+          <button class="sw-pref-inall  on" data-pref="concerts" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="musees" onclick="toggleChip(this)">🏛️ Musées</button>
+          <button class="sw-pref-inall" data-pref="musees" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="festivals" onclick="toggleChip(this)">🎪 Festivals</button>
+          <button class="sw-pref-inall" data-pref="festivals" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="theatre" onclick="toggleChip(this)">🎭 Théâtre</button>
+          <button class="sw-pref-inall" data-pref="theatre" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="opera" onclick="toggleChip(this)">🎤 Opéra</button>
+          <button class="sw-pref-inall" data-pref="opera" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="jeux-video" onclick="toggleChip(this)">🎮 Jeux vidéo</button>
+          <button class="sw-pref-inall" data-pref="jeux-video" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="bd" onclick="toggleChip(this)">📚 BD / Manga</button>
+          <button class="sw-pref-inall" data-pref="bd" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="photo" onclick="toggleChip(this)">📷 Photo</button>
+          <button class="sw-pref-inall" data-pref="photo" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+      </div>
     </div>
 
     <div class="sw-section">
       <div class="sw-section-title">&#128248; Mode &#8212; mes marques</div>
-      <div class="sw-card"><div class="sw-chip-wrap" id="sw-mode">
-        <button class="sw-chip on" style="background:#DB2777;color:#fff" data-pref="sezane" onclick="toggleChip(this)">S&#233;zane</button>
-        <button class="sw-chip on" style="background:#DB2777;color:#fff" data-pref="rouje" onclick="toggleChip(this)">Rouje</button>
-        <button class="sw-chip" data-pref="balzac" onclick="toggleChip(this)">Balzac Paris</button>
-        <button class="sw-chip" data-pref="saaj" onclick="toggleChip(this)">SAAJ Paris</button>
-        <button class="sw-chip" data-pref="maison-stella" onclick="toggleChip(this)">Maison Stella</button>
-        <button class="sw-chip" data-pref="suzie" onclick="toggleChip(this)">Suzie</button>
-        <button class="sw-chip" data-pref="fashion-week" onclick="toggleChip(this)">Fashion Week</button>
-        <button class="sw-chip" data-pref="soldes" onclick="toggleChip(this)">&#128717; Soldes</button>
-      </div></div>
+      <div class="sw-card" id="sw-mode" style="padding:4px 0">
+        <div class="sw-pref-row">
+          <button class="sw-chip  on" style="background:#DB2777;color:#fff" data-pref="sezane" onclick="toggleChip(this)">Sézane</button>
+          <button class="sw-pref-inall  on" data-pref="sezane" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip  on" style="background:#DB2777;color:#fff" data-pref="rouje" onclick="toggleChip(this)">Rouje</button>
+          <button class="sw-pref-inall  on" data-pref="rouje" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="balzac" onclick="toggleChip(this)">Balzac Paris</button>
+          <button class="sw-pref-inall" data-pref="balzac" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="saaj" onclick="toggleChip(this)">SAAJ Paris</button>
+          <button class="sw-pref-inall" data-pref="saaj" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="maison-stella" onclick="toggleChip(this)">Maison Stella</button>
+          <button class="sw-pref-inall" data-pref="maison-stella" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="suzie" onclick="toggleChip(this)">Suzie</button>
+          <button class="sw-pref-inall" data-pref="suzie" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="fashion-week" onclick="toggleChip(this)">Fashion Week</button>
+          <button class="sw-pref-inall" data-pref="fashion-week" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="soldes" onclick="toggleChip(this)">🛍️ Soldes</button>
+          <button class="sw-pref-inall" data-pref="soldes" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+      </div>
     </div>
 
     <div class="sw-section">
@@ -612,14 +776,16 @@ function getActiveCats(){
   return chips.length?[...chips].map(c=>c.dataset.cat):null;
 }
 function getInAllCats(){
-  // Catégories qui s'affichent dans "Tout" = sw-inall.on
-  const btns=document.querySelectorAll('.sw-inall.on');
-  return [...btns].map(b=>b.dataset.cat);
+  return [...document.querySelectorAll('.sw-inall.on')].map(b=>b.dataset.cat);
+}
+function getInAllPrefs(){
+  return [...document.querySelectorAll('.sw-pref-inall.on')].map(b=>b.dataset.pref);
 }
 function getActivePrefs(){
   const chips=document.querySelectorAll('#sw-sport .sw-chip.on, #sw-foot .sw-chip.on, #sw-nba .sw-chip.on');
   return [...chips].map(c=>c.dataset.pref);
 }
+function srcMatchesPrefInAll(src,prefs){return srcMatchesPref(src,prefs);}
 function srcMatchesPref(src,prefs){
   if(!src)return true;
   const s=src.toLowerCase();
@@ -642,15 +808,15 @@ function srcMatchesPref(src,prefs){
 function filt(){
   const activeCats=getActiveCats();
   const inAllCats=getInAllCats();
+  const inAllPrefs=getInAllPrefs();
   const activePrefs=getActivePrefs();
   let evts=EVT;
   if(cat==='all'){
-    // Dans "Tout" : uniquement les catégories cochées ✦
+    // Catégories ✦ actives
     evts=evts.filter(e=>inAllCats.includes(e.cat));
-    // Pour sport : filtrer aussi par préfs
-    evts=evts.filter(e=>e.cat!=='sport'||srcMatchesPref(e.src,activePrefs));
+    // Pour sport : seuls les sous-éléments avec ✦ activé
+    evts=evts.filter(e=>e.cat!=='sport'||srcMatchesPrefInAll(e.src,inAllPrefs));
   } else {
-    // Dans une catégorie : uniquement si la catégorie est active
     if(activeCats&&!activeCats.includes(cat)){return [];}
     evts=evts.filter(e=>e.cat===cat);
     if(cat==='sport'){
@@ -998,6 +1164,12 @@ function toggleCat(el){
     el.style.background=colors[cat]||'#E8334A';el.style.color='#fff';
   }
 }
+function togglePrefInAll(el){
+  const row=el.closest('.sw-pref-row');
+  const chip=row?row.querySelector('.sw-chip'):null;
+  if(!chip||!chip.classList.contains('on'))return;
+  el.classList.toggle('on');
+}
 function toggleInAll(el){
   const row=el.closest('.sw-cat-row');
   const chip=row?row.querySelector('.sw-chip'):null;
@@ -1040,10 +1212,12 @@ function saveSettings(){
   document.querySelectorAll('.sw-cat-row .sw-chip.on').forEach(c=>cats.push(c.dataset.cat));
   const inall=[];
   document.querySelectorAll('.sw-inall.on').forEach(b=>inall.push(b.dataset.cat));
+  const inallPrefs=[];
+  document.querySelectorAll('.sw-pref-inall.on').forEach(b=>inallPrefs.push(b.dataset.pref));
   const prefs=[];
   document.querySelectorAll('.sw-chip.on[data-pref]').forEach(c=>prefs.push(c.dataset.pref));
   const ville=document.querySelector('#sw-villes .sw-chip.on')?.dataset?.pref||'paris';
-  localStorage.setItem('kalendi-settings',JSON.stringify({cats,inall,prefs,ville,savedAt:new Date().toISOString()}));
+  localStorage.setItem('kalendi-settings',JSON.stringify({cats,inall,inallPrefs,prefs,ville,savedAt:new Date().toISOString()}));
   rAll();
   const toast=document.getElementById('savedToast');
   toast.classList.add('show');
@@ -1068,6 +1242,21 @@ function loadSettings(){
     const on=inall.includes(b.dataset.cat);
     b.classList.toggle('on',on);
   });
+  // Restaurer les prefs inall
+  const inallPrefs=s.inallPrefs;
+  if(inallPrefs){
+    document.querySelectorAll('.sw-pref-inall').forEach(b=>{
+      const on=inallPrefs.includes(b.dataset.pref);
+      b.classList.toggle('on',on);
+    });
+  } else {
+    // Par défaut : activer ✦ pour tous les chips déjà cochés
+    document.querySelectorAll('.sw-chip.on[data-pref]').forEach(c=>{
+      const row=c.closest('.sw-pref-row');
+      const inallBtn=row?row.querySelector('.sw-pref-inall'):null;
+      if(inallBtn)inallBtn.classList.add('on');
+    });
+  }
   if(s.prefs){
     document.querySelectorAll('.sw-chip[data-pref]').forEach(c=>{
       if(c.closest('#sw-villes'))return;
