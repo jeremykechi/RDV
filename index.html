@@ -965,6 +965,7 @@ async function loadEventsFromDB() {
     EVT.length = 0;
     EVT.push(...dbEvents);
     console.log(`✅ ${dbEvents.length} événements chargés depuis Supabase`);
+    await loadMeteoFromDB();
     rAll();
   } catch(e) {
     console.log('❌ DB load error:', e.message, '— using static data');
@@ -986,9 +987,9 @@ async function loadMeteoFromDB() {
     const meteoEvents = data.map(e => ({
       id: e.id,
       date: e.date,
-      d: parseInt(e.date.split('-')[2]),
-      m: parseInt(e.date.split('-')[1]) - 1,
-      y: parseInt(e.date.split('-')[0]),
+      d: parseInt(e.date.split('-')[2], 10),
+      m: parseInt(e.date.split('-')[1], 10) - 1,
+      y: parseInt(e.date.split('-')[0], 10),
       cat: 'meteo',
       i: getWeatherIcon(e.weathercode),
       c: '#fff',
@@ -1007,7 +1008,6 @@ async function loadMeteoFromDB() {
 
     EVT.push(...meteoEvents);
     console.log(`✅ ${meteoEvents.length} jours météo chargés depuis Supabase`);
-    rAll();
   } catch(e) {
     console.log('❌ Meteo load error:', e.message);
   }
@@ -1078,7 +1078,6 @@ window.addEventListener('load', () => {
   // Connect to Supabase
   if (initSupabase()) {
     loadEventsFromDB();
-    loadMeteoFromDB();
   }
 });
 </script>
