@@ -974,9 +974,8 @@ async function loadEventsFromDB() {
       }
     });
     const data = await res.json();
-    if (!data || !data.length) return;
 
-    const dbEvents = data.map(e => ({
+    const dbEvents = (!data || !data.length) ? [] : data.map(e => ({
       id: e.id,
       date: e.date,
       d: e.day,
