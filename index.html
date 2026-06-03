@@ -422,7 +422,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="tennis" onclick="toggleChip(this)">&#127934; Tennis</button>
         <button class="sw-chip" data-pref="basket" onclick="toggleChip(this)">&#127936; Basket / NBA</button>
         <button class="sw-chip" data-pref="rugby" onclick="toggleChip(this)">&#127945; Rugby</button>
-        <button class="sw-chip" data-pref="cyclisme" onclick="toggleChip(this)">&#128692; Cyclisme</button>
+        <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="cyclisme" onclick="toggleChip(this)">&#128692; Cyclisme</button>
         <button class="sw-chip" data-pref="golf" onclick="toggleChip(this)">&#9971; Golf</button>
         <button class="sw-chip" data-pref="running" onclick="toggleChip(this)">&#127939; Running</button>
         <button class="sw-chip" data-pref="natation" onclick="toggleChip(this)">&#127946; Natation</button>
@@ -597,8 +597,9 @@ function srcMatchesPref(src,prefs){
   if(s.includes('golf')&&prefs.includes('golf'))return true;
   // Si la source ne correspond à aucun pref connu, on l'affiche quand même
   if(s.includes('cdm')&&prefs.includes('cdm'))return true;
+  if((s.includes('giro')||s.includes('tour de france')||s.includes('vuelta'))&&prefs.includes('cyclisme'))return true;
   if(s.includes('nba')){const nbaTeams=['knicks','spurs','lakers','celtics','warriors','bulls','heat','nuggets','thunder','cavaliers','76ers','pistons'];return nbaTeams.some(t=>prefs.includes(t)&&(s.includes(t)||true));}
-  const knownSrcs=['f1','motogp','cdm 2026','nba playoffs 2026','tennis','foot','basket','rugby','cyclisme','golf'];
+  const knownSrcs=['f1','motogp','cdm 2026','nba playoffs 2026','cyclisme 2026','tennis','foot','basket','rugby','cyclisme','golf'];
   if(!knownSrcs.some(k=>s.includes(k)))return true;
   return false;
 }
@@ -1086,6 +1087,7 @@ async function loadEventsFromDB() {
     await loadMotoGPFromDB();
     await loadCDMFromDB();
     await loadNBAFromDB();
+    await loadCyclismeFromDB();
     rAll();
   } catch(e) {
     console.log('❌ DB load error:', e.message);
@@ -1096,6 +1098,7 @@ async function loadEventsFromDB() {
     await loadMotoGPFromDB();
     await loadCDMFromDB();
     await loadNBAFromDB();
+    await loadCyclismeFromDB();
     rAll();
   }
 }
@@ -1492,6 +1495,61 @@ async function loadNBAFromDB() {
     console.log(`✅ ${nbaEvents.length} matchs NBA chargés`);
   } catch(e) {
     console.log('❌ NBA load error:', e.message);
+  }
+}
+
+// Load Cyclisme 2026 from Supabase
+async function loadCyclismeFromDB() {
+  try {
+    const prefs = getActivePrefs();
+    if (!prefs.includes('cyclisme')) return;
+
+    const res = await fetch(`${SUPA_URL}/rest/v1/cyclisme_2026?select=*&order=date_event.asc`, {
+      headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` }
+    });
+    const data = await res.json();
+    if (!data || !data.length) return;
+
+    const cycleEvents = data.map(e => {
+      const icon = e.type === 'depart' ? '🚴' :
+                   e.type === 'arrivee' ? '🏆' :
+                   e.type === 'repos' ? '😴' :
+                   e.profil === 'montagne' ? '🏔️' :
+                   e.profil === 'contre-la-montre' ? '⏱️' : '🚴';
+      const bg = e.course === 'Giro d'Italia' ? '#E8006B' :
+                 e.course === 'Tour de France' ? '#FFD700' :
+                 '#CC0000';
+      const tc = e.course === 'Tour de France' ? '#1a1a1a' : '#fff';
+      const km = e.km ? ` · ${e.km} km` : '';
+      const trajet = e.depart && e.arrivee ? `${e.depart} → ${e.arrivee}` :
+                     e.arrivee ? `→ ${e.arrivee}` : '';
+      return {
+        id: `cycle-${e.id}`,
+        date: e.date_event,
+        d: parseInt(e.date_event.split('-')[2], 10),
+        m: parseInt(e.date_event.split('-')[1], 10) - 1,
+        y: parseInt(e.date_event.split('-')[0], 10),
+        cat: 'sport',
+        i: icon,
+        c: tc,
+        bg: bg,
+        t: e.nom,
+        s: trajet + km,
+        h: '',
+        dt: e.date_event,
+        lieu: e.arrivee || e.depart || '',
+        v: e.arrivee || '',
+        px: '',
+        desc: `🚴 ${e.course}\n${e.nom}${trajet ? '\n📍 ' + trajet : ''}${km ? '\n📏' + km : ''}`,
+        rel: [],
+        src: 'Cyclisme 2026'
+      };
+    });
+
+    EVT.push(...cycleEvents);
+    console.log(`✅ ${cycleEvents.length} événements cyclisme chargés`);
+  } catch(e) {
+    console.log('❌ Cyclisme load error:', e.message);
   }
 }
 
