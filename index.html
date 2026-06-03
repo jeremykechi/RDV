@@ -995,6 +995,7 @@ async function loadEventsFromDB() {
     EVT.push(...dbEvents);
     console.log(`✅ ${dbEvents.length} événements chargés depuis Supabase`);
     await loadMeteoFromDB();
+    await loadFeriesFromDB();
     rAll();
   } catch(e) {
     console.log('❌ DB load error:', e.message, '— using static data');
@@ -1039,6 +1040,47 @@ async function loadMeteoFromDB() {
     console.log(`✅ ${meteoEvents.length} jours météo chargés depuis Supabase`);
   } catch(e) {
     console.log('❌ Meteo load error:', e.message);
+  }
+}
+
+// Load jours fériés from Supabase
+async function loadFeriesFromDB() {
+  try {
+    const res = await fetch(`${SUPA_URL}/rest/v1/jours_feries?select=*&order=date.asc`, {
+      headers: {
+        'apikey': SUPA_KEY,
+        'Authorization': `Bearer ${SUPA_KEY}`
+      }
+    });
+    const data = await res.json();
+    if (!data || !data.length) return;
+
+    const feriesEvents = data.map(e => ({
+      id: e.id,
+      date: e.date,
+      d: parseInt(e.date.split('-')[2], 10),
+      m: parseInt(e.date.split('-')[1], 10) - 1,
+      y: parseInt(e.date.split('-')[0], 10),
+      cat: 'feries',
+      i: '🏛',
+      c: '#fff',
+      bg: '#6366F1',
+      t: e.nom,
+      s: 'Jour férié',
+      h: '',
+      dt: e.date,
+      lieu: 'France',
+      v: 'France',
+      px: '',
+      desc: `🏛 ${e.nom} — Jour férié en France`,
+      rel: [],
+      src: 'Officiel'
+    }));
+
+    EVT.push(...feriesEvents);
+    console.log(`✅ ${feriesEvents.length} jours fériés chargés depuis Supabase`);
+  } catch(e) {
+    console.log('❌ Feries load error:', e.message);
   }
 }
 
