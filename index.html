@@ -235,7 +235,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   </div>
   <div class="cats">
     <div class="pill on" style="background:#E8334A;border-color:#E8334A" onclick="sCat(this,'all')">✦ Tout</div>
-    <div class="pill off" onclick="sCat(this,'feries')">🏛 Officiel</div>
+    <div class="pill off" onclick="sCat(this,'feries')">🏛 Fériés</div>
+    <div class="pill off" onclick="sCat(this,'vacances')">🏫 Vacances</div>
     <div class="pill off" onclick="sCat(this,'meteo')">🌤 Météo</div>
     <div class="pill off" onclick="sCat(this,'sport')">⚽ Sport</div>
     <div class="pill off" onclick="sCat(this,'culture')">🎭 Culture</div>
@@ -349,7 +350,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="sw-section">
       <div class="sw-section-title">Cat&#233;gories actives</div>
       <div class="sw-card"><div class="sw-chip-wrap" id="sw-cats">
-        <button class="sw-chip on" style="background:#6366F1;color:#fff" data-cat="feries" onclick="toggleChip(this)">🏛 Officiel</button>
+        <button class="sw-chip on" style="background:#6366F1;color:#fff" data-cat="feries" onclick="toggleChip(this)">🏛 Fériés</button>
+        <button class="sw-chip on" style="background:#8B5CF6;color:#fff" data-cat="vacances" onclick="toggleChip(this)">🏫 Vacances</button>
         <button class="sw-chip on" style="background:#0EA5E9;color:#fff" data-cat="meteo" onclick="toggleChip(this)">&#127780; Météo</button>
         <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-cat="sport" onclick="toggleChip(this)">&#9917; Sport</button>
         <button class="sw-chip on" style="background:#7C3AED;color:#fff" data-cat="culture" onclick="toggleChip(this)">&#127917; Culture</button>
@@ -558,7 +560,7 @@ function sCat(el,c){
   cat=c;
   document.querySelectorAll('.pill').forEach(p=>{p.className='pill off';p.style.background='';p.style.borderColor='';});
   el.className='pill on';
-  const cols={all:'#E8334A',feries:'#6366F1',sport:'#1D4ED8',culture:'#7C3AED',business:'#059669',tourisme:'#10B981',mode:'#DB2777',meteo:'#0EA5E9',enfants:'#F97316'};
+  const cols={all:'#E8334A',feries:'#6366F1',vacances:'#8B5CF6',sport:'#1D4ED8',culture:'#7C3AED',business:'#059669',tourisme:'#10B981',mode:'#DB2777',meteo:'#0EA5E9',enfants:'#F97316'};
   el.style.background=cols[c]||'#555';
   el.style.borderColor=cols[c]||'#555';
   rAll();
@@ -877,6 +879,11 @@ function setZone(el, zone) {
   });
   el.classList.add('on'); el.style.background='#6366F1'; el.style.color='#fff';
   localStorage.setItem('kalendi-zone', zone);
+  // Recharger les vacances avec la nouvelle zone
+  for (let i = EVT.length - 1; i >= 0; i--) {
+    if (EVT[i].cat === 'vacances') EVT.splice(i, 1);
+  }
+  loadVacancesFromDB().then(() => rAll());
 }
 function toggleVille(el){
   document.querySelectorAll('#sw-villes .sw-chip').forEach(c=>{c.classList.remove('on');c.style.background='';c.style.color='';});
@@ -1078,8 +1085,11 @@ async function loadFeriesFromDB() {
       src: 'Officiel'
     }));
 
-    EVT.push(...feriesEvents);
-    console.log(`✅ ${feriesEvents.length} jours fériés chargés depuis Supabase`);
+    // Dédupliquer par date
+    const datesExistantes = new Set(EVT.filter(e => e.cat === 'feries').map(e => e.date));
+    const feriesSansDuplicates = feriesEvents.filter(e => !datesExistantes.has(e.date));
+    EVT.push(...feriesSansDuplicates);
+    console.log(`✅ ${feriesSansDuplicates.length} jours fériés chargés depuis Supabase`);
   } catch(e) {
     console.log('❌ Feries load error:', e.message);
   }
@@ -1119,10 +1129,10 @@ async function loadVacancesFromDB() {
           d: day,
           m: month,
           y: year,
-          cat: 'feries',
-          i: getVacIcon(v.nom),
-          c: '#fff',
-          bg: '#6366F1',
+          cat: 'vacances',
+          i: '🏫',
+          c: 'var(--tx)',
+          bg: 'transparent',
           t: `Vacances ${v.nom}`,
           s: `Zone ${v.zone} · ${v.annee_scolaire}`,
           h: '',
