@@ -235,13 +235,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   </div>
   <div class="cats">
     <div class="pill on" style="background:#E8334A;border-color:#E8334A" onclick="sCat(this,'all')">✦ Tout</div>
-    <div class="pill off" onclick="sCat(this,'feries')">🗓 Fériés</div>
+    <div class="pill off" onclick="sCat(this,'feries')">🏛 Officiel</div>
+    <div class="pill off" onclick="sCat(this,'meteo')">🌤 Météo</div>
     <div class="pill off" onclick="sCat(this,'sport')">⚽ Sport</div>
     <div class="pill off" onclick="sCat(this,'culture')">🎭 Culture</div>
     <div class="pill off" onclick="sCat(this,'business')">📈 Business</div>
     <div class="pill off" onclick="sCat(this,'tourisme')">🗺 Sorties</div>
     <div class="pill off" onclick="sCat(this,'mode')">👗 Mode</div>
-    <div class="pill off" onclick="sCat(this,'meteo')">🌤 Météo</div>
     <div class="pill off" onclick="sCat(this,'enfants')">👶 Enfants</div>
   </div>
   <div class="scr">
@@ -349,15 +349,29 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="sw-section">
       <div class="sw-section-title">Cat&#233;gories actives</div>
       <div class="sw-card"><div class="sw-chip-wrap" id="sw-cats">
-        <button class="sw-chip on" style="background:#6366F1;color:#fff" data-cat="feries" onclick="toggleChip(this)">&#127987; Jours F&#233;ri&#233;s</button>
+        <button class="sw-chip on" style="background:#6366F1;color:#fff" data-cat="feries" onclick="toggleChip(this)">🏛 Officiel</button>
+        <button class="sw-chip on" style="background:#0EA5E9;color:#fff" data-cat="meteo" onclick="toggleChip(this)">&#127780; Météo</button>
         <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-cat="sport" onclick="toggleChip(this)">&#9917; Sport</button>
         <button class="sw-chip on" style="background:#7C3AED;color:#fff" data-cat="culture" onclick="toggleChip(this)">&#127917; Culture</button>
         <button class="sw-chip on" style="background:#059669;color:#fff" data-cat="business" onclick="toggleChip(this)">&#128200; Business</button>
         <button class="sw-chip on" style="background:#10B981;color:#fff" data-cat="tourisme" onclick="toggleChip(this)">&#128506; Sorties</button>
         <button class="sw-chip on" style="background:#DB2777;color:#fff" data-cat="mode" onclick="toggleChip(this)">&#128248; Mode</button>
-        <button class="sw-chip on" style="background:#0EA5E9;color:#fff" data-cat="meteo" onclick="toggleChip(this)">&#127780; M&#233;t&#233;o</button>
         <button class="sw-chip on" style="background:#F97316;color:#fff" data-cat="enfants" onclick="toggleChip(this)">&#128118; Enfants</button>
       </div></div>
+    </div>
+
+    <div class="sw-section">
+      <div class="sw-section-title">🏫 Zone de vacances scolaires</div>
+      <div class="sw-card"><div class="sw-chip-wrap" id="sw-zone">
+        <button class="sw-chip" data-pref="zone-a" onclick="setZone(this,'A')">Zone A</button>
+        <button class="sw-chip on" style="background:#6366F1;color:#fff" data-pref="zone-b" onclick="setZone(this,'B')">Zone B</button>
+        <button class="sw-chip" data-pref="zone-c" onclick="setZone(this,'C')">Zone C</button>
+      </div></div>
+      <div style="padding:0 16px 12px;font-size:11px;color:var(--tx2)">
+        Zone A : Besançon, Bordeaux, Clermont-Ferrand, Dijon, Grenoble, Limoges, Lyon, Poitiers<br>
+        Zone B : Aix-Marseille, Amiens, Caen, Lille, Nancy-Metz, Nantes, Nice, Orléans-Tours, Reims, Rennes, Rouen, Strasbourg<br>
+        Zone C : Créteil, Montpellier, Paris, Toulouse, Versailles
+      </div>
     </div>
 
     <div class="sw-section">
@@ -857,6 +871,13 @@ function toggleChip(el){
     el.style.color='#fff';
   }
 }
+function setZone(el, zone) {
+  document.querySelectorAll('#sw-zone .sw-chip').forEach(c => {
+    c.classList.remove('on'); c.style.background=''; c.style.color='';
+  });
+  el.classList.add('on'); el.style.background='#6366F1'; el.style.color='#fff';
+  localStorage.setItem('kalendi-zone', zone);
+}
 function toggleVille(el){
   document.querySelectorAll('#sw-villes .sw-chip').forEach(c=>{c.classList.remove('on');c.style.background='';c.style.color='';});
   el.classList.add('on');el.style.background='#E8334A';el.style.color='#fff';
@@ -906,6 +927,14 @@ function loadSettings(){
       c.style.color=on?'#fff':'';
     });
   }
+  // Restore zone scolaire
+  const zone=localStorage.getItem('kalendi-zone')||'B';
+  document.querySelectorAll('#sw-zone .sw-chip').forEach(c=>{
+    const on=c.dataset.pref===`zone-${zone.toLowerCase()}`;
+    c.classList.toggle('on',on);
+    c.style.background=on?'#6366F1':'';
+    c.style.color=on?'#fff':'';
+  });
 }
 
 </script>
