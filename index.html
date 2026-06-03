@@ -1501,9 +1501,6 @@ async function loadNBAFromDB() {
 // Load Cyclisme 2026 from Supabase
 async function loadCyclismeFromDB() {
   try {
-    const prefs = getActivePrefs();
-    if (!prefs.includes('cyclisme')) return;
-
     const res = await fetch(`${SUPA_URL}/rest/v1/cyclisme_2026?select=*&order=date_event.asc`, {
       headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` }
     });
