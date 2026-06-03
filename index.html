@@ -379,8 +379,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
 
     <div class="sw-section">
-      <div class="sw-section-title">&#9917; Football &#8212; mes clubs</div>
+      <div class="sw-section-title">&#9917; Football</div>
       <div class="sw-card"><div class="sw-chip-wrap" id="sw-foot">
+        <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="cdm" onclick="toggleChip(this)">🏆 Coupe du Monde</button>
         <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="psg" onclick="toggleChip(this)">PSG</button>
         <button class="sw-chip" data-pref="om" onclick="toggleChip(this)">OM</button>
         <button class="sw-chip" data-pref="ol" onclick="toggleChip(this)">OL</button>
@@ -577,8 +578,8 @@ function srcMatchesPref(src,prefs){
   if(s.includes('cyclisme')&&prefs.includes('cyclisme'))return true;
   if(s.includes('golf')&&prefs.includes('golf'))return true;
   // Si la source ne correspond à aucun pref connu, on l'affiche quand même
-  if(s.includes('cdm')&&prefs.includes('foot'))return true;
-  const knownSrcs=['f1','motogp','cdm','tennis','foot','basket','rugby','cyclisme','golf'];
+  if(s.includes('cdm')&&prefs.includes('cdm'))return true;
+  const knownSrcs=['f1','motogp','cdm 2026','tennis','foot','basket','rugby','cyclisme','golf'];
   if(!knownSrcs.some(k=>s.includes(k)))return true;
   return false;
 }
@@ -1233,7 +1234,7 @@ async function loadF1FromDB() {
         d: parseInt(r.date_quali.split('-')[2], 10),
         m: parseInt(r.date_quali.split('-')[1], 10) - 1,
         y: parseInt(r.date_quali.split('-')[0], 10),
-        cat: 'sport', i: '🏎️', c: '#fff', bg: '#CC0000',
+        cat: 'sport', i: '🏎️', c: '#CC0000', bg: 'transparent',
         t: `Qualifications — ${r.nom}`,
         s: `${r.circuit} · ${r.ville}`,
         h: r.heure_quali, dt: r.date_quali,
@@ -1252,7 +1253,7 @@ async function loadF1FromDB() {
           d: parseInt(r.date_sprint.split('-')[2], 10),
           m: parseInt(r.date_sprint.split('-')[1], 10) - 1,
           y: parseInt(r.date_sprint.split('-')[0], 10),
-          cat: 'sport', i: '⚡', c: '#fff', bg: '#E10600',
+          cat: 'sport', i: '⚡', c: '#CC0000', bg: 'transparent',
           t: `Sprint — ${r.nom}`,
           s: `${r.circuit} · ${r.ville}`,
           h: r.heure_sprint, dt: r.date_sprint,
@@ -1271,7 +1272,7 @@ async function loadF1FromDB() {
         d: parseInt(r.date_course.split('-')[2], 10),
         m: parseInt(r.date_course.split('-')[1], 10) - 1,
         y: parseInt(r.date_course.split('-')[0], 10),
-        cat: 'sport', i: '🏆', c: '#fff', bg: '#E10600',
+        cat: 'sport', i: '🏎️', c: '#CC0000', bg: 'transparent',
         t: r.nom,
         s: `${r.circuit} · ${r.ville}`,
         h: r.heure_course, dt: r.date_course,
@@ -1310,7 +1311,7 @@ async function loadMotoGPFromDB() {
           d: parseInt(r.date_quali.split('-')[2], 10),
           m: parseInt(r.date_quali.split('-')[1], 10) - 1,
           y: parseInt(r.date_quali.split('-')[0], 10),
-          cat: 'sport', i: '🏍️', c: '#fff', bg: '#CC0000',
+          cat: 'sport', i: '🏍️', c: '#0369A1', bg: 'transparent',
           t: `Qualifications — ${r.nom}`,
           s: `${r.circuit} · ${r.ville}`,
           h: r.heure_quali, dt: r.date_quali,
@@ -1327,7 +1328,7 @@ async function loadMotoGPFromDB() {
           d: parseInt(r.date_sprint.split('-')[2], 10),
           m: parseInt(r.date_sprint.split('-')[1], 10) - 1,
           y: parseInt(r.date_sprint.split('-')[0], 10),
-          cat: 'sport', i: '⚡', c: '#fff', bg: '#CC0000',
+          cat: 'sport', i: '⚡', c: '#0369A1', bg: 'transparent',
           t: `Sprint — ${r.nom}`,
           s: `${r.circuit} · ${r.ville}`,
           h: r.heure_sprint, dt: r.date_sprint,
@@ -1343,7 +1344,7 @@ async function loadMotoGPFromDB() {
         d: parseInt(r.date_course.split('-')[2], 10),
         m: parseInt(r.date_course.split('-')[1], 10) - 1,
         y: parseInt(r.date_course.split('-')[0], 10),
-        cat: 'sport', i: '🏆', c: '#fff', bg: '#CC0000',
+        cat: 'sport', i: '🏍️', c: '#0369A1', bg: 'transparent',
         t: r.nom,
         s: `${r.circuit} · ${r.ville}`,
         h: r.heure_course, dt: r.date_course,
