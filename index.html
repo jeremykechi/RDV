@@ -65,12 +65,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .dn.tod{background:var(--red);color:#fff;border-radius:50%;width:23px;height:23px;display:flex;align-items:center;justify-content:center;font-weight:700}
 .dn.dim{color:var(--tx3);font-weight:400}
 .dico{display:flex;flex-wrap:wrap;gap:1px;justify-content:center;margin-top:2px;max-width:46px}
-.ei{width:14px;height:14px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0}
+.ei{width:18px;height:18px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
 .els{padding:11px 15px;flex:1}
 .elt{font-size:11px;font-weight:700;color:var(--tx2);margin-bottom:9px;text-transform:uppercase;letter-spacing:.6px}
 .ec{background:var(--sur);border:1px solid var(--bd);border-radius:14px;padding:11px 13px;margin-bottom:8px;cursor:pointer;display:flex;align-items:flex-start;gap:10px;transition:all .15s}
 .ec:hover{border-color:var(--bd2);background:var(--sur2)}
-.eico{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.eico{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
 .etm{font-size:10px;color:var(--tx3);text-align:center;margin-top:3px;font-weight:500}
 .en{font-size:13px;font-weight:700;color:var(--tx);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .es{font-size:11px;color:var(--tx2)}
@@ -397,6 +397,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
 
     <div class="sw-section">
+      <div class="sw-section-title">&#127936; NBA — mes équipes</div>
+      <div class="sw-card"><div class="sw-chip-wrap" id="sw-nba">
+        <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="knicks" onclick="toggleChip(this)">🗽 Knicks</button>
+        <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="spurs" onclick="toggleChip(this)">🤠 Spurs</button>
+        <button class="sw-chip" data-pref="lakers" onclick="toggleChip(this)">💛 Lakers</button>
+        <button class="sw-chip" data-pref="celtics" onclick="toggleChip(this)">🍀 Celtics</button>
+        <button class="sw-chip" data-pref="warriors" onclick="toggleChip(this)">🌉 Warriors</button>
+        <button class="sw-chip" data-pref="bulls" onclick="toggleChip(this)">🐂 Bulls</button>
+        <button class="sw-chip" data-pref="heat" onclick="toggleChip(this)">🔥 Heat</button>
+        <button class="sw-chip" data-pref="nuggets" onclick="toggleChip(this)">⛏️ Nuggets</button>
+        <button class="sw-chip" data-pref="thunder" onclick="toggleChip(this)">⚡ Thunder</button>
+        <button class="sw-chip" data-pref="cavaliers" onclick="toggleChip(this)">⚔️ Cavaliers</button>
+        <button class="sw-chip" data-pref="76ers" onclick="toggleChip(this)">🔔 76ers</button>
+        <button class="sw-chip" data-pref="pistons" onclick="toggleChip(this)">🔧 Pistons</button>
+      </div></div>
+    </div>
+
+    <div class="sw-section">
       <div class="sw-section-title">&#127941; Autres sports</div>
       <div class="sw-card"><div class="sw-chip-wrap" id="sw-sport">
         <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="f1" onclick="toggleChip(this)">&#127950; F1</button>
@@ -563,7 +581,7 @@ function getActiveCats(){
   return chips.length?[...chips].map(c=>c.dataset.cat):null;
 }
 function getActivePrefs(){
-  const chips=document.querySelectorAll('#sw-sport .sw-chip.on, #sw-foot .sw-chip.on');
+  const chips=document.querySelectorAll('#sw-sport .sw-chip.on, #sw-foot .sw-chip.on, #sw-nba .sw-chip.on');
   return [...chips].map(c=>c.dataset.pref);
 }
 function srcMatchesPref(src,prefs){
@@ -579,7 +597,8 @@ function srcMatchesPref(src,prefs){
   if(s.includes('golf')&&prefs.includes('golf'))return true;
   // Si la source ne correspond à aucun pref connu, on l'affiche quand même
   if(s.includes('cdm')&&prefs.includes('cdm'))return true;
-  const knownSrcs=['f1','motogp','cdm 2026','tennis','foot','basket','rugby','cyclisme','golf'];
+  if(s.includes('nba')){const nbaTeams=['knicks','spurs','lakers','celtics','warriors','bulls','heat','nuggets','thunder','cavaliers','76ers','pistons'];return nbaTeams.some(t=>prefs.includes(t)&&(s.includes(t)||true));}
+  const knownSrcs=['f1','motogp','cdm 2026','nba playoffs 2026','tennis','foot','basket','rugby','cyclisme','golf'];
   if(!knownSrcs.some(k=>s.includes(k)))return true;
   return false;
 }
@@ -1056,6 +1075,7 @@ async function loadEventsFromDB() {
     await loadF1FromDB();
     await loadMotoGPFromDB();
     await loadCDMFromDB();
+    await loadNBAFromDB();
     rAll();
   } catch(e) {
     console.log('❌ DB load error:', e.message);
@@ -1065,6 +1085,7 @@ async function loadEventsFromDB() {
     await loadF1FromDB();
     await loadMotoGPFromDB();
     await loadCDMFromDB();
+    await loadNBAFromDB();
     rAll();
   }
 }
@@ -1408,6 +1429,59 @@ async function loadCDMFromDB() {
     console.log(`✅ ${cdmEvents.length} matchs Coupe du Monde chargés`);
   } catch(e) {
     console.log('❌ CDM load error:', e.message);
+  }
+}
+
+// Load NBA Playoffs 2026 from Supabase
+async function loadNBAFromDB() {
+  try {
+    const prefs = getActivePrefs();
+    const res = await fetch(`${SUPA_URL}/rest/v1/nba_playoffs_2026?select=*&order=date_match.asc`, {
+      headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` }
+    });
+    const data = await res.json();
+    if (!data || !data.length) return;
+
+    const nbaTeams = ['knicks','spurs','lakers','celtics','warriors','bulls','heat','nuggets','thunder','cavaliers','76ers','pistons'];
+    const activeTeams = prefs.filter(p => nbaTeams.includes(p));
+
+    // Filtrer : afficher si une des équipes est dans les préfs (ou toutes si aucune pref NBA)
+    const filtered = activeTeams.length === 0 ? data : data.filter(m => {
+      const e1 = m.equipe1.toLowerCase();
+      const e2 = m.equipe2.toLowerCase();
+      return activeTeams.some(t => e1.includes(t) || e2.includes(t));
+    });
+
+    const nbaEvents = filtered.map(m => {
+      const score = m.termine && m.score1 !== null ? ` (${m.score1}-${m.score2})` : '';
+      const label = m.termine ? `✓ ${m.equipe1} - ${m.equipe2}${score}` : `${m.equipe1} vs ${m.equipe2}`;
+      return {
+        id: `nba-${m.id}`,
+        date: m.date_match,
+        d: parseInt(m.date_match.split('-')[2], 10),
+        m: parseInt(m.date_match.split('-')[1], 10) - 1,
+        y: parseInt(m.date_match.split('-')[0], 10),
+        cat: 'sport',
+        i: '🏀',
+        c: m.termine ? '#888' : '#C9082A',
+        bg: 'transparent',
+        t: label,
+        s: `${m.round} · Game ${m.game}`,
+        h: m.heure_fr,
+        dt: m.date_match,
+        lieu: 'NBA',
+        v: 'NBA',
+        px: '',
+        desc: `🏀 NBA Playoffs 2026\n${m.round} — Game ${m.game}\n${m.equipe1} vs ${m.equipe2}\n⏰ ${m.heure_fr}${score ? '\n🏁 Score : ' + m.score1 + ' - ' + m.score2 : ''}`,
+        rel: [],
+        src: 'NBA Playoffs 2026'
+      };
+    });
+
+    EVT.push(...nbaEvents);
+    console.log(`✅ ${nbaEvents.length} matchs NBA chargés`);
+  } catch(e) {
+    console.log('❌ NBA load error:', e.message);
   }
 }
 
