@@ -255,8 +255,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       </div>
     </div>
     <div class="vt">
-      <button class="vb" onclick="sV(this)">Mois</button>
-      <button class="vb on" onclick="sV(this)">Semaine</button>
+      <button class="vb on" onclick="sV(this)">Mois</button>
+      <button class="vb" onclick="sV(this)">Semaine</button>
       <button class="vb" onclick="sV(this)">Jour</button>
     </div>
     <div class="cg">
@@ -643,9 +643,19 @@ function rCal(){
     if(ev.length){
       const france=ev.find(e=>e.i==='🇫🇷');
       const autres=ev.filter(e=>e.i!=='🇫🇷');
-      if(france&&autres.length>0){icEvts=[france,autres[0]];}
-      else if(france){icEvts=[france];}
-      else{icEvts=[ev[0]];}
+      if(france&&autres.length>0){
+        // France + un autre événement favori
+        icEvts=[france, autres[0]];
+      } else if(france){
+        icEvts=[france];
+      } else if(ev.length>=2){
+        // 2 événements favoris différents sans France
+        const cats=[...new Set(ev.map(e=>e.cat+e.i))];
+        if(cats.length>=2){icEvts=[ev[0],ev.find(e=>e.cat+e.i!==cats[0])||ev[1]];}
+        else{icEvts=[ev[0]];}
+      } else {
+        icEvts=[ev[0]];
+      }
     }
     const ic=icEvts.length?'<div class="dico">'+icEvts.map(e=>'<div class="ei" style="background:'+e.bg+'" title="'+e.t+'">'+e.i+'</div>').join('')+'</div>':'';
     return '<div class="dc'+(sel?' sel':'')+'"'+(oth?'':' onclick="sD('+d+')"')+'>'+
@@ -1545,7 +1555,8 @@ setInterval(tick,30000);
 
 // Init on load
 window.addEventListener('load', () => {
-  // Boot the calendar
+  // Appliquer les préférences avant le premier rendu
+  loadSettings();
   rAll();
   // Connect to Supabase
   if (initSupabase()) {
