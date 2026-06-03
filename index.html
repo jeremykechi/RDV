@@ -250,6 +250,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <span class="cm" id="cm"></span>
       <div class="cnav">
         <button onclick="chM(-1)">&#8592;</button>
+        <button onclick="goToday()" style="font-size:11px;padding:4px 10px;border-radius:20px;background:var(--red);color:#fff;border:none;font-weight:600;cursor:pointer">Aujourd'hui</button>
         <button onclick="chM(1)">&#8594;</button>
       </div>
     </div>
@@ -615,6 +616,7 @@ function rEvts(){
 }
 
 function rAll(){rCal();rEvts();}
+function goToday(){const n=new Date();cM=n.getMonth();cY=n.getFullYear();sDay=n.getDate();rAll();}
 function sD(d){sDay=d;rAll();}
 function chM(dir){cM+=dir;if(cM>11){cM=0;cY++;}if(cM<0){cM=11;cY--;}rAll();}
 function sV(b){document.querySelectorAll('.vb').forEach(x=>x.classList.remove('on'));b.classList.add('on');}
