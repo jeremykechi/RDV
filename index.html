@@ -128,6 +128,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .toggle.on::after{transform:translateX(20px)}
 .sw-chip-wrap{display:flex;flex-wrap:wrap;gap:7px;padding:14px 16px}
 .sw-chip{padding:6px 13px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--bd2);background:none;color:var(--tx2);font-family:inherit;transition:all .2s}
+.sw-cat-row{display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:12px}
+.sw-inall{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--bd2);background:none;color:var(--tx2);font-size:12px;cursor:pointer;flex-shrink:0;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.sw-inall.on{background:var(--cc,#E8334A);color:#fff;border-color:transparent}
 .sw-chip.on{color:#fff;border-color:transparent}
 .sw-profile-header{margin:20px 20px 0;display:flex;align-items:center;gap:14px;padding:16px;background:var(--sur);border:1px solid var(--bd);border-radius:14px}
 .sw-avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#E8334A,#1A1A2E);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
@@ -349,19 +352,46 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
 
     <div class="sw-section">
-      <div class="sw-section-title">✦ Affichage "Tout"</div>
-      <div style="padding:0 16px 10px;font-size:11px;color:var(--tx2)">Sélectionne les catégories visibles quand tu cliques sur "Tout"</div>
-      <div class="sw-card"><div class="sw-chip-wrap" id="sw-cats">
-        <button class="sw-chip on" style="background:#6366F1;color:#fff" data-cat="feries" onclick="toggleChip(this)">🏛 Fériés</button>
-        <button class="sw-chip on" style="background:#8B5CF6;color:#fff" data-cat="vacances" onclick="toggleChip(this)">🏫 Vacances</button>
-        <button class="sw-chip on" style="background:#0EA5E9;color:#fff" data-cat="meteo" onclick="toggleChip(this)">&#127780; Météo</button>
-        <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-cat="sport" onclick="toggleChip(this)">&#9917; Sport</button>
-        <button class="sw-chip on" style="background:#7C3AED;color:#fff" data-cat="culture" onclick="toggleChip(this)">&#127917; Culture</button>
-        <button class="sw-chip on" style="background:#059669;color:#fff" data-cat="business" onclick="toggleChip(this)">&#128200; Business</button>
-        <button class="sw-chip on" style="background:#10B981;color:#fff" data-cat="tourisme" onclick="toggleChip(this)">&#128506; Sorties</button>
-        <button class="sw-chip on" style="background:#DB2777;color:#fff" data-cat="mode" onclick="toggleChip(this)">&#128248; Mode</button>
-        <button class="sw-chip on" style="background:#F97316;color:#fff" data-cat="enfants" onclick="toggleChip(this)">&#128118; Enfants</button>
-      </div></div>
+      <div class="sw-section-title">&#128197; Catégories</div>
+      <div style="padding:0 16px 10px;font-size:11px;color:var(--tx2)">Active les catégories · ✦ = visible dans "Tout"</div>
+      <div class="sw-card" style="padding:4px 8px">
+        <div class="sw-cat-row" data-cat="feries" style="--cc:#6366F1">
+          <button class="sw-chip on" style="background:#6366F1;color:#fff" data-cat="feries" onclick="toggleCat(this)">🏛 Fériés</button>
+          <button class="sw-inall on" data-cat="feries" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
+        </div>
+        <div class="sw-cat-row" data-cat="vacances" style="--cc:#8B5CF6">
+          <button class="sw-chip on" style="background:#8B5CF6;color:#fff" data-cat="vacances" onclick="toggleCat(this)">🏫 Vacances</button>
+          <button class="sw-inall on" data-cat="vacances" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
+        </div>
+        <div class="sw-cat-row" data-cat="meteo" style="--cc:#0EA5E9">
+          <button class="sw-chip on" style="background:#0EA5E9;color:#fff" data-cat="meteo" onclick="toggleCat(this)">🌤 Météo</button>
+          <button class="sw-inall on" data-cat="meteo" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
+        </div>
+        <div class="sw-cat-row" data-cat="sport" style="--cc:#1D4ED8">
+          <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-cat="sport" onclick="toggleCat(this)">⚽ Sport</button>
+          <button class="sw-inall on" data-cat="sport" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
+        </div>
+        <div class="sw-cat-row" data-cat="culture" style="--cc:#7C3AED">
+          <button class="sw-chip on" style="background:#7C3AED;color:#fff" data-cat="culture" onclick="toggleCat(this)">🎭 Culture</button>
+          <button class="sw-inall on" data-cat="culture" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
+        </div>
+        <div class="sw-cat-row" data-cat="business" style="--cc:#059669">
+          <button class="sw-chip on" style="background:#059669;color:#fff" data-cat="business" onclick="toggleCat(this)">📈 Business</button>
+          <button class="sw-inall on" data-cat="business" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
+        </div>
+        <div class="sw-cat-row" data-cat="tourisme" style="--cc:#10B981">
+          <button class="sw-chip on" style="background:#10B981;color:#fff" data-cat="tourisme" onclick="toggleCat(this)">🗺 Sorties</button>
+          <button class="sw-inall on" data-cat="tourisme" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
+        </div>
+        <div class="sw-cat-row" data-cat="mode" style="--cc:#DB2777">
+          <button class="sw-chip on" style="background:#DB2777;color:#fff" data-cat="mode" onclick="toggleCat(this)">👗 Mode</button>
+          <button class="sw-inall on" data-cat="mode" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
+        </div>
+        <div class="sw-cat-row" data-cat="enfants" style="--cc:#F97316">
+          <button class="sw-chip on" style="background:#F97316;color:#fff" data-cat="enfants" onclick="toggleCat(this)">👶 Enfants</button>
+          <button class="sw-inall on" data-cat="enfants" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
+        </div>
+      </div>
     </div>
 
     <div class="sw-section">
@@ -577,8 +607,14 @@ const EVT=[];
 
 // ─── LOGIQUE APP ──────────────────────────────────────────────────────────────
 function getActiveCats(){
-  const chips=document.querySelectorAll('#sw-cats .sw-chip.on');
+  // Catégories actives = sw-chip.on dans sw-cat-row
+  const chips=document.querySelectorAll('.sw-cat-row .sw-chip.on');
   return chips.length?[...chips].map(c=>c.dataset.cat):null;
+}
+function getInAllCats(){
+  // Catégories qui s'affichent dans "Tout" = sw-inall.on
+  const btns=document.querySelectorAll('.sw-inall.on');
+  return [...btns].map(b=>b.dataset.cat);
 }
 function getActivePrefs(){
   const chips=document.querySelectorAll('#sw-sport .sw-chip.on, #sw-foot .sw-chip.on, #sw-nba .sw-chip.on');
@@ -605,15 +641,21 @@ function srcMatchesPref(src,prefs){
 }
 function filt(){
   const activeCats=getActiveCats();
+  const inAllCats=getInAllCats();
   const activePrefs=getActivePrefs();
   let evts=EVT;
   if(cat==='all'){
-    if(activeCats)evts=evts.filter(e=>activeCats.includes(e.cat));
-  } else {
-    evts=evts.filter(e=>e.cat===cat);
-  }
-  if(cat==='sport'||cat==='all'){
+    // Dans "Tout" : uniquement les catégories cochées ✦
+    evts=evts.filter(e=>inAllCats.includes(e.cat));
+    // Pour sport : filtrer aussi par préfs
     evts=evts.filter(e=>e.cat!=='sport'||srcMatchesPref(e.src,activePrefs));
+  } else {
+    // Dans une catégorie : uniquement si la catégorie est active
+    if(activeCats&&!activeCats.includes(cat)){return [];}
+    evts=evts.filter(e=>e.cat===cat);
+    if(cat==='sport'){
+      evts=evts.filter(e=>srcMatchesPref(e.src,activePrefs));
+    }
   }
   return evts;
 }
@@ -941,6 +983,28 @@ function closeSettings(){
   document.getElementById('sw').classList.remove('open');
   document.getElementById('mw').classList.remove('gone');
 }
+function toggleCat(el){
+  const row=el.closest('.sw-cat-row');
+  const inall=row?row.querySelector('.sw-inall'):null;
+  const isOn=el.classList.contains('on');
+  if(isOn){
+    el.classList.remove('on');el.style.background='';el.style.color='';
+    // Désactiver aussi "dans Tout"
+    if(inall){inall.classList.remove('on');}
+  } else {
+    el.classList.add('on');
+    const colors={feries:'#6366F1',vacances:'#8B5CF6',meteo:'#0EA5E9',sport:'#1D4ED8',culture:'#7C3AED',business:'#059669',tourisme:'#10B981',mode:'#DB2777',enfants:'#F97316'};
+    const cat=el.dataset.cat;
+    el.style.background=colors[cat]||'#E8334A';el.style.color='#fff';
+  }
+}
+function toggleInAll(el){
+  const row=el.closest('.sw-cat-row');
+  const chip=row?row.querySelector('.sw-chip'):null;
+  // Ne peut être actif que si la catégorie est active
+  if(!chip||!chip.classList.contains('on'))return;
+  el.classList.toggle('on');
+}
 function toggleChip(el){
   const isOn=el.classList.contains('on');
   if(isOn){el.classList.remove('on');el.style.background='';el.style.color='';}
@@ -973,11 +1037,13 @@ function toggleVille(el){
 function toggleSwitch(el){el.classList.toggle('on');}
 function saveSettings(){
   const cats=[];
-  document.querySelectorAll('#sw-cats .sw-chip.on').forEach(c=>cats.push(c.dataset.cat));
+  document.querySelectorAll('.sw-cat-row .sw-chip.on').forEach(c=>cats.push(c.dataset.cat));
+  const inall=[];
+  document.querySelectorAll('.sw-inall.on').forEach(b=>inall.push(b.dataset.cat));
   const prefs=[];
   document.querySelectorAll('.sw-chip.on[data-pref]').forEach(c=>prefs.push(c.dataset.pref));
   const ville=document.querySelector('#sw-villes .sw-chip.on')?.dataset?.pref||'paris';
-  localStorage.setItem('kalendi-settings',JSON.stringify({cats,prefs,ville,savedAt:new Date().toISOString()}));
+  localStorage.setItem('kalendi-settings',JSON.stringify({cats,inall,prefs,ville,savedAt:new Date().toISOString()}));
   rAll();
   const toast=document.getElementById('savedToast');
   toast.classList.add('show');
@@ -990,13 +1056,18 @@ function loadSettings(){
   const s=JSON.parse(saved);
   const colors={feries:'#6366F1',sport:'#1D4ED8',culture:'#7C3AED',business:'#059669',tourisme:'#10B981',mode:'#DB2777',meteo:'#0EA5E9',enfants:'#F97316'};
   if(s.cats){
-    document.querySelectorAll('#sw-cats .sw-chip').forEach(c=>{
+    document.querySelectorAll('.sw-cat-row .sw-chip').forEach(c=>{
       const on=s.cats.includes(c.dataset.cat);
       c.classList.toggle('on',on);
       c.style.background=on?(colors[c.dataset.cat]||'#E8334A'):'';
       c.style.color=on?'#fff':'';
     });
   }
+  const inall=s.inall||['feries','vacances','meteo','sport','culture','business','tourisme','mode','enfants'];
+  document.querySelectorAll('.sw-inall').forEach(b=>{
+    const on=inall.includes(b.dataset.cat);
+    b.classList.toggle('on',on);
+  });
   if(s.prefs){
     document.querySelectorAll('.sw-chip[data-pref]').forEach(c=>{
       if(c.closest('#sw-villes'))return;
