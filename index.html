@@ -996,6 +996,7 @@ async function loadEventsFromDB() {
     console.log(`✅ ${dbEvents.length} événements chargés depuis Supabase`);
     await loadMeteoFromDB();
     await loadFeriesFromDB();
+    await loadVacancesFromDB();
     rAll();
   } catch(e) {
     console.log('❌ DB load error:', e.message, '— using static data');
@@ -1082,6 +1083,70 @@ async function loadFeriesFromDB() {
   } catch(e) {
     console.log('❌ Feries load error:', e.message);
   }
+}
+
+// Load vacances scolaires from Supabase
+async function loadVacancesFromDB() {
+  try {
+    const zone = localStorage.getItem('kalendi-zone') || 'B';
+    const res = await fetch(`${SUPA_URL}/rest/v1/vacances_scolaires?select=*&order=date_debut.asc`, {
+      headers: {
+        'apikey': SUPA_KEY,
+        'Authorization': `Bearer ${SUPA_KEY}`
+      }
+    });
+    const data = await res.json();
+    if (!data || !data.length) return;
+
+    // Filtrer par zone (ABC = communes à toutes les zones)
+    const filtered = data.filter(v => v.zone === zone || v.zone === 'ABC');
+
+    const vacEvents = [];
+    filtered.forEach(v => {
+      // Générer un événement par jour
+      const start = new Date(v.date_debut);
+      const end = new Date(v.date_fin);
+      for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+        const dateStr = d.toISOString().split('T')[0];
+        vacEvents.push({
+          id: `vac-${dateStr}-${v.zone}`,
+          date: dateStr,
+          d: d.getDate(),
+          m: d.getMonth(),
+          y: d.getFullYear(),
+          cat: 'feries',
+          i: getVacIcon(v.nom),
+          c: '#fff',
+          bg: '#6366F1',
+          t: `Vacances ${v.nom}`,
+          s: `Zone ${v.zone} · ${v.annee_scolaire}`,
+          h: '',
+          dt: dateStr,
+          lieu: 'France',
+          v: 'France',
+          px: '',
+          desc: `🏫 Vacances ${v.nom} — Zone ${v.zone}\n📅 Du ${v.date_debut} au ${v.date_fin}`,
+          rel: [],
+          src: 'Officiel'
+        });
+      }
+    });
+
+    EVT.push(...vacEvents);
+    console.log(`✅ ${vacEvents.length} jours de vacances chargés (Zone ${zone})`);
+  } catch(e) {
+    console.log('❌ Vacances load error:', e.message);
+  }
+}
+
+function getVacIcon(nom) {
+  if (nom === 'Été') return '☀️';
+  if (nom === 'Noël') return '🎄';
+  if (nom === 'Toussaint') return '🍂';
+  if (nom === 'Hiver') return '⛷️';
+  if (nom === 'Printemps') return '🌸';
+  if (nom === 'Ascension') return '✝️';
+  return '🏫';
 }
 
 function getWeatherIcon(code) {
