@@ -32,10 +32,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 @media(max-width:430px){body{padding:0}}
 @media(orientation:landscape){
   .app{flex-direction:row}
-  #week-grid{--week-h:100dvh}
+  #week-grid{--week-h:100dvh;--hr-h:calc((100dvh - 130px) / 24 * 1.2)}
 }
 @media(orientation:portrait){
-  #week-grid{--week-h:100dvh}
+  #week-grid{--week-h:100dvh;--hr-h:calc((100dvh - 160px) / 24 * 1.2)}
 }
 .phone{width:390px;max-width:100vw;background:var(--sur);border-radius:44px;border:1px solid var(--bd2);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 32px 80px rgba(0,0,0,0.18);min-height:844px}
 @media(max-width:430px){.phone{border-radius:0;min-height:100vh;min-height:100dvh;border:none;width:100vw;max-width:100vw}}
