@@ -270,13 +270,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <button class="vb" onclick="sV(this)">Semaine</button>
       <button class="vb" onclick="sV(this)">Jour</button>
     </div>
-    <div class="cg">
-      <div class="chd"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
-      <div class="cd" id="cd"></div>
+    <div id="view-mois">
+      <div class="cg">
+        <div class="chd"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
+        <div class="cd" id="cd"></div>
+      </div>
+      <div class="els">
+        <div class="elt" id="elt"></div>
+        <div id="el"></div>
+      </div>
     </div>
-    <div class="els">
-      <div class="elt" id="elt"></div>
-      <div id="el"></div>
+    <div id="view-semaine" style="display:none"></div>
+    <div id="view-jour" style="display:none">
+      <div class="els">
+        <div class="elt" id="elt-jour"></div>
+        <div id="el-jour"></div>
+      </div>
     </div>
   </div>
   <div class="bnav">
@@ -911,7 +920,99 @@ function rEvts(){
   ||'<div class="empty">Aucun événement ce jour<br><span style="font-size:11px;opacity:.7">Navigue dans le calendrier ↑</span></div>';
 }
 
-function rAll(){rCal();rEvts();}
+function getView(){
+  const on=document.querySelector('.vb.on');
+  return on?on.textContent.trim():'Mois';
+}
+function showView(v){
+  document.getElementById('view-mois').style.display=v==='Mois'?'':'none';
+  document.getElementById('view-semaine').style.display=v==='Semaine'?'':'none';
+  document.getElementById('view-jour').style.display=v==='Jour'?'':'none';
+}
+function rAll(){
+  const v=getView();
+  showView(v);
+  if(v==='Semaine')rWeek();
+  else if(v==='Jour')rDay();
+  else{rCal();rEvts();}
+}
+
+function rDay(){
+  const fe=filt();
+  const de=fe.filter(e=>e.d===sDay&&e.m===cM&&e.y===cY)
+    .sort((a,b)=>(a.h||'').localeCompare(b.h||''));
+  const dn=new Date(cY,cM,sDay);
+  document.getElementById('cm').textContent=MO[cM]+' '+cY;
+  document.getElementById('elt-jour').textContent=
+    de.length?DJ[dn.getDay()]+' '+sDay+' '+MO[cM]:'';
+  document.getElementById('el-jour').innerHTML=de.map(e=>`
+    <div class="ec" onclick="openD('${e.id}')">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;min-width:38px">
+        <div class="eico" style="background:${e.bg}">${e.i}</div>
+        <div class="etm">${e.h.split(' ')[0]}</div>
+      </div>
+      <div style="flex:1;min-width:0">
+        <div class="en">${e.t}</div>
+        <div class="es">${e.s}</div>
+        <div style="display:flex;align-items:center;margin-top:4px;flex-wrap:wrap;gap:3px">
+          <span class="eb" style="background:${e.bg};color:${e.c}">${e.h}</span>
+          <span class="srcb">${e.src}</span>
+        </div>
+      </div>
+      <i class="ti ti-chevron-right" style="font-size:16px;color:var(--tx3);flex-shrink:0;align-self:center"></i>
+    </div>`).join('')
+  ||'<div class="empty">Aucun événement ce jour<br><span style="font-size:11px;opacity:.7">Navigue avec les flèches ↑</span></div>';
+}
+
+function rWeek(){
+  const fe=filt();
+  // Trouver le lundi de la semaine courante
+  const cur=new Date(cY,cM,sDay);
+  const dow=(cur.getDay()+6)%7; // 0=lundi
+  const monday=new Date(cur);
+  monday.setDate(cur.getDate()-dow);
+  document.getElementById('cm').textContent=MO[cM]+' '+cY;
+
+  const days=[];
+  for(let i=0;i<7;i++){
+    const d=new Date(monday);
+    d.setDate(monday.getDate()+i);
+    days.push(d);
+  }
+
+  const dayNames=['L','M','M','J','V','S','D'];
+  let h='<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;padding:8px 8px 0">';
+
+  // Header jours
+  days.forEach((d,i)=>{
+    const isToday=d.getDate()===now.getDate()&&d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();
+    const isSel=d.getDate()===sDay&&d.getMonth()===cM&&d.getFullYear()===cY;
+    h+=`<div style="text-align:center;cursor:pointer;padding:4px 2px;border-radius:8px;${isSel?'background:var(--dark)':''}" onclick="sDay=${d.getDate()};cM=${d.getMonth()};cY=${d.getFullYear()};rAll()">
+      <div style="font-size:10px;color:var(--tx2);font-weight:500">${dayNames[i]}</div>
+      <div style="font-size:14px;font-weight:700;${isToday?'color:var(--red)':isSel?'color:#fff':'color:var(--tx)'}">${d.getDate()}</div>
+    </div>`;
+  });
+  h+='</div>';
+
+  // Événements par jour
+  h+='<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;padding:4px 8px;align-items:start">';
+  days.forEach(d=>{
+    const evts=fe.filter(e=>e.d===d.getDate()&&e.m===d.getMonth()&&e.y===d.getFullYear())
+      .sort((a,b)=>(a.h||'').localeCompare(b.h||''));
+    h+='<div style="display:flex;flex-direction:column;gap:3px;min-height:60px">';
+    evts.slice(0,4).forEach(e=>{
+      h+=`<div onclick="openD('${e.id}')" style="background:${e.bg||'var(--sur2)'};border-radius:5px;padding:3px 4px;cursor:pointer;overflow:hidden">
+        <div style="font-size:10px;font-weight:600;color:${e.c||'var(--tx)'};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${e.i} ${e.t}</div>
+        ${e.h?`<div style="font-size:9px;opacity:.8;color:${e.c||'var(--tx2)'}">${e.h}</div>`:''}
+      </div>`;
+    });
+    if(evts.length>4)h+=`<div style="font-size:9px;color:var(--tx2);text-align:center">+${evts.length-4}</div>`;
+    h+='</div>';
+  });
+  h+='</div>';
+
+  document.getElementById('view-semaine').innerHTML=h;
+}
 
 // Pull-to-refresh
 (function(){
@@ -951,8 +1052,24 @@ function rAll(){rCal();rEvts();}
 })();
 function goToday(){const n=new Date();cM=n.getMonth();cY=n.getFullYear();sDay=n.getDate();rAll();}
 function sD(d){sDay=d;rAll();}
-function chM(dir){cM+=dir;if(cM>11){cM=0;cY++;}if(cM<0){cM=11;cY--;}rAll();}
-function sV(b){document.querySelectorAll('.vb').forEach(x=>x.classList.remove('on'));b.classList.add('on');}
+function chM(dir){
+  const v=getView();
+  if(v==='Semaine'){
+    // Naviguer par semaine
+    const d=new Date(cY,cM,sDay);
+    d.setDate(d.getDate()+dir*7);
+    cM=d.getMonth();cY=d.getFullYear();sDay=d.getDate();
+  } else if(v==='Jour'){
+    // Naviguer par jour
+    const d=new Date(cY,cM,sDay);
+    d.setDate(d.getDate()+dir);
+    cM=d.getMonth();cY=d.getFullYear();sDay=d.getDate();
+  } else {
+    cM+=dir;if(cM>11){cM=0;cY++;}if(cM<0){cM=11;cY--;}
+  }
+  rAll();
+}
+function sV(b){document.querySelectorAll('.vb').forEach(x=>x.classList.remove('on'));b.classList.add('on');rAll();}
 
 function openD(id){
   const e=EVT.find(x=>x.id===id);
