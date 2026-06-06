@@ -7,74 +7,41 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Kalendi">
 <meta name="application-name" content="Kalendi">
-<meta name="theme-color" content="#08081A">
+<meta name="theme-color" content="#1A1A2E">
 <meta name="description" content="Kalendi — Ton calendrier personnel d'événements : sport, culture, mode, sorties et plus.">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" sizes="152x152" href="data:image/png;base64,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">
+<link rel="apple-touch-icon" sizes="167x167" href="data:image/png;base64,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">
+<link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,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">
+<link rel="icon" type="image/png" sizes="192x192" href="data:image/png;base64,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">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
 <title>Kalendi</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
-/* === COSMOS DESIGN SYSTEM === */
-/* Full dark, violet profond, micro-typographie premium */
-
 *{box-sizing:border-box;margin:0;padding:0}
-
-/* Color tokens — Two-tone: dark shell + light content */
 :root{
   --red:#A78BFA;
-  --red-act:#8B5CF6;
   --dark:#08081A;
-  --bg:#1A1535;
-  --sur:#1E1840;
-  --sur2:#261F50;
-  --tx:#E8E4FF;
-  --tx2:#9B96CC;
-  --tx3:#5A5488;
-  --bd:rgba(167,139,250,0.13);
-  --bd2:rgba(167,139,250,0.25);
+  --sur:#111128;
+  --sur2:#18183A;
+  --tx:#EEEEFF;
+  --tx2:#7878AA;
+  --tx3:#3A3A6A;
+  --bd:rgba(167,139,250,0.1);
+  --bd2:rgba(167,139,250,0.22);
   --accent:#A78BFA;
-  --accent2:#C4B5FD;
-  /* Content zone: light lavender */
-  --cz-bg:#EDE9FE;
-  --cz-bg2:#E8E3FF;
-  --cz-tx:#2D1F6E;
-  --cz-tx2:#6B5FA8;
-  --cz-tx3:#9D94CC;
-  --cz-bd:rgba(124,58,237,0.15);
-  --cz-card:#F5F2FF;
-  --cz-card2:#EEE9FF;
+  /* Content zone = light lavender glass */
+  --cz:#1D1A4A;
+  --cz2:#231F56;
 }
-
-body{
-  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  background:#050510;
-  display:flex;
-  justify-content:center;
-  align-items:flex-start;
-  padding:0;
-  margin:0;
-  min-height:100vh;
-  min-height:100dvh;
-}
-
-/* Pull to refresh */
-.ptr-indicator{
-  position:absolute;top:0;left:50%;
-  transform:translateX(-50%) translateY(-60px);
-  background:var(--sur2);border-radius:50%;
-  width:40px;height:40px;display:flex;
-  align-items:center;justify-content:center;
-  font-size:18px;
-  box-shadow:0 2px 16px rgba(167,139,250,0.2);
-  transition:transform .2s;z-index:100;pointer-events:none;
-}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#050510;display:flex;justify-content:center;align-items:flex-start;padding:0;margin:0;min-height:100vh;min-height:100dvh}
+.ptr-indicator{position:absolute;top:0;left:50%;transform:translateX(-50%) translateY(-60px);background:#1D1A4A;border:1px solid rgba(167,139,250,0.2);border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 2px 16px rgba(100,60,200,0.25);transition:transform .2s;z-index:100;pointer-events:none}
 .ptr-indicator.visible{transform:translateX(-50%) translateY(8px)}
 .ptr-indicator.spinning{animation:spin .7s linear infinite}
 @keyframes spin{from{transform:translateX(-50%) translateY(8px) rotate(0deg)}to{transform:translateX(-50%) translateY(8px) rotate(360deg)}}
-
 @media(max-width:430px){body{padding:0}}
 @media(orientation:landscape){
   .app{flex-direction:row}
@@ -83,391 +50,218 @@ body{
 @media(orientation:portrait){
   #week-grid{--week-h:100dvh;--hr-h:calc((100dvh - 160px) / 24)}
 }
-
-/* Phone shell */
-.phone{
-  width:390px;max-width:100vw;
-  background:var(--dark);
-  border-radius:44px;
-  border:1px solid rgba(167,139,250,0.2);
-  overflow:hidden;display:flex;flex-direction:column;
-  box-shadow:0 32px 80px rgba(0,0,0,0.7),0 0 0 1px rgba(167,139,250,0.08);
-  min-height:844px;
-}
-@media(max-width:430px){
-  .phone{border-radius:0;min-height:100vh;min-height:100dvh;border:none;width:100vw;max-width:100vw}
-}
-
-/* Status bar */
-.sb{
-  background:var(--dark);
-  padding:calc(env(safe-area-inset-top,0px) + 14px) 28px 8px;
-  display:flex;justify-content:space-between;align-items:center;
-}
-.sb span{color:rgba(255,255,255,0.5);font-size:12px;font-weight:500}
-
-/* App header */
-.ah{
-  background:var(--dark);
-  padding:8px 22px 14px;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.logo{font-size:22px;font-weight:800;color:#fff;letter-spacing:-1px}
+.phone{width:390px;max-width:100vw;background:var(--dark);border-radius:44px;border:1px solid rgba(167,139,250,0.18);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 32px 80px rgba(0,0,0,0.7);min-height:844px}
+@media(max-width:430px){.phone{border-radius:0;min-height:100vh;min-height:100dvh;border:none;width:100vw;max-width:100vw}}
+.sb{background:var(--dark);padding:calc(env(safe-area-inset-top,0px) + 14px) 28px 8px;display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+.sb span{color:rgba(255,255,255,0.45);font-size:12px;font-weight:500}
+.ah{background:var(--dark);padding:10px 22px 14px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:22px;font-weight:700;color:#fff;letter-spacing:-.5px}
 .logo em{color:var(--accent);font-style:normal}
 .hico{display:flex;gap:14px}
-.hico i{color:rgba(255,255,255,0.4);font-size:21px;cursor:pointer;transition:color .15s}
-.hico i:hover{color:var(--accent)}
-
-/* Category pills */
-.cats{
-  background:var(--dark);
-  padding:0 16px 13px;
-  display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;
-}
+.hico i{color:rgba(255,255,255,.38);font-size:21px;cursor:pointer;transition:color .15s}
+.cats{background:var(--dark);padding:0 16px 13px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
 .cats::-webkit-scrollbar{display:none}
-.pill{
-  padding:6px 13px;border-radius:20px;
-  font-size:11px;font-weight:600;white-space:nowrap;cursor:pointer;
-  border:1px solid transparent;transition:all .2s;
-  display:flex;align-items:center;gap:5px;
-}
+.pill{padding:6px 13px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;cursor:pointer;border:1.5px solid transparent;transition:all .2s;display:flex;align-items:center;gap:5px}
 .pill.on{color:#fff}
-.pill.off{
-  background:rgba(255,255,255,0.05);
-  color:rgba(255,255,255,0.35);
-  border-color:rgba(255,255,255,0.07);
-}
-.pill.off:hover{background:rgba(255,255,255,0.09);color:rgba(255,255,255,0.6)}
-
-/* Main wrapper */
+.pill.off{background:rgba(255,255,255,.05);color:rgba(255,255,255,.32);border-color:rgba(255,255,255,.07)}
 .mw{display:flex;flex-direction:column;flex:1;overflow:hidden;min-height:0}
 .mw.gone{display:none}
 .dw{display:none;flex-direction:column;flex:1;overflow:hidden;min-height:0}
 .dw.open{display:flex}
-.scr{flex:1;overflow-y:auto;scrollbar-width:none;display:flex;flex-direction:column;background:linear-gradient(180deg,#EDE9FE 0%,#E8E3FF 100%)}
+.scr{flex:1;overflow-y:auto;scrollbar-width:none;display:flex;flex-direction:column;background:var(--dark)}
 .scr::-webkit-scrollbar{display:none}
-
-/* Calendar header */
-.ch{display:flex;align-items:center;justify-content:space-between;padding:14px 22px 9px}
-.cm{font-size:17px;font-weight:700;color:#2D1F6E}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:14px 22px 9px;background:var(--dark)}
+.cm{font-size:17px;font-weight:700;color:#fff}
 .cnav{display:flex;gap:5px}
-.cnav button{background:none;border:none;cursor:pointer;color:#9D94CC;font-size:26px;line-height:1;padding:0 6px;transition:color .12s}
-.cnav button:hover{color:var(--accent)}
-
-/* View toggle */
-.vt{
-  display:flex;border:1px solid var(--bd);border-radius:9px;
-  overflow:hidden;margin:0 20px 11px;
-  background:rgba(255,255,255,0.35);
-}
-.vb{
-  flex:1;padding:7px;font-size:12px;cursor:pointer;
-  background:none;border:none;color:#7B72B8;
-  font-family:inherit;font-weight:500;transition:all .2s;
-}
-.vb.on{background:#7C3AED;color:#fff;font-weight:700}
-
-/* Calendar grid */
-.cg{padding:0 12px}
+.cnav button{background:none;border:none;cursor:pointer;color:rgba(255,255,255,0.35);font-size:26px;line-height:1;padding:0 6px}
+.cnav button:hover{color:var(--tx)}
+.vt{display:flex;border:1px solid rgba(167,139,250,0.12);border-radius:9px;overflow:hidden;margin:0 20px 11px;background:rgba(255,255,255,0.04)}
+.vb{flex:1;padding:7px;font-size:12px;cursor:pointer;background:none;border:none;color:rgba(255,255,255,0.35);font-family:inherit;font-weight:500}
+.vb.on{background:var(--accent);color:#fff;font-weight:700}
+.cg{margin:0 14px 4px;background:linear-gradient(145deg,#1D1A4A,#1A1640);border:1px solid rgba(167,139,250,0.18);border-radius:22px;padding:12px 10px 10px}
 .chd{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:4px}
-.chd span{text-align:center;font-size:11px;color:#8C82C0;font-weight:700;padding:3px 0;letter-spacing:.3px}
+.chd span{text-align:center;font-size:11px;color:rgba(167,139,250,0.45);font-weight:700;padding:3px 0;letter-spacing:.3px}
 .cd{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
-.dc{
-  min-height:54px;display:flex;flex-direction:column;align-items:center;
-  padding:4px 1px 3px;border-radius:9px;cursor:pointer;transition:background .12s;
-}
-.dc:hover{background:rgba(255,255,255,0.5)}
-.dc.sel{background:rgba(255,255,255,0.7);outline:1.5px solid rgba(124,58,237,0.4)}
-.dn{font-size:12px;color:#3D2E8A;line-height:23px;min-width:23px;text-align:center;font-weight:500}
-.dn.tod{
-  background:var(--accent);color:#fff;border-radius:50%;
-  width:23px;height:23px;display:flex;align-items:center;justify-content:center;
-  font-weight:800;font-size:11px;
-}
-.dn.dim{color:#AEA8D4;font-weight:400}
+.dc{min-height:54px;display:flex;flex-direction:column;align-items:center;padding:4px 1px 3px;border-radius:9px;cursor:pointer;transition:background .12s}
+.dc:hover{background:rgba(167,139,250,0.1)}
+.dc.sel{background:rgba(167,139,250,0.14);outline:1.5px solid rgba(167,139,250,0.35)}
+.dn{font-size:12px;color:rgba(255,255,255,0.75);line-height:23px;min-width:23px;text-align:center;font-weight:500}
+.dn.tod{background:var(--accent);color:#fff;border-radius:50%;width:23px;height:23px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px}
+.dn.dim{color:rgba(255,255,255,0.2);font-weight:400}
 .dico{display:flex;flex-wrap:wrap;gap:1px;justify-content:center;margin-top:2px;max-width:46px}
-
-/* Calendar day event icons — NO background in calendar dots, just emoji */
-.ei{
-  width:18px;height:18px;border-radius:4px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:13px;flex-shrink:0;
-  background:transparent !important;
-}
-
-/* Event list section */
-.els{padding:11px 15px;flex:1}
-.elt{
-  font-size:11px;font-weight:700;color:#7B72B8;margin-bottom:9px;
-  text-transform:uppercase;letter-spacing:.8px;
-}
-
-/* Event card — frosted lavender */
-.ec{
-  background:rgba(255,255,255,0.6);
-  border:1px solid rgba(167,139,250,0.2);
-  border-radius:14px;padding:11px 13px;margin-bottom:8px;
-  cursor:pointer;display:flex;align-items:flex-start;gap:10px;
-  transition:all .15s;
-  box-shadow:0 1px 12px rgba(100,60,200,0.07);
-}
-.ec:hover{border-color:rgba(124,58,237,0.35);background:rgba(255,255,255,0.85)}
-
-/* Event icon — large emoji, NO background */
-.eico{
-  width:42px;height:42px;border-radius:12px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:26px;flex-shrink:0;
-  background:transparent !important;
-}
-.etm{font-size:10px;color:#9D94CC;text-align:center;margin-top:1px;font-weight:600;letter-spacing:.2px}
-
-/* Event text */
-.en{font-size:13px;font-weight:700;color:#2D1F6E;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.es{font-size:11px;color:#7B72B8}
-
-/* Badge */
-.eb{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700;margin-top:4px;display:inline-block;letter-spacing:.2px}
-.srcb{
-  font-size:9px;padding:1px 5px;border-radius:4px;
-  background:rgba(255,255,255,0.5);color:#7B72B8;
-  border:1px solid rgba(124,58,237,0.15);margin-left:5px;font-weight:600;
-}
-
-/* Bottom nav */
-.bnav{
-  background:#08081A;
-  border-top:1px solid rgba(167,139,250,0.12);
-  backdrop-filter:blur(20px);
-  display:flex;justify-content:space-around;
-  padding:10px 0 calc(env(safe-area-inset-bottom,0px) + 12px);
-  flex-shrink:0;
-}
+.ei{width:18px;height:18px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;background:transparent!important}
+.els{padding:11px 14px;flex:1}
+.elt{font-size:11px;font-weight:700;color:#fff;margin-bottom:9px;text-transform:uppercase;letter-spacing:.8px}
+.ec{background:linear-gradient(145deg,#1D1A4A,#1A1640);border:1px solid rgba(167,139,250,0.15);border-radius:14px;padding:11px 13px;margin-bottom:8px;cursor:pointer;display:flex;align-items:flex-start;gap:10px;transition:all .15s}
+.ec:hover{border-color:rgba(167,139,250,0.32);background:linear-gradient(145deg,#231F56,#1E1B4B)}
+.eico{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;background:transparent!important}
+.etm{font-size:10px;color:rgba(167,139,250,0.5);text-align:center;margin-top:2px;font-weight:600}
+.en{font-size:13px;font-weight:700;color:#EEEEFF;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.es{font-size:11px;color:rgba(167,139,250,0.6)}
+.eb{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:600;margin-top:4px;display:inline-block}
+.srcb{font-size:9px;padding:1px 5px;border-radius:4px;background:rgba(255,255,255,0.05);color:rgba(167,139,250,0.5);border:1px solid rgba(167,139,250,0.12);margin-left:5px;font-weight:600}
+.bnav{background:#08081A;border-top:1px solid rgba(167,139,250,0.1);display:flex;justify-content:space-around;padding:10px 0 calc(env(safe-area-inset-bottom,0px) + 12px);flex-shrink:0}
 .bni{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px 16px}
-.bni i{font-size:24px;color:var(--tx3);transition:color .15s}
-.bni span{font-size:10px;color:var(--tx3);font-weight:600;transition:color .15s}
+.bni i{font-size:24px;color:rgba(255,255,255,0.22)}
+.bni span{font-size:10px;color:rgba(255,255,255,0.22);font-weight:600}
 .bni.on i,.bni.on span{color:var(--accent)}
-.bni:hover i,.bni:hover span{color:var(--accent2)}
-
-/* Detail screen */
-.dh{
-  background:var(--dark);padding:11px 20px 15px;
-  display:flex;align-items:center;gap:11px;flex-shrink:0;
-  border-bottom:1px solid var(--bd);
-}
-.dbk{
-  background:rgba(167,139,250,0.1);border:none;
-  color:var(--accent);cursor:pointer;font-size:20px;
-  padding:7px;border-radius:10px;display:flex;align-items:center;
-  transition:background .15s;
-}
-.dbk:hover{background:rgba(167,139,250,0.2)}
+.dh{background:var(--dark);padding:11px 20px 15px;display:flex;align-items:center;gap:11px;flex-shrink:0}
+.dbk{background:rgba(167,139,250,0.12);border:none;color:var(--accent);cursor:pointer;font-size:20px;padding:8px;border-radius:10px;display:flex;align-items:center}
 .dhi{flex:1}
-.dhi h2{font-size:15px;font-weight:700;color:var(--tx)}
-.dhi p{font-size:11px;color:var(--tx2)}
-.dhero{
-  height:130px;display:flex;align-items:center;justify-content:center;
-  font-size:54px;flex-shrink:0;
-  background:transparent;
-  border-bottom:1px solid rgba(124,58,237,0.12);
-}
-.dscr{flex:1;overflow-y:auto;scrollbar-width:none;background:linear-gradient(180deg,#EDE9FE 0%,#E8E3FF 100%)}
+.dhi h2{font-size:15px;font-weight:700;color:#EEEEFF}
+.dhi p{font-size:11px;color:rgba(255,255,255,.5)}
+.dhero{height:130px;display:flex;align-items:center;justify-content:center;font-size:54px;flex-shrink:0;background:linear-gradient(145deg,#1D1A4A,#1A1640);border-bottom:1px solid rgba(167,139,250,0.12)}
+.dscr{flex:1;overflow-y:auto;scrollbar-width:none;background:var(--dark)}
 .dscr::-webkit-scrollbar{display:none}
-.dcon{padding:15px 18px}
-.dttl{font-size:19px;font-weight:700;margin-bottom:4px;color:#2D1F6E}
-.ddes{font-size:13px;color:#7B72B8;margin-bottom:13px;line-height:1.6;white-space:pre-line}
-.dr{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid rgba(124,58,237,0.12)}
+.dcon{padding:15px 18px;background:linear-gradient(145deg,#1D1A4A,#1A1640);margin:12px;border-radius:18px;border:1px solid rgba(167,139,250,0.14)}
+.dttl{font-size:19px;font-weight:700;margin-bottom:4px;color:#EEEEFF}
+.ddes{font-size:13px;color:rgba(167,139,250,0.65);margin-bottom:13px;line-height:1.6;white-space:pre-line}
+.dr{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid rgba(167,139,250,0.1)}
 .dr i{font-size:17px;color:var(--accent);margin-top:1px;flex-shrink:0}
-.drt p{font-size:13px;color:#2D1F6E;font-weight:600}
-.drt span{font-size:11px;color:#8C82C0}
+.drt p{font-size:13px;color:#EEEEFF;font-weight:600}
+.drt span{font-size:11px;color:rgba(167,139,250,0.55)}
 .dact{display:flex;gap:8px;padding:13px 16px;flex-shrink:0}
-.ab{
-  flex:1;padding:10px 4px;border-radius:11px;
-  border:1px solid rgba(167,139,250,0.25);background:rgba(255,255,255,0.55);
-  font-size:12px;font-weight:600;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;gap:5px;
-  color:#5B21B6;font-family:inherit;transition:all .15s;
-}
-.ab:hover{background:rgba(255,255,255,0.85);color:#4C1D95}
+.ab{flex:1;padding:10px 4px;border-radius:11px;border:1px solid rgba(167,139,250,0.2);background:rgba(167,139,250,0.08);font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;color:var(--accent);font-family:inherit;transition:all .15s}
+.ab:hover{background:rgba(167,139,250,0.16)}
 .ab.pri{background:var(--accent);border-color:var(--accent);color:#fff}
-.ab.pri:hover{background:var(--accent2)}
 .rel{padding:0 18px 20px}
-.relt{font-size:11px;font-weight:700;color:#8C82C0;margin-bottom:9px;text-transform:uppercase;letter-spacing:.6px}
-.ri{display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid rgba(124,58,237,0.12);cursor:pointer}
-.rd{font-size:11px;color:var(--tx3);min-width:54px;font-weight:600}
-.rn{font-size:13px;color:#2D1F6E;flex:1;font-weight:500}
-.empty{text-align:center;padding:32px;color:#9D94CC;font-size:13px;line-height:1.8}
+.relt{font-size:11px;font-weight:700;color:rgba(167,139,250,0.5);margin-bottom:9px;text-transform:uppercase;letter-spacing:.6px}
+.ri{display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid rgba(167,139,250,0.1);cursor:pointer}
+.rd{font-size:11px;color:rgba(167,139,250,0.4);min-width:54px;font-weight:600}
+.rn{font-size:13px;color:#EEEEFF;flex:1;font-weight:500}
+.empty{text-align:center;padding:32px;color:rgba(167,139,250,0.35);font-size:13px;line-height:1.8}
 
-/* Settings screen */
+/* ── Settings Screen ─────────────────────────────────────── */
 .sw{display:none;flex-direction:column;flex:1;overflow:hidden;min-height:0}
 .sw.open{display:flex}
-.sw-scr{flex:1;overflow-y:auto;scrollbar-width:none;padding-bottom:32px;background:linear-gradient(180deg,#EDE9FE 0%,#E4DEFF 100%)}
+.sw-scr{flex:1;overflow-y:auto;scrollbar-width:none;padding-bottom:32px;background:var(--dark)}
 .sw-scr::-webkit-scrollbar{display:none}
 .sw-section{padding:20px 20px 0}
-.sw-section-title{
-  font-size:11px;font-weight:700;color:#7C3AED;
-  text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px;
-}
-.sw-card{
-  background:rgba(255,255,255,0.6);
-  border:1px solid rgba(167,139,250,0.2);border-radius:14px;
-  overflow:hidden;margin-bottom:8px;
-}
-.sw-row{
-  display:flex;align-items:center;gap:12px;
-  padding:13px 16px;border-bottom:1px solid var(--bd);
-  cursor:pointer;transition:background .12s;
-}
+.sw-section-title{font-size:11px;font-weight:700;color:rgba(167,139,250,0.6);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px}
+.sw-card{background:linear-gradient(145deg,#1D1A4A,#1A1640);border:1px solid rgba(167,139,250,0.14);border-radius:14px;overflow:hidden;margin-bottom:8px}
+.sw-row{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid rgba(167,139,250,0.08);cursor:pointer;transition:background .12s}
 .sw-row:last-child{border-bottom:none}
-.sw-row:hover{background:rgba(255,255,255,0.5)}
-.sw-row-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;background:rgba(255,255,255,0.6)}
+.sw-row:hover{background:rgba(167,139,250,0.07)}
+.sw-row-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;background:rgba(167,139,250,0.1)}
 .sw-row-label{flex:1}
-.sw-row-label p{font-size:14px;font-weight:500;color:#2D1F6E}
-.sw-row-label span{font-size:11px;color:#8C82C0}
-.toggle{
-  width:48px;height:28px;border-radius:14px;
-  background:rgba(255,255,255,0.1);position:relative;
-  cursor:pointer;transition:background .2s;
-  flex-shrink:0;border:none;padding:0;
-}
+.sw-row-label p{font-size:14px;font-weight:500;color:#EEEEFF}
+.sw-row-label span{font-size:11px;color:rgba(167,139,250,0.5)}
+.toggle{width:48px;height:28px;border-radius:14px;background:var(--bd2);position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;border:none;padding:0}
 .toggle.on{background:#7C3AED}
-.toggle::after{
-  content:'';position:absolute;width:22px;height:22px;
-  border-radius:50%;background:#fff;top:3px;left:3px;
-  transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.25);
-}
+.toggle::after{content:'';position:absolute;width:22px;height:22px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.25)}
 .toggle.on::after{transform:translateX(20px)}
 .sw-chip-wrap{display:flex;flex-wrap:wrap;gap:7px;padding:14px 16px}
-.sw-chip{
-  padding:6px 13px;border-radius:20px;font-size:12px;font-weight:600;
-  cursor:pointer;border:1px solid rgba(124,58,237,0.2);
-  background:rgba(255,255,255,0.4);color:#5B3FAA;font-family:inherit;transition:all .2s;
-}
-.sw-chip:hover{border-color:rgba(124,58,237,0.4);color:#2D1F6E;background:rgba(255,255,255,0.7)}
-.sw-chip.on{color:#fff;border-color:transparent}
+.sw-chip{padding:6px 13px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid rgba(167,139,250,0.18);background:rgba(255,255,255,0.03);color:rgba(167,139,250,0.6);font-family:inherit;transition:all .2s}
 .sw-cat-row{display:flex;align-items:center;gap:8px;padding:4px 8px;border-radius:12px}
-.sw-inall{
-  width:28px;height:28px;border-radius:50%;
-  border:1px solid rgba(124,58,237,0.25);background:rgba(255,255,255,0.3);
-  color:#9D94CC;font-size:12px;cursor:pointer;
-  flex-shrink:0;transition:all .2s;display:flex;align-items:center;justify-content:center;
-}
+.sw-inall{width:28px;height:28px;border-radius:50%;border:1px solid rgba(167,139,250,0.2);background:rgba(255,255,255,0.03);color:rgba(167,139,250,0.45);font-size:12px;cursor:pointer;flex-shrink:0;transition:all .2s;display:flex;align-items:center;justify-content:center}
 .sw-pref-row{display:flex;align-items:center;gap:6px;padding:3px 8px}
-.sw-pref-inall{
-  width:24px;height:24px;border-radius:50%;
-  border:1px solid rgba(124,58,237,0.2);background:rgba(255,255,255,0.3);
-  color:#9D94CC;font-size:10px;cursor:pointer;
-  flex-shrink:0;transition:all .2s;font-family:inherit;
-}
+.sw-pref-inall{width:24px;height:24px;border-radius:50%;border:1px solid rgba(167,139,250,0.18);background:rgba(255,255,255,0.03);color:rgba(167,139,250,0.4);font-size:10px;cursor:pointer;flex-shrink:0;transition:all .2s;font-family:inherit}
 .sw-pref-inall.on{background:var(--accent);color:#fff;border-color:transparent}
 .sw-inall.on{background:var(--cc,var(--accent));color:#fff;border-color:transparent}
-.sw-profile-header{
-  margin:20px 20px 0;display:flex;align-items:center;gap:14px;
-  padding:16px;background:rgba(255,255,255,0.55);
-  border:1px solid rgba(167,139,250,0.2);border-radius:14px;
-}
-.sw-avatar{
-  width:56px;height:56px;border-radius:50%;
-  background:linear-gradient(135deg,var(--accent),#312e81);
-  display:flex;align-items:center;justify-content:center;
-  font-size:24px;flex-shrink:0;
-}
-.sw-avatar-info h3{font-size:16px;font-weight:600;color:#2D1F6E}
-.sw-avatar-info p{font-size:12px;color:#8C82C0;margin-top:2px}
-.sw-save{
-  margin:20px;padding:14px;
-  background:linear-gradient(135deg,var(--accent),#6d28d9);
-  color:#fff;border:none;border-radius:14px;
-  font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;
-  width:calc(100% - 40px);display:flex;align-items:center;justify-content:center;gap:8px;
-  transition:opacity .15s;
-}
+.sw-chip.on{color:#fff;border-color:transparent}
+.sw-profile-header{margin:20px 20px 0;display:flex;align-items:center;gap:14px;padding:16px;background:linear-gradient(145deg,#1D1A4A,#1A1640);border:1px solid rgba(167,139,250,0.14);border-radius:14px}
+.sw-avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#312e81);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.sw-avatar-info h3{font-size:16px;font-weight:600;color:#EEEEFF}
+.sw-avatar-info p{font-size:12px;color:rgba(167,139,250,0.5);margin-top:2px}
+.sw-save{margin:20px;padding:14px;background:linear-gradient(135deg,var(--accent),#6d28d9);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;width:calc(100% - 40px);display:flex;align-items:center;justify-content:center;gap:8px}
 .sw-save:active{opacity:.85}
-.saved-toast{
-  position:fixed;bottom:100px;left:50%;
-  transform:translateX(-50%) translateY(20px);
-  background:#2D1B69;border:1px solid rgba(167,139,250,0.4);
-  color:#C4B5FD;padding:10px 20px;border-radius:20px;
-  font-size:13px;font-weight:600;opacity:0;
-  transition:all .3s;pointer-events:none;white-space:nowrap;z-index:9999;
-}
+.saved-toast{position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:rgba(167,139,250,0.18);backdrop-filter:blur(20px);border:1px solid rgba(167,139,250,0.3);color:#C4B5FD;padding:10px 20px;border-radius:20px;font-size:13px;font-weight:600;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;z-index:9999}
 .saved-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-/* Desktop centering */
+.sw{display:none;flex-direction:column;flex:1;overflow:hidden;min-height:0}
+.sw.open{display:flex}
+.sw-scr{flex:1;overflow-y:auto;scrollbar-width:none;padding-bottom:32px;background:var(--dark)}
+.sw-scr::-webkit-scrollbar{display:none}
+.sw-section{padding:20px 20px 0}
+.sw-section-title{font-size:11px;font-weight:700;color:rgba(167,139,250,0.6);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px}
+.sw-card{background:linear-gradient(145deg,#1D1A4A,#1A1640);border:1px solid rgba(167,139,250,0.14);border-radius:14px;overflow:hidden;margin-bottom:8px}
+.sw-row{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--bd);transition:background .12s}
+.sw-row:last-child{border-bottom:none}
+.sw-row:hover{background:rgba(167,139,250,0.07)}
+.sw-row-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;background:rgba(167,139,250,0.1)}
+.sw-row-label{flex:1}
+.sw-row-label p{font-size:14px;font-weight:500;color:#EEEEFF}
+.sw-row-label span{font-size:11px;color:rgba(167,139,250,0.5)}
+.toggle{width:48px;height:28px;border-radius:14px;background:var(--bd2);position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;border:none;padding:0}
+.toggle.on{background:#7C3AED}
+.toggle::after{content:'';position:absolute;width:22px;height:22px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.toggle.on::after{transform:translateX(20px)}
+.sw-chip-wrap{display:flex;flex-wrap:wrap;gap:7px;padding:14px 16px}
+.sw-chip{padding:6px 13px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid rgba(167,139,250,0.18);background:rgba(255,255,255,0.03);color:rgba(167,139,250,0.6);font-family:inherit;transition:all .2s}
+.sw-chip.on{color:#fff;border-color:transparent}
+.sw-profile-header{margin:20px 20px 0;display:flex;align-items:center;gap:14px;padding:16px;background:linear-gradient(145deg,#1D1A4A,#1A1640);border:1px solid rgba(167,139,250,0.14);border-radius:14px}
+.sw-avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#312e81);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.sw-avatar-info h3{font-size:16px;font-weight:600;color:#EEEEFF}
+.sw-avatar-info p{font-size:12px;color:rgba(167,139,250,0.5);margin-top:2px}
+.sw-save{margin:20px;padding:14px;background:linear-gradient(135deg,var(--accent),#6d28d9);color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;width:calc(100% - 40px);display:flex;align-items:center;justify-content:center;gap:8px}
+.saved-toast2x_already_done{display:none}
+.saved-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+
+
+
+
+/* ── DESKTOP — centre l'app comme un téléphone ── */
 @media(min-width:600px){
   body{
     background:linear-gradient(135deg,#050510,#0a0520,#050510);
-    display:flex;justify-content:center;align-items:flex-start;
-    padding:2rem 1rem;min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    padding:2rem 1rem;
+    min-height:100vh;
   }
   .phone{
-    width:390px;min-height:844px;border-radius:44px;
-    border:1px solid rgba(167,139,250,0.2);
-    box-shadow:0 32px 80px rgba(0,0,0,.8),0 0 80px rgba(100,60,200,0.08);
+    width:390px;
+    min-height:844px;
+    border-radius:44px;
+    border:1px solid rgba(255,255,255,.15);
+    box-shadow:0 32px 80px rgba(0,0,0,.8),0 0 80px rgba(100,60,200,0.06);
   }
-  .install-banner{width:390px;}
+  .install-banner{
+    width:390px;
+    border-radius:16px 16px 0 0;
+  }
 }
 
-/* Map screen */
+
+/* ── MAP SCREEN ──────────────────────────────────────────────────────────── */
 .mapw{display:none;flex-direction:column;flex:1;overflow:hidden;min-height:0}
 .mapw.open{display:flex}
 #leaflet-map{flex:1;width:100%;min-height:0}
-.map-filter{
-  background:var(--dark);padding:8px 14px;
-  display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;flex-shrink:0;
-  border-bottom:1px solid var(--bd);
-}
+.map-filter{background:var(--dark);padding:8px 14px;display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;flex-shrink:0}
 .map-filter::-webkit-scrollbar{display:none}
-.map-pill{
-  padding:5px 11px;border-radius:20px;font-size:11px;font-weight:600;
-  white-space:nowrap;cursor:pointer;border:1px solid rgba(167,139,250,0.15);
-  background:rgba(167,139,250,0.05);color:rgba(255,255,255,0.45);
-  font-family:inherit;transition:all .2s;
-}
-.map-pill:hover{color:rgba(255,255,255,0.75)}
+.map-pill{padding:5px 11px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap;cursor:pointer;border:1px solid rgba(167,139,250,0.15);background:rgba(167,139,250,0.06);color:rgba(255,255,255,.4);font-family:inherit;transition:all .2s}
 .map-pill.on{color:#fff}
-.map-event-list{
-  background:linear-gradient(180deg,#EDE9FE,#E8E3FF);border-top:1px solid rgba(124,58,237,0.12);
-  max-height:220px;overflow-y:auto;flex-shrink:0;
-}
-.map-event-item{
-  display:flex;align-items:center;gap:10px;padding:10px 14px;
-  border-bottom:0.5px solid var(--bd);cursor:pointer;transition:background .1s;
-}
-.map-event-item:hover{background:rgba(255,255,255,0.5)}
+.map-event-list{background:linear-gradient(145deg,#1D1A4A,#1A1640);border-top:1px solid rgba(167,139,250,0.12);max-height:220px;overflow-y:auto;flex-shrink:0}
+.map-event-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:0.5px solid rgba(167,139,250,0.1);cursor:pointer}
+.map-event-item:hover{background:rgba(167,139,250,0.08)}
 .map-event-ico{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
 .map-event-info{flex:1;min-width:0}
-.map-event-title{font-size:13px;font-weight:600;color:#2D1F6E;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.map-event-sub{font-size:11px;color:#8C82C0}
+.map-event-title{font-size:13px;font-weight:600;color:#EEEEFF;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.map-event-sub{font-size:11px;color:rgba(167,139,250,0.5)}
+
 
 .screens-wrap{flex:1;display:flex;flex-direction:column;overflow:hidden;min-height:0;position:relative}
 .screen-panel{display:none;flex-direction:column;flex:1;overflow:hidden;position:absolute;inset:0;background:var(--sur)}
 .screen-panel.active{display:flex}
 
-/* Week view */
-#week-grid{--week-h:100dvh;--hr-h:32px}
 </style>
 </head>
 <body>
 <div class="phone">
-
-<!-- STATUS BAR -->
 <div class="sb">
   <span id="clk">9:41</span>
   <span style="display:flex;gap:5px;align-items:center">
-    <i class="ti ti-wifi" style="font-size:14px;color:rgba(255,255,255,0.5)"></i>
-    <i class="ti ti-battery-2" style="font-size:14px;color:rgba(255,255,255,0.5)"></i>
+    <i class="ti ti-wifi" style="font-size:14px;color:#fff"></i>
+    <i class="ti ti-battery-2" style="font-size:14px;color:#fff"></i>
   </span>
 </div>
 
-<!-- MAIN VIEW -->
 <div class="mw" id="mw">
   <div class="ah">
-    <div class="logo"><span style="color:#fff">Kalen</span><em>di</em></div>
-    <div class="hico">
-      <i class="ti ti-bell" onclick="openNotifs()" style="cursor:pointer"></i>
-      <i class="ti ti-settings" onclick="openSettings()" style="cursor:pointer"></i>
-    </div>
+    <div class="logo"><span style="color:#fff">Kalen</span><em style="color:var(--red);font-style:normal">di</em></div>
+    <div class="hico"><i class="ti ti-bell" onclick="openNotifs()" style="cursor:pointer"></i><i class="ti ti-settings" onclick="openSettings()" style="cursor:pointer"></i></div>
   </div>
   <div class="cats">
     <div class="pill on" style="background:#A78BFA;border-color:#A78BFA" onclick="sCat(this,'all')">✦ Tout</div>
@@ -487,7 +281,7 @@ body{
       <span class="cm" id="cm"></span>
       <div class="cnav">
         <button onclick="chM(-1)">&#8592;</button>
-        <button onclick="goToday()" style="font-size:11px;padding:4px 12px;border-radius:20px;background:var(--accent);color:#fff;border:none;font-weight:700;cursor:pointer;letter-spacing:.2px">Aujourd'hui</button>
+        <button onclick="goToday()" style="font-size:11px;padding:4px 12px;border-radius:20px;background:#A78BFA;color:#fff;border:none;font-weight:700;cursor:pointer;letter-spacing:.2px">Aujourd'hui</button>
         <button onclick="chM(1)">&#8594;</button>
       </div>
     </div>
@@ -522,22 +316,24 @@ body{
   </div>
 </div>
 
+
+<!-- NOTIFICATIONS PANEL -->
 <!-- MAP SCREEN -->
 <div class="mapw" id="mapw">
-  <div class="sb"><span id="clk5">9:41</span><span style="display:flex;gap:5px;align-items:center"><i class="ti ti-wifi" style="font-size:14px;color:rgba(255,255,255,0.5)"></i><i class="ti ti-battery-2" style="font-size:14px;color:rgba(255,255,255,0.5)"></i></span></div>
+  <div class="sb"><span id="clk5">9:41</span><span style="display:flex;gap:5px;align-items:center"><i class="ti ti-wifi" style="font-size:14px;color:#fff"></i><i class="ti ti-battery-2" style="font-size:14px;color:#fff"></i></span></div>
   <div class="ah" style="padding:10px 20px 14px">
-    <div class="logo"><span style="color:#fff">Kalen</span><em>di</em></div>
+    <div class="logo"><span style="color:#fff">Kalen</span><em style="color:var(--red);font-style:normal">di</em></div>
     <div class="hico" style="margin-left:auto">
       <i class="ti ti-bell" onclick="openNotifs()" style="cursor:pointer"></i>
       <i class="ti ti-settings" onclick="openSettings()" style="cursor:pointer"></i>
     </div>
   </div>
   <div class="map-filter" id="mapFilter">
-    <button class="map-pill on" style="background:#A78BFA;border-color:#A78BFA" onclick="filterMap(this,'all')">✦ Tout</button>
-    <button class="map-pill" onclick="filterMap(this,'sport')">⚽ Sport</button>
-    <button class="map-pill" onclick="filterMap(this,'culture')">🎭 Culture</button>
-    <button class="map-pill" onclick="filterMap(this,'tourisme')">🗺 Sorties</button>
-    <button class="map-pill" onclick="filterMap(this,'mode')">👗 Mode</button>
+    <button class="map-pill on" style="background:#A78BFA;border-color:#A78BFA" onclick="filterMap(this,'all')">&#10022; Tout</button>
+    <button class="map-pill" onclick="filterMap(this,'sport')">&#9917; Sport</button>
+    <button class="map-pill" onclick="filterMap(this,'culture')">&#127917; Culture</button>
+    <button class="map-pill" onclick="filterMap(this,'tourisme')">&#128506; Sorties</button>
+    <button class="map-pill" onclick="filterMap(this,'mode')">&#128248; Mode</button>
   </div>
   <div id="leaflet-map"></div>
   <div class="map-event-list" id="mapEventList"></div>
@@ -545,33 +341,33 @@ body{
     <div class="bni" onclick="closeMap()"><i class="ti ti-calendar"></i><span>Agenda</span></div>
     <div class="bni on"><i class="ti ti-map-pin"></i><span>Carte</span></div>
     <div class="bni"><i class="ti ti-star"></i><span>Favoris</span></div>
-    <div class="bni" onclick="openSettings()"><i class="ti ti-settings"></i><span>Réglages</span></div>
+    <div class="bni" onclick="openSettings()"><i class="ti ti-settings"></i><span>R&#233;glages</span></div>
   </div>
 </div>
 
-<!-- NOTIFICATIONS SCREEN -->
 <div class="sw" id="nw">
-  <div class="sb"><span id="clk4">9:41</span><span style="display:flex;gap:5px;align-items:center"><i class="ti ti-wifi" style="font-size:14px;color:rgba(255,255,255,0.5)"></i><i class="ti ti-battery-2" style="font-size:14px;color:rgba(255,255,255,0.5)"></i></span></div>
+  <div class="sb"><span id="clk4">9:41</span><span style="display:flex;gap:5px;align-items:center"><i class="ti ti-wifi" style="font-size:14px;color:#fff"></i><i class="ti ti-battery-2" style="font-size:14px;color:#fff"></i></span></div>
   <div class="dh">
     <button class="dbk" onclick="closeNotifs()"><i class="ti ti-arrow-left"></i></button>
-    <div class="dhi"><h2>Notifications</h2><p>Tes événements à venir</p></div>
+    <div class="dhi"><h2>Notifications</h2><p>Tes &#233;v&#233;nements &#224; venir</p></div>
   </div>
   <div class="sw-scr">
     <div class="sw-section">
-      <div class="sw-section-title">📅 Prochainement</div>
-      <div class="sw-card" id="notif-list"></div>
+      <div class="sw-section-title">&#128197; Prochainement</div>
+      <div class="sw-card" id="notif-list">
+      </div>
     </div>
     <div class="sw-section">
-      <div class="sw-section-title">⚙️ Réglages notifications</div>
+      <div class="sw-section-title">&#9881;&#65039; R&#233;glages notifications</div>
       <div class="sw-card">
         <div class="sw-row">
-          <div class="sw-row-icon">🔔</div>
-          <div class="sw-row-label"><p>Rappels 24h avant</p><span>Activé pour tous les événements</span></div>
+          <div class="sw-row-icon" style="background:#fee2e2">&#128276;</div>
+          <div class="sw-row-label"><p>Rappels 24h avant</p><span>Activ&#233; pour tous les &#233;v&#233;nements</span></div>
           <button class="toggle on" onclick="toggleSwitch(this)"></button>
         </div>
         <div class="sw-row">
-          <div class="sw-row-icon">📅</div>
-          <div class="sw-row-label"><p>Nouveaux événements</p><span>Désactivé</span></div>
+          <div class="sw-row-icon" style="background:#dbeafe">&#128197;</div>
+          <div class="sw-row-label"><p>Nouveaux &#233;v&#233;nements</p><span>D&#233;sactiv&#233;</span></div>
           <button class="toggle" onclick="toggleSwitch(this)"></button>
         </div>
       </div>
@@ -579,33 +375,62 @@ body{
   </div>
 </div>
 
-<!-- SETTINGS SCREEN -->
 <div class="sw" id="sw">
-  <div class="sb"><span id="clk3">9:41</span><span style="display:flex;gap:5px;align-items:center"><i class="ti ti-wifi" style="font-size:14px;color:rgba(255,255,255,0.5)"></i><i class="ti ti-battery-2" style="font-size:14px;color:rgba(255,255,255,0.5)"></i></span></div>
+  <div class="sb"><span id="clk3">9:41</span><span style="display:flex;gap:5px;align-items:center"><i class="ti ti-wifi" style="font-size:14px;color:#fff"></i><i class="ti ti-battery-2" style="font-size:14px;color:#fff"></i></span></div>
   <div class="dh">
     <button class="dbk" onclick="closeSettings()"><i class="ti ti-arrow-left"></i></button>
-    <div class="dhi"><h2>Mes préférences</h2><p>Personnalise ton Kalendi</p></div>
+    <div class="dhi"><h2>Mes pr&#233;f&#233;rences</h2><p>Personnalise ton Kalendi</p></div>
   </div>
   <div class="sw-scr">
+
     <div class="sw-profile-header">
-      <div class="sw-avatar">👤</div>
-      <div class="sw-avatar-info"><h3>Mon compte</h3><p>Préférences sauvegardées localement</p></div>
+      <div class="sw-avatar">&#128100;</div>
+      <div class="sw-avatar-info"><h3>Mon compte</h3><p>Pr&#233;f&#233;rences sauvegard&#233;es localement</p></div>
     </div>
+
     <div class="sw-section">
-      <div class="sw-section-title">📅 Catégories</div>
+      <div class="sw-section-title">&#128197; Catégories</div>
       <div style="padding:0 16px 10px;font-size:11px;color:var(--tx2)">Active les catégories · ✦ = visible dans "Tout"</div>
       <div class="sw-card" style="padding:4px 8px">
-        <div class="sw-cat-row" data-cat="feries" style="--cc:#6366F1"><button class="sw-chip on" style="background:#6366F1;color:#fff" data-cat="feries" onclick="toggleCat(this)">🏛 Fériés</button><button class="sw-inall on" data-cat="feries" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button></div>
-        <div class="sw-cat-row" data-cat="vacances" style="--cc:#8B5CF6"><button class="sw-chip on" style="background:#8B5CF6;color:#fff" data-cat="vacances" onclick="toggleCat(this)">🏫 Vacances</button><button class="sw-inall on" data-cat="vacances" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button></div>
-        <div class="sw-cat-row" data-cat="meteo" style="--cc:#0EA5E9"><button class="sw-chip on" style="background:#0EA5E9;color:#fff" data-cat="meteo" onclick="toggleCat(this)">🌤 Météo</button><button class="sw-inall on" data-cat="meteo" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button></div>
-        <div class="sw-cat-row" data-cat="sport" style="--cc:#1D4ED8"><button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-cat="sport" onclick="toggleCat(this)">⚽ Sport</button><button class="sw-inall on" data-cat="sport" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button></div>
-        <div class="sw-cat-row" data-cat="culture" style="--cc:#7C3AED"><button class="sw-chip on" style="background:#7C3AED;color:#fff" data-cat="culture" onclick="toggleCat(this)">🎭 Culture</button><button class="sw-inall on" data-cat="culture" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button></div>
-        <div class="sw-cat-row" data-cat="business" style="--cc:#059669"><button class="sw-chip on" style="background:#059669;color:#fff" data-cat="business" onclick="toggleCat(this)">📈 Business</button><button class="sw-inall on" data-cat="business" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button></div>
-        <div class="sw-cat-row" data-cat="tourisme" style="--cc:#10B981"><button class="sw-chip on" style="background:#10B981;color:#fff" data-cat="tourisme" onclick="toggleCat(this)">🗺 Sorties</button><button class="sw-inall on" data-cat="tourisme" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button></div>
-        <div class="sw-cat-row" data-cat="mode" style="--cc:#DB2777"><button class="sw-chip on" style="background:#DB2777;color:#fff" data-cat="mode" onclick="toggleCat(this)">👗 Mode</button><button class="sw-inall on" data-cat="mode" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button></div>
-        <div class="sw-cat-row" data-cat="enfants" style="--cc:#F97316"><button class="sw-chip on" style="background:#F97316;color:#fff" data-cat="enfants" onclick="toggleCat(this)">👶 Enfants</button><button class="sw-inall on" data-cat="enfants" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button></div>
+        <div class="sw-cat-row" data-cat="feries" style="--cc:#6366F1">
+          <button class="sw-chip on" style="background:#6366F1;color:#fff" data-cat="feries" onclick="toggleCat(this)">🏛 Fériés</button>
+          <button class="sw-inall on" data-cat="feries" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
+        </div>
+        <div class="sw-cat-row" data-cat="vacances" style="--cc:#8B5CF6">
+          <button class="sw-chip on" style="background:#8B5CF6;color:#fff" data-cat="vacances" onclick="toggleCat(this)">🏫 Vacances</button>
+          <button class="sw-inall on" data-cat="vacances" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
+        </div>
+        <div class="sw-cat-row" data-cat="meteo" style="--cc:#0EA5E9">
+          <button class="sw-chip on" style="background:#0EA5E9;color:#fff" data-cat="meteo" onclick="toggleCat(this)">🌤 Météo</button>
+          <button class="sw-inall on" data-cat="meteo" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
+        </div>
+        <div class="sw-cat-row" data-cat="sport" style="--cc:#1D4ED8">
+          <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-cat="sport" onclick="toggleCat(this)">⚽ Sport</button>
+          <button class="sw-inall on" data-cat="sport" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
+        </div>
+        <div class="sw-cat-row" data-cat="culture" style="--cc:#7C3AED">
+          <button class="sw-chip on" style="background:#7C3AED;color:#fff" data-cat="culture" onclick="toggleCat(this)">🎭 Culture</button>
+          <button class="sw-inall on" data-cat="culture" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
+        </div>
+        <div class="sw-cat-row" data-cat="business" style="--cc:#059669">
+          <button class="sw-chip on" style="background:#059669;color:#fff" data-cat="business" onclick="toggleCat(this)">📈 Business</button>
+          <button class="sw-inall on" data-cat="business" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
+        </div>
+        <div class="sw-cat-row" data-cat="tourisme" style="--cc:#10B981">
+          <button class="sw-chip on" style="background:#10B981;color:#fff" data-cat="tourisme" onclick="toggleCat(this)">🗺 Sorties</button>
+          <button class="sw-inall on" data-cat="tourisme" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
+        </div>
+        <div class="sw-cat-row" data-cat="mode" style="--cc:#DB2777">
+          <button class="sw-chip on" style="background:#DB2777;color:#fff" data-cat="mode" onclick="toggleCat(this)">👗 Mode</button>
+          <button class="sw-inall on" data-cat="mode" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
+        </div>
+        <div class="sw-cat-row" data-cat="enfants" style="--cc:#F97316">
+          <button class="sw-chip on" style="background:#F97316;color:#fff" data-cat="enfants" onclick="toggleCat(this)">👶 Enfants</button>
+          <button class="sw-inall on" data-cat="enfants" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
+        </div>
       </div>
     </div>
+
     <div class="sw-section">
       <div class="sw-section-title">🏫 Zone de vacances scolaires</div>
       <div class="sw-card"><div class="sw-chip-wrap" id="sw-zone">
@@ -613,104 +438,277 @@ body{
         <button class="sw-chip on" style="background:#6366F1;color:#fff" data-pref="zone-b" onclick="setZone(this,'B')">Zone B</button>
         <button class="sw-chip" data-pref="zone-c" onclick="setZone(this,'C')">Zone C</button>
       </div></div>
-      <div style="padding:0 16px 12px;font-size:11px;color:var(--tx2)">Zone A : Besançon, Bordeaux, Clermont-Ferrand, Dijon, Grenoble, Limoges, Lyon, Poitiers<br>Zone B : Aix-Marseille, Amiens, Caen, Lille, Nancy-Metz, Nantes, Nice, Orléans-Tours, Reims, Rennes, Rouen, Strasbourg<br>Zone C : Créteil, Montpellier, Paris, Toulouse, Versailles</div>
+      <div style="padding:0 16px 12px;font-size:11px;color:var(--tx2)">
+        Zone A : Besançon, Bordeaux, Clermont-Ferrand, Dijon, Grenoble, Limoges, Lyon, Poitiers<br>
+        Zone B : Aix-Marseille, Amiens, Caen, Lille, Nancy-Metz, Nantes, Nice, Orléans-Tours, Reims, Rennes, Rouen, Strasbourg<br>
+        Zone C : Créteil, Montpellier, Paris, Toulouse, Versailles
+      </div>
     </div>
+
     <div class="sw-section">
-      <div class="sw-section-title">⚽ Football</div>
+      <div class="sw-section-title">&#9917; Football</div>
       <div class="sw-card" id="sw-foot" style="padding:4px 0">
-        <div class="sw-pref-row"><button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="cdm" onclick="toggleChip(this)">🏆 Coupe du Monde</button><button class="sw-pref-inall on" data-pref="cdm" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="psg" onclick="toggleChip(this)">PSG</button><button class="sw-pref-inall on" data-pref="psg" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="om" onclick="toggleChip(this)">OM</button><button class="sw-pref-inall" data-pref="om" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="ol" onclick="toggleChip(this)">OL</button><button class="sw-pref-inall" data-pref="ol" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="monaco" onclick="toggleChip(this)">Monaco</button><button class="sw-pref-inall" data-pref="monaco" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="rennes" onclick="toggleChip(this)">Rennes</button><button class="sw-pref-inall" data-pref="rennes" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="lens" onclick="toggleChip(this)">Lens</button><button class="sw-pref-inall" data-pref="lens" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="nice" onclick="toggleChip(this)">Nice</button><button class="sw-pref-inall" data-pref="nice" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="juventus" onclick="toggleChip(this)">Juventus</button><button class="sw-pref-inall" data-pref="juventus" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="arsenal" onclick="toggleChip(this)">Arsenal</button><button class="sw-pref-inall" data-pref="arsenal" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="barca" onclick="toggleChip(this)">FC Barcelone</button><button class="sw-pref-inall" data-pref="barca" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="real" onclick="toggleChip(this)">Real Madrid</button><button class="sw-pref-inall" data-pref="real" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
+        <div class="sw-pref-row">
+          <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="cdm" onclick="toggleChip(this)">🏆 Coupe du Monde</button>
+          <button class="sw-pref-inall on" data-pref="cdm" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="psg" onclick="toggleChip(this)">PSG</button>
+          <button class="sw-pref-inall on" data-pref="psg" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="om" onclick="toggleChip(this)">OM</button>
+          <button class="sw-pref-inall" data-pref="om" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="ol" onclick="toggleChip(this)">OL</button>
+          <button class="sw-pref-inall" data-pref="ol" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="monaco" onclick="toggleChip(this)">Monaco</button>
+          <button class="sw-pref-inall" data-pref="monaco" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="rennes" onclick="toggleChip(this)">Rennes</button>
+          <button class="sw-pref-inall" data-pref="rennes" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="lens" onclick="toggleChip(this)">Lens</button>
+          <button class="sw-pref-inall" data-pref="lens" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="nice" onclick="toggleChip(this)">Nice</button>
+          <button class="sw-pref-inall" data-pref="nice" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="juventus" onclick="toggleChip(this)">Juventus</button>
+          <button class="sw-pref-inall" data-pref="juventus" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="arsenal" onclick="toggleChip(this)">Arsenal</button>
+          <button class="sw-pref-inall" data-pref="arsenal" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="barca" onclick="toggleChip(this)">FC Barcelone</button>
+          <button class="sw-pref-inall" data-pref="barca" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="real" onclick="toggleChip(this)">Real Madrid</button>
+          <button class="sw-pref-inall" data-pref="real" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
       </div>
     </div>
+
     <div class="sw-section">
-      <div class="sw-section-title">🏀 NBA — mes équipes</div>
+      <div class="sw-section-title">&#127936; NBA — mes équipes</div>
       <div class="sw-card" id="sw-nba" style="padding:4px 0">
-        <div class="sw-pref-row"><button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="knicks" onclick="toggleChip(this)">🗽 Knicks</button><button class="sw-pref-inall on" data-pref="knicks" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="spurs" onclick="toggleChip(this)">🤠 Spurs</button><button class="sw-pref-inall on" data-pref="spurs" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="lakers" onclick="toggleChip(this)">💛 Lakers</button><button class="sw-pref-inall" data-pref="lakers" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="celtics" onclick="toggleChip(this)">🍀 Celtics</button><button class="sw-pref-inall" data-pref="celtics" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="warriors" onclick="toggleChip(this)">🌉 Warriors</button><button class="sw-pref-inall" data-pref="warriors" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="bulls" onclick="toggleChip(this)">🐂 Bulls</button><button class="sw-pref-inall" data-pref="bulls" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="heat" onclick="toggleChip(this)">🔥 Heat</button><button class="sw-pref-inall" data-pref="heat" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="nuggets" onclick="toggleChip(this)">⛏️ Nuggets</button><button class="sw-pref-inall" data-pref="nuggets" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="thunder" onclick="toggleChip(this)">⚡ Thunder</button><button class="sw-pref-inall" data-pref="thunder" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="cavaliers" onclick="toggleChip(this)">⚔️ Cavaliers</button><button class="sw-pref-inall" data-pref="cavaliers" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="76ers" onclick="toggleChip(this)">🔔 76ers</button><button class="sw-pref-inall" data-pref="76ers" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="pistons" onclick="toggleChip(this)">🔧 Pistons</button><button class="sw-pref-inall" data-pref="pistons" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
+        <div class="sw-pref-row">
+          <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="knicks" onclick="toggleChip(this)">🗽 Knicks</button>
+          <button class="sw-pref-inall on" data-pref="knicks" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="spurs" onclick="toggleChip(this)">🤠 Spurs</button>
+          <button class="sw-pref-inall on" data-pref="spurs" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="lakers" onclick="toggleChip(this)">💛 Lakers</button>
+          <button class="sw-pref-inall" data-pref="lakers" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="celtics" onclick="toggleChip(this)">🍀 Celtics</button>
+          <button class="sw-pref-inall" data-pref="celtics" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="warriors" onclick="toggleChip(this)">🌉 Warriors</button>
+          <button class="sw-pref-inall" data-pref="warriors" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="bulls" onclick="toggleChip(this)">🐂 Bulls</button>
+          <button class="sw-pref-inall" data-pref="bulls" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="heat" onclick="toggleChip(this)">🔥 Heat</button>
+          <button class="sw-pref-inall" data-pref="heat" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="nuggets" onclick="toggleChip(this)">⛏️ Nuggets</button>
+          <button class="sw-pref-inall" data-pref="nuggets" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="thunder" onclick="toggleChip(this)">⚡ Thunder</button>
+          <button class="sw-pref-inall" data-pref="thunder" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="cavaliers" onclick="toggleChip(this)">⚔️ Cavaliers</button>
+          <button class="sw-pref-inall" data-pref="cavaliers" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="76ers" onclick="toggleChip(this)">🔔 76ers</button>
+          <button class="sw-pref-inall" data-pref="76ers" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="pistons" onclick="toggleChip(this)">🔧 Pistons</button>
+          <button class="sw-pref-inall" data-pref="pistons" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
       </div>
     </div>
+
     <div class="sw-section">
-      <div class="sw-section-title">🎯 Autres sports</div>
+      <div class="sw-section-title">&#127941; Autres sports</div>
       <div class="sw-card" id="sw-sport" style="padding:4px 0">
-        <div class="sw-pref-row"><button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="f1" onclick="toggleChip(this)">🏎️ F1</button><button class="sw-pref-inall on" data-pref="f1" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="motogp" onclick="toggleChip(this)">🏍️ MotoGP</button><button class="sw-pref-inall on" data-pref="motogp" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="tennis" onclick="toggleChip(this)">🎾 Tennis</button><button class="sw-pref-inall on" data-pref="tennis" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="basket" onclick="toggleChip(this)">🏀 Basket / NBA</button><button class="sw-pref-inall" data-pref="basket" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="rugby" onclick="toggleChip(this)">🏉 Rugby</button><button class="sw-pref-inall" data-pref="rugby" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="cyclisme" onclick="toggleChip(this)">🚴 Cyclisme</button><button class="sw-pref-inall on" data-pref="cyclisme" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="golf" onclick="toggleChip(this)">⛳ Golf</button><button class="sw-pref-inall" data-pref="golf" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="running" onclick="toggleChip(this)">🏃 Running</button><button class="sw-pref-inall" data-pref="running" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="natation" onclick="toggleChip(this)">🏊 Natation</button><button class="sw-pref-inall" data-pref="natation" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="handball" onclick="toggleChip(this)">Handball</button><button class="sw-pref-inall" data-pref="handball" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="volley" onclick="toggleChip(this)">🏐 Volley</button><button class="sw-pref-inall" data-pref="volley" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="ski" onclick="toggleChip(this)">⛷️ Ski alpin</button><button class="sw-pref-inall" data-pref="ski" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="athletisme" onclick="toggleChip(this)">🏃 Athlétisme</button><button class="sw-pref-inall" data-pref="athletisme" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
+        <div class="sw-pref-row">
+          <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="f1" onclick="toggleChip(this)">🏎️ F1</button>
+          <button class="sw-pref-inall on" data-pref="f1" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="motogp" onclick="toggleChip(this)">🏍️ MotoGP</button>
+          <button class="sw-pref-inall on" data-pref="motogp" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="tennis" onclick="toggleChip(this)">🎾 Tennis</button>
+          <button class="sw-pref-inall on" data-pref="tennis" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="basket" onclick="toggleChip(this)">🏀 Basket / NBA</button>
+          <button class="sw-pref-inall" data-pref="basket" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="rugby" onclick="toggleChip(this)">🏉 Rugby</button>
+          <button class="sw-pref-inall" data-pref="rugby" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="cyclisme" onclick="toggleChip(this)">🚴 Cyclisme</button>
+          <button class="sw-pref-inall on" data-pref="cyclisme" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="golf" onclick="toggleChip(this)">⛳ Golf</button>
+          <button class="sw-pref-inall" data-pref="golf" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="running" onclick="toggleChip(this)">🏃 Running</button>
+          <button class="sw-pref-inall" data-pref="running" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="natation" onclick="toggleChip(this)">🏊 Natation</button>
+          <button class="sw-pref-inall" data-pref="natation" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="handball" onclick="toggleChip(this)">Handball</button>
+          <button class="sw-pref-inall" data-pref="handball" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="volley" onclick="toggleChip(this)">🏐 Volley</button>
+          <button class="sw-pref-inall" data-pref="volley" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="ski" onclick="toggleChip(this)">⛷️ Ski alpin</button>
+          <button class="sw-pref-inall" data-pref="ski" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="athletisme" onclick="toggleChip(this)">🏃 Athlétisme</button>
+          <button class="sw-pref-inall" data-pref="athletisme" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
       </div>
     </div>
+
     <div class="sw-section">
-      <div class="sw-section-title">🥊 Sports de combat</div>
+      <div class="sw-section-title">&#129354; Sports de combat</div>
       <div class="sw-card"><div class="sw-chip-wrap" id="sw-combat">
-        <button class="sw-chip" data-pref="ufc" onclick="toggleChip(this)">🥊 UFC / MMA</button>
-        <button class="sw-chip" data-pref="boxe" onclick="toggleChip(this)">🥊 Boxe</button>
+        <button class="sw-chip" data-pref="ufc" onclick="toggleChip(this)">&#129354; UFC / MMA</button>
+        <button class="sw-chip" data-pref="boxe" onclick="toggleChip(this)">&#129354; Boxe</button>
         <button class="sw-chip" data-pref="kickboxing" onclick="toggleChip(this)">Kickboxing</button>
-        <button class="sw-chip" data-pref="judo" onclick="toggleChip(this)">🥋 Judo</button>
-        <button class="sw-chip" data-pref="karate" onclick="toggleChip(this)">Karaté</button>
+        <button class="sw-chip" data-pref="judo" onclick="toggleChip(this)">&#129354; Judo</button>
+        <button class="sw-chip" data-pref="karate" onclick="toggleChip(this)">Karat&#233;</button>
         <button class="sw-chip" data-pref="lutte" onclick="toggleChip(this)">Lutte</button>
         <button class="sw-chip" data-pref="muay-thai" onclick="toggleChip(this)">Muay Thai</button>
         <button class="sw-chip" data-pref="sumo" onclick="toggleChip(this)">Sumo</button>
       </div></div>
     </div>
+
     <div class="sw-section">
-      <div class="sw-section-title">🎭 Culture — mes intérêts</div>
+      <div class="sw-section-title">&#127917; Culture &#8212; mes int&#233;r&#234;ts</div>
       <div class="sw-card" id="sw-culture" style="padding:4px 0">
-        <div class="sw-pref-row"><button class="sw-chip on" style="background:#7C3AED;color:#fff" data-pref="cinema" onclick="toggleChip(this)">🎬 Cinéma</button><button class="sw-pref-inall on" data-pref="cinema" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip on" style="background:#7C3AED;color:#fff" data-pref="concerts" onclick="toggleChip(this)">🎵 Concerts</button><button class="sw-pref-inall on" data-pref="concerts" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="musees" onclick="toggleChip(this)">🏛️ Musées</button><button class="sw-pref-inall" data-pref="musees" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="festivals" onclick="toggleChip(this)">🎪 Festivals</button><button class="sw-pref-inall" data-pref="festivals" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="theatre" onclick="toggleChip(this)">🎭 Théâtre</button><button class="sw-pref-inall" data-pref="theatre" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="opera" onclick="toggleChip(this)">🎤 Opéra</button><button class="sw-pref-inall" data-pref="opera" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="jeux-video" onclick="toggleChip(this)">🎮 Jeux vidéo</button><button class="sw-pref-inall" data-pref="jeux-video" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="bd" onclick="toggleChip(this)">📚 BD / Manga</button><button class="sw-pref-inall" data-pref="bd" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="photo" onclick="toggleChip(this)">📷 Photo</button><button class="sw-pref-inall" data-pref="photo" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
+        <div class="sw-pref-row">
+          <button class="sw-chip on" style="background:#7C3AED;color:#fff" data-pref="cinema" onclick="toggleChip(this)">🎬 Cinéma</button>
+          <button class="sw-pref-inall on" data-pref="cinema" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip on" style="background:#7C3AED;color:#fff" data-pref="concerts" onclick="toggleChip(this)">🎵 Concerts</button>
+          <button class="sw-pref-inall on" data-pref="concerts" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="musees" onclick="toggleChip(this)">🏛️ Musées</button>
+          <button class="sw-pref-inall" data-pref="musees" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="festivals" onclick="toggleChip(this)">🎪 Festivals</button>
+          <button class="sw-pref-inall" data-pref="festivals" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="theatre" onclick="toggleChip(this)">🎭 Théâtre</button>
+          <button class="sw-pref-inall" data-pref="theatre" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="opera" onclick="toggleChip(this)">🎤 Opéra</button>
+          <button class="sw-pref-inall" data-pref="opera" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="jeux-video" onclick="toggleChip(this)">🎮 Jeux vidéo</button>
+          <button class="sw-pref-inall" data-pref="jeux-video" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="bd" onclick="toggleChip(this)">📚 BD / Manga</button>
+          <button class="sw-pref-inall" data-pref="bd" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="photo" onclick="toggleChip(this)">📷 Photo</button>
+          <button class="sw-pref-inall" data-pref="photo" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
       </div>
     </div>
+
     <div class="sw-section">
-      <div class="sw-section-title">👗 Mode — mes marques</div>
+      <div class="sw-section-title">&#128248; Mode &#8212; mes marques</div>
       <div class="sw-card" id="sw-mode" style="padding:4px 0">
-        <div class="sw-pref-row"><button class="sw-chip on" style="background:#DB2777;color:#fff" data-pref="sezane" onclick="toggleChip(this)">Sézane</button><button class="sw-pref-inall on" data-pref="sezane" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip on" style="background:#DB2777;color:#fff" data-pref="rouje" onclick="toggleChip(this)">Rouje</button><button class="sw-pref-inall on" data-pref="rouje" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="balzac" onclick="toggleChip(this)">Balzac Paris</button><button class="sw-pref-inall" data-pref="balzac" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="saaj" onclick="toggleChip(this)">SAAJ Paris</button><button class="sw-pref-inall" data-pref="saaj" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="maison-stella" onclick="toggleChip(this)">Maison Stella</button><button class="sw-pref-inall" data-pref="maison-stella" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="suzie" onclick="toggleChip(this)">Suzie</button><button class="sw-pref-inall" data-pref="suzie" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="fashion-week" onclick="toggleChip(this)">Fashion Week</button><button class="sw-pref-inall" data-pref="fashion-week" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="soldes" onclick="toggleChip(this)">🛍️ Soldes</button><button class="sw-pref-inall" data-pref="soldes" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
+        <div class="sw-pref-row">
+          <button class="sw-chip on" style="background:#DB2777;color:#fff" data-pref="sezane" onclick="toggleChip(this)">Sézane</button>
+          <button class="sw-pref-inall on" data-pref="sezane" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip on" style="background:#DB2777;color:#fff" data-pref="rouje" onclick="toggleChip(this)">Rouje</button>
+          <button class="sw-pref-inall on" data-pref="rouje" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="balzac" onclick="toggleChip(this)">Balzac Paris</button>
+          <button class="sw-pref-inall" data-pref="balzac" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="saaj" onclick="toggleChip(this)">SAAJ Paris</button>
+          <button class="sw-pref-inall" data-pref="saaj" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="maison-stella" onclick="toggleChip(this)">Maison Stella</button>
+          <button class="sw-pref-inall" data-pref="maison-stella" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="suzie" onclick="toggleChip(this)">Suzie</button>
+          <button class="sw-pref-inall" data-pref="suzie" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="fashion-week" onclick="toggleChip(this)">Fashion Week</button>
+          <button class="sw-pref-inall" data-pref="fashion-week" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-pref-row">
+          <button class="sw-chip" data-pref="soldes" onclick="toggleChip(this)">🛍️ Soldes</button>
+          <button class="sw-pref-inall" data-pref="soldes" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
       </div>
     </div>
+
     <div class="sw-section">
-      <div class="sw-section-title">📍 Ma ville</div>
+      <div class="sw-section-title">&#128205; Ma ville</div>
       <div class="sw-card"><div class="sw-chip-wrap" id="sw-villes">
-        <button class="sw-chip on" style="background:#A78BFA;color:#fff" data-pref="paris" onclick="toggleVille(this)">Paris</button>
+        <button class="sw-chip on" style="background:#E8334A;color:#fff" data-pref="paris" onclick="toggleVille(this)">Paris</button>
         <button class="sw-chip" data-pref="lyon" onclick="toggleVille(this)">Lyon</button>
         <button class="sw-chip" data-pref="marseille" onclick="toggleVille(this)">Marseille</button>
         <button class="sw-chip" data-pref="bordeaux" onclick="toggleVille(this)">Bordeaux</button>
@@ -718,56 +716,58 @@ body{
         <button class="sw-chip" data-pref="toulouse" onclick="toggleVille(this)">Toulouse</button>
         <button class="sw-chip" data-pref="lille" onclick="toggleVille(this)">Lille</button>
         <button class="sw-chip" data-pref="nice" onclick="toggleVille(this)">Nice</button>
-        <button class="sw-chip" data-pref="toute-france" onclick="toggleVille(this)">🇫🇷 Toute la France</button>
+        <button class="sw-chip" data-pref="toute-france" onclick="toggleVille(this)">&#127467;&#127479; Toute la France</button>
       </div></div>
     </div>
+
     <div class="sw-section">
-      <div class="sw-section-title">🔔 Notifications</div>
+      <div class="sw-section-title">&#128276; Notifications</div>
       <div class="sw-card">
         <div class="sw-row">
-          <div class="sw-row-icon">🔔</div>
-          <div class="sw-row-label"><p>Rappels événements</p><span>24h avant chaque événement favori</span></div>
+          <div class="sw-row-icon" style="background:#fee2e2">&#128276;</div>
+          <div class="sw-row-label"><p>Rappels &#233;v&#233;nements</p><span>24h avant chaque &#233;v&#233;nement favori</span></div>
           <button class="toggle on" onclick="toggleSwitch(this)"></button>
         </div>
         <div class="sw-row">
-          <div class="sw-row-icon">📅</div>
-          <div class="sw-row-label"><p>Nouveaux événements</p><span>Quand un événement de ta catégorie est ajouté</span></div>
+          <div class="sw-row-icon" style="background:#dbeafe">&#128197;</div>
+          <div class="sw-row-label"><p>Nouveaux &#233;v&#233;nements</p><span>Quand un &#233;v&#233;nement de ta cat&#233;gorie est ajout&#233;</span></div>
           <button class="toggle" onclick="toggleSwitch(this)"></button>
         </div>
       </div>
     </div>
+
     <div class="sw-section">
-      <div class="sw-section-title">ℹ️ À propos</div>
+      <div class="sw-section-title">&#8505;&#65039; &#192; propos</div>
       <div class="sw-card">
         <div class="sw-row">
-          <div class="sw-row-icon">👔</div>
-          <div class="sw-row-label"><p>Conditions d'utilisation</p></div>
+          <div class="sw-row-icon" style="background:#f3e8ff">&#128084;</div>
+          <div class="sw-row-label"><p>Conditions d&#8217;utilisation</p></div>
           <i class="ti ti-chevron-right" style="color:var(--tx3);font-size:16px"></i>
         </div>
         <div class="sw-row">
-          <div class="sw-row-icon">🔒</div>
-          <div class="sw-row-label"><p>Politique de confidentialité</p></div>
+          <div class="sw-row-icon" style="background:#dcfce7">&#128274;</div>
+          <div class="sw-row-label"><p>Politique de confidentialit&#233;</p></div>
           <i class="ti ti-chevron-right" style="color:var(--tx3);font-size:16px"></i>
         </div>
         <div class="sw-row">
-          <div class="sw-row-icon">❤️</div>
-          <div class="sw-row-label"><p>Version</p><span>Kalendi v1.0 — Beta</span></div>
+          <div class="sw-row-icon" style="background:#fef3c7">&#10084;&#65039;</div>
+          <div class="sw-row-label"><p>Version</p><span>Kalendi v1.0 &#8212; Beta</span></div>
         </div>
       </div>
     </div>
-    <button class="sw-save" onclick="saveSettings()">✓ Sauvegarder mes préférences</button>
+
+    <button class="sw-save" onclick="saveSettings()">&#10003; Sauvegarder mes pr&#233;f&#233;rences</button>
   </div>
 </div>
+<div class="saved-toast" id="savedToast">&#10003; Pr&#233;f&#233;rences sauvegard&#233;es !</div>
 
-<div class="saved-toast" id="savedToast">✓ Préférences sauvegardées !</div>
 
-<!-- DETAIL SCREEN -->
 <div class="dw" id="dw">
-  <div class="sb"><span id="clk2">9:41</span><span><i class="ti ti-wifi" style="font-size:14px;color:rgba(255,255,255,0.5)"></i></span></div>
+  <div class="sb"><span id="clk2">9:41</span><span><i class="ti ti-wifi" style="font-size:14px;color:#fff"></i></span></div>
   <div class="dh">
     <button class="dbk" onclick="closeD()"><i class="ti ti-arrow-left"></i></button>
     <div class="dhi"><h2 id="dcat"></h2><p id="ddate"></p></div>
-    <i class="ti ti-share" style="color:rgba(255,255,255,0.5);font-size:21px;cursor:pointer"></i>
+    <i class="ti ti-share" style="color:#fff;font-size:21px;cursor:pointer"></i>
   </div>
   <div class="dscr">
     <div class="dhero" id="dhero"></div>
@@ -788,6 +788,7 @@ body{
     </div>
     <div class="rel"><div class="relt">Voir aussi</div><div id="rl"></div></div>
   </div>
+</div>
 </div>
 
 <script>
@@ -923,7 +924,7 @@ function rEvts(){
   document.getElementById('el').innerHTML=de.map(e=>`
     <div class="ec" onclick="openD('${e.id}')">
       <div style="display:flex;flex-direction:column;align-items:center;gap:3px;min-width:38px">
-        <div class="eico" style="background:transparent">${e.i}</div>
+        <div class="eico" style="background:${e.bg}">${e.i}</div>
         <div class="etm">${e.h.split(' ')[0]}</div>
       </div>
       <div style="flex:1;min-width:0">
@@ -934,7 +935,7 @@ function rEvts(){
           <span class="srcb">${e.src}</span>
         </div>
       </div>
-      <i class="ti ti-chevron-right" style="font-size:16px;color:#9D94CC;flex-shrink:0;align-self:center"></i>
+      <i class="ti ti-chevron-right" style="font-size:16px;color:var(--tx3);flex-shrink:0;align-self:center"></i>
     </div>`).join('')
   ||'<div class="empty">Aucun événement ce jour<br><span style="font-size:11px;opacity:.7">Navigue dans le calendrier ↑</span></div>';
 }
@@ -967,7 +968,7 @@ function rDay(){
   document.getElementById('el-jour').innerHTML=de.map(e=>`
     <div class="ec" onclick="openD('${e.id}')">
       <div style="display:flex;flex-direction:column;align-items:center;gap:3px;min-width:38px">
-        <div class="eico" style="background:transparent">${e.i}</div>
+        <div class="eico" style="background:${e.bg}">${e.i}</div>
         <div class="etm">${e.h.split(' ')[0]}</div>
       </div>
       <div style="flex:1;min-width:0">
@@ -978,7 +979,7 @@ function rDay(){
           <span class="srcb">${e.src}</span>
         </div>
       </div>
-      <i class="ti ti-chevron-right" style="font-size:16px;color:#9D94CC;flex-shrink:0;align-self:center"></i>
+      <i class="ti ti-chevron-right" style="font-size:16px;color:var(--tx3);flex-shrink:0;align-self:center"></i>
     </div>`).join('')
   ||'<div class="empty">Aucun événement ce jour<br><span style="font-size:11px;opacity:.7">Navigue avec les flèches ↑</span></div>';
 }
@@ -1017,7 +1018,7 @@ function rWeek(){
   let h=`<div style="display:flex;flex-direction:column;font-size:11px">`;
 
   // Header sticky
-  h+=`<div style="display:grid;grid-template-columns:28px repeat(7,minmax(0,1fr));position:sticky;top:0;background:#EDE9FE;z-index:10;border-bottom:1px solid var(--bd);padding-bottom:4px;margin-bottom:0;width:100%;box-sizing:border-box">`;
+  h+=`<div style="display:grid;grid-template-columns:28px repeat(7,minmax(0,1fr));position:sticky;top:0;background:#0F0C2A;z-index:10;border-bottom:1px solid var(--bd);padding-bottom:4px;margin-bottom:0;width:100%;box-sizing:border-box">`;
   h+=`<div></div>`;
   days.forEach((d,i)=>{
     const isToday=d.getDate()===now.getDate()&&d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();
@@ -1025,7 +1026,7 @@ function rWeek(){
     h+=`<div style="text-align:center;padding:4px 1px;cursor:pointer" onclick="sDay=${d.getDate()};cM=${d.getMonth()};cY=${d.getFullYear()};rAll()">
       <div style="font-size:9px;color:var(--tx2);font-weight:500;text-transform:uppercase">${dayNames[i]}</div>
       <div style="width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:2px auto 0;font-size:12px;font-weight:700;
-        ${isToday?'background:var(--accent);color:#fff':isSel?'background:var(--dark);color:#fff':'color:var(--tx)'}">
+        ${isToday?'background:var(--red);color:#fff':isSel?'background:var(--dark);color:#fff':'color:var(--tx)'}">
         ${d.getDate()}
       </div>
     </div>`;
@@ -1044,13 +1045,13 @@ function rWeek(){
       h+=`<div style="height:var(--hr-h);min-height:var(--hr-h);max-height:var(--hr-h);border-top:1px solid var(--bd);border-left:1px solid var(--bd);padding:1px;position:relative;overflow:hidden;box-sizing:border-box">`;
       evts.forEach(e=>{
         h+=`<div onclick="openD('${e.id}')" title="${e.t}" style="
-          background:${e.bg&&e.bg!=='transparent'?e.bg:'var(--sur2)'};
+          background:rgba(167,139,250,0.15);
           border-radius:4px;padding:1px 3px;margin-bottom:1px;cursor:pointer;
           display:flex;align-items:center;gap:2px;overflow:hidden;
-          border-left:2px solid ${e.bg&&e.bg!=='transparent'?e.bg:'var(--tx2)'}
+          border-left:2px solid ${e.bg&&e.bg!=='transparent'?e.bg:'var(--accent)'}
         ">
           <span style="font-size:12px;flex-shrink:0">${e.i}</span>
-          <span style="font-size:9px;font-weight:600;color:${e.c&&e.c!=='var(--tx)'?e.c:'var(--tx)'};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${e.t}</span>
+          <span style="font-size:9px;font-weight:600;color:#EEEEFF;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${e.t}</span>
         </div>`;
       });
       h+=`</div>`;
@@ -1168,29 +1169,28 @@ function closeD(){
   document.getElementById('dw').classList.remove('open');
   document.getElementById('mw').classList.remove('gone');
 }
-
 function openNotifs(){
   document.getElementById('mw').classList.add('gone');
   document.getElementById('dw').classList.remove('open');
   document.getElementById('sw').classList.remove('open');
   document.getElementById('mapw').classList.remove('open');
   document.getElementById('nw').classList.add('open');
-  // Populate upcoming events
   const now2=new Date();
   const upcoming=EVT.filter(e=>new Date(e.y,e.m,e.d)>=now2)
     .sort((a,b)=>new Date(a.y,a.m,a.d)-new Date(b.y,b.m,b.d))
     .slice(0,10);
   document.getElementById('notif-list').innerHTML=upcoming.map(e=>`
     <div class="sw-row" onclick="closeNotifs();openD('${e.id}')">
-      <div class="sw-row-icon" style="font-size:20px;background:rgba(167,139,250,0.1)">${e.i}</div>
+      <div class="sw-row-icon" style="font-size:20px">${e.i}</div>
       <div class="sw-row-label"><p>${e.t}</p><span>${e.dt} · ${e.h||''}</span></div>
-      <i class="ti ti-chevron-right" style="color:var(--tx3);font-size:16px"></i>
+      <i class="ti ti-chevron-right" style="font-size:14px;color:rgba(167,139,250,0.35)"></i>
     </div>`).join('')||'<div class="sw-row"><div class="sw-row-label"><p>Aucun événement à venir</p></div></div>';
 }
 function closeNotifs(){
   document.getElementById('nw').classList.remove('open');
   document.getElementById('mw').classList.remove('gone');
 }
+
 
 
 // ─── LIVE APIs ────────────────────────────────────────────────────────────────
@@ -1340,7 +1340,7 @@ function renderMapMarkers() {
     return getCoords(e) !== null;
   }).sort((a,b) => new Date(a.y,a.m,a.d) - new Date(b.y,b.m,b.d)).slice(0, 50);
 
-  const catColors = {sport:'#3B82F6',culture:'#7C3AED',business:'#B45309',tourisme:'#10B981',mode:'#DB2777'};
+  const catColors = {sport:'#1D4ED8',culture:'#7C3AED',business:'#B45309',tourisme:'#10B981',mode:'#DB2777'};
 
   filtered.forEach(evt => {
     const coords = getCoords(evt);
@@ -1410,7 +1410,7 @@ function toggleCat(el){
     el.classList.add('on');
     const colors={feries:'#6366F1',vacances:'#8B5CF6',meteo:'#0EA5E9',sport:'#1D4ED8',culture:'#7C3AED',business:'#059669',tourisme:'#10B981',mode:'#DB2777',enfants:'#F97316'};
     const cat=el.dataset.cat;
-    el.style.background=colors[cat]||'#E8334A';el.style.color='#fff';
+    el.style.background=colors[cat]||'#A78BFA';el.style.color='#fff';
   }
 }
 function togglePrefInAll(el){
