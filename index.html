@@ -998,7 +998,7 @@ function rWeek(){
   let h=`<div style="display:flex;flex-direction:column;font-size:11px">`;
 
   // Header sticky
-  h+=`<div style="display:grid;grid-template-columns:32px repeat(7,1fr);position:sticky;top:0;background:var(--sur);z-index:10;border-bottom:1px solid var(--bd);padding-bottom:4px;margin-bottom:0">`;
+  h+=`<div style="display:grid;grid-template-columns:28px repeat(7,minmax(0,1fr));position:sticky;top:0;background:var(--sur);z-index:10;border-bottom:1px solid var(--bd);padding-bottom:4px;margin-bottom:0;width:100%;box-sizing:border-box">`;
   h+=`<div></div>`;
   days.forEach((d,i)=>{
     const isToday=d.getDate()===now.getDate()&&d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();
@@ -1014,11 +1014,11 @@ function rWeek(){
   h+=`</div>`;
 
   // Grille horaire
-  h+=`<div style="display:grid;grid-template-columns:32px repeat(7,1fr);position:relative">`;
+  h+=`<div style="display:grid;grid-template-columns:28px repeat(7,minmax(0,1fr));position:relative;width:100%;box-sizing:border-box">`;
 
   hours.forEach(hr=>{
     // Colonne heure
-    h+=`<div style="padding:0 4px;color:var(--tx2);font-size:9px;height:48px;border-top:1px solid var(--bd);display:flex;align-items:flex-start;padding-top:2px;flex-shrink:0">${hr}h</div>`;
+    h+=`<div style="padding:0 2px;color:var(--tx2);font-size:9px;height:48px;border-top:1px solid var(--bd);display:flex;align-items:flex-start;padding-top:2px;flex-shrink:0;width:28px;box-sizing:border-box">${hr}h</div>`;
     // 7 colonnes jours
     days.forEach((_,di)=>{
       const evts=weekEvts[di].filter(e=>e._hr===hr);
