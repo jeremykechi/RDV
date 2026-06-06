@@ -1025,11 +1025,11 @@ function rWeek(){
 
   hours.forEach(hr=>{
     // Colonne heure
-    h+=`<div style="padding:0 2px;color:var(--tx2);font-size:9px;height:var(--hr-h);border-top:1px solid var(--bd);display:flex;align-items:flex-start;padding-top:2px;flex-shrink:0;width:28px;box-sizing:border-box">${hr}h</div>`;
+    h+=`<div style="padding:0 2px;color:var(--tx2);font-size:9px;height:var(--hr-h);min-height:var(--hr-h);max-height:var(--hr-h);border-top:1px solid var(--bd);display:flex;align-items:flex-start;padding-top:2px;flex-shrink:0;width:28px;box-sizing:border-box;overflow:hidden">${hr}h</div>`;
     // 7 colonnes jours
     days.forEach((_,di)=>{
       const evts=weekEvts[di].filter(e=>e._hr===hr);
-      h+=`<div style="height:var(--hr-h);border-top:1px solid var(--bd);border-left:1px solid var(--bd);padding:1px;position:relative;overflow:visible">`;
+      h+=`<div style="height:var(--hr-h);min-height:var(--hr-h);max-height:var(--hr-h);border-top:1px solid var(--bd);border-left:1px solid var(--bd);padding:1px;position:relative;overflow:hidden;box-sizing:border-box">`;
       evts.forEach(e=>{
         h+=`<div onclick="openD('${e.id}')" title="${e.t}" style="
           background:${e.bg&&e.bg!=='transparent'?e.bg:'var(--sur2)'};
