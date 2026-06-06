@@ -1130,7 +1130,7 @@ function openD(id){
   const dw=document.getElementById('dw');dw.classList.add('open');
 
   const e2 = ev;
-  document.getElementById('dcat').textContent=e2.cat.charAt(0).toUpperCase()+eRef.cat.slice(1)+' · '+e2.s.split(' · ')[0];
+  document.getElementById('dcat').textContent=e2.cat.charAt(0).toUpperCase()+e2.cat.slice(1)+' · '+e2.s.split(' · ')[0];
   document.getElementById('ddate').textContent=e2.dt+' · '+e2.h;
   const h=document.getElementById('dhero');h.textContent=e2.i;h.style.background=e2.bg;
   document.getElementById('dttl').textContent=e2.t;
