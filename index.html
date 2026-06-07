@@ -305,7 +305,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .pill{padding:6px 13px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;cursor:pointer;border:1.5px solid transparent;transition:all .2s;display:flex;align-items:center;gap:5px}
 .pill.on{color:#fff}
 .pill.off{background:var(--pill-off-bg);color:var(--pill-off-tx);border-color:transparent}
-.mw{display:flex;flex-direction:column;flex:1;overflow:hidden;min-height:0}
+.mw{display:flex;flex-direction:column;flex:1;overflow:hidden;min-height:0;position:relative}
 .mw.gone{display:none}
 .dw{display:none;flex-direction:column;flex:1;overflow:hidden;min-height:0}
 .dw.open{display:flex}
@@ -524,9 +524,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 
 
-/* Theme panel popup — anchored under header */
+/* Theme panel popup — top right, below header icons */
 #theme-panel{
-  position:absolute;top:100%;right:16px;
+  position:absolute;top:72px;right:16px;
   background:var(--ec-bg);border:1px solid var(--ec-bd);
   border-radius:16px;padding:8px 6px;
   display:none;flex-direction:column;gap:4px;
@@ -599,6 +599,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 }
 [data-theme="bloom"] #view-semaine {
   margin-top:12px;
+  background:#fff;
+  border-radius:22px 22px 0 0;
+  flex:1;
+  overflow:hidden;
 }
 [data-theme="bloom"] .cg {
   margin:0;
@@ -640,19 +644,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 <div class="mw" id="mw">
   <div class="ah">
-    <div class="logo"><span style="color:#fff">Kalen</span><em style="color:var(--red);font-style:normal">di</em></div>
+    <div class="logo"><span style="color:#fff">Kalen</span><em style="color:var(--logo-em);font-style:normal">di</em></div>
     <div class="hico">
       <button onclick="openThemePanel()" id="theme-btn" style="background:none;border:none;padding:0;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:21px;flex-shrink:0;line-height:1" title="Thème">🎨</button>
       <i class="ti ti-bell" onclick="openNotifs()" style="cursor:pointer"></i>
       <i class="ti ti-settings" onclick="openSettings()" style="cursor:pointer"></i>
     </div>
-    <div id="theme-panel">
-      <div class="tp-row active" data-theme="bloom" onclick="setTheme('bloom')"><div class="tp-dot" style="background:linear-gradient(135deg,#7C6FE0,#A78BFA)"></div><span class="tp-name">Bloom</span></div>
-      <div class="tp-row" data-theme="cosmos" onclick="setTheme('cosmos')"><div class="tp-dot" style="background:#1C1845;border:1.5px solid rgba(167,139,250,0.4)"></div><span class="tp-name">Cosmos</span></div>
-      <div class="tp-row" data-theme="papier" onclick="setTheme('papier')"><div class="tp-dot" style="background:#F5F3EE;border:1.5px solid #D4622A"></div><span class="tp-name">Papier</span></div>
-      <div class="tp-row" data-theme="circuit" onclick="setTheme('circuit')"><div class="tp-dot" style="background:#00FF87"></div><span class="tp-name">Circuit</span></div>
-      <div class="tp-row" data-theme="aurora" onclick="setTheme('aurora')"><div class="tp-dot" style="background:linear-gradient(135deg,#A78BFA,#38BDF8)"></div><span class="tp-name">Aurora</span></div>
-    </div>
+  </div>
+  <div id="theme-panel">
+    <div class="tp-row active" data-theme="bloom" onclick="setTheme('bloom')"><div class="tp-dot" style="background:linear-gradient(135deg,#7C6FE0,#A78BFA)"></div><span class="tp-name">Bloom</span></div>
+    <div class="tp-row" data-theme="cosmos" onclick="setTheme('cosmos')"><div class="tp-dot" style="background:#1C1845;border:1.5px solid rgba(167,139,250,0.4)"></div><span class="tp-name">Cosmos</span></div>
+    <div class="tp-row" data-theme="papier" onclick="setTheme('papier')"><div class="tp-dot" style="background:#F5F3EE;border:1.5px solid #D4622A"></div><span class="tp-name">Papier</span></div>
+    <div class="tp-row" data-theme="circuit" onclick="setTheme('circuit')"><div class="tp-dot" style="background:#00FF87"></div><span class="tp-name">Circuit</span></div>
+    <div class="tp-row" data-theme="aurora" onclick="setTheme('aurora')"><div class="tp-dot" style="background:linear-gradient(135deg,#A78BFA,#38BDF8)"></div><span class="tp-name">Aurora</span></div>
   </div>
   <div class="cats">
     <div class="pill on" style="background:#fff;color:#7C6FE0;border-color:#fff" onclick="sCat(this,'all')" id="pill-all">✦ Tout</div>
@@ -715,7 +719,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="mapw" id="mapw">
   <div class="sb"><span id="clk5">9:41</span><span style="display:flex;gap:5px;align-items:center"><i class="ti ti-wifi" style="font-size:14px;color:#fff"></i><i class="ti ti-battery-2" style="font-size:14px;color:#fff"></i></span></div>
   <div class="ah" style="padding:10px 20px 14px">
-    <div class="logo"><span style="color:#fff">Kalen</span><em style="color:var(--red);font-style:normal">di</em></div>
+    <div class="logo"><span style="color:#fff">Kalen</span><em style="color:var(--logo-em);font-style:normal">di</em></div>
     <div class="hico" style="margin-left:auto">
       <i class="ti ti-bell" onclick="openNotifs()" style="cursor:pointer"></i>
       <i class="ti ti-settings" onclick="openSettings()" style="cursor:pointer"></i>
