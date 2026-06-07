@@ -318,7 +318,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .cnav button{background:none;border:none;cursor:pointer;color:var(--cnav-tx);font-size:26px;line-height:1;padding:0 6px}
 .cnav button:hover{color:var(--tx)}
 .vt{display:flex;border:1px solid var(--bd);border-radius:9px;overflow:hidden;margin:0 20px 11px;background:var(--vt-bg)}
-.vb{flex:1;padding:7px;font-size:12px;cursor:pointer;background:none;border:none;color:var(--vb-tx);font-family:inherit;font-weight:500}
+.vb{flex:1;padding:7px;font-size:12px;cursor:pointer;background:none;border:none;color:var(--tx);font-family:inherit;font-weight:600;opacity:0.55}
+.vb.on{opacity:1}
 .vb.on{background:var(--accent);color:#fff;font-weight:700}
 .cg{margin:0 14px 4px;background:var(--cal-bg);border:1px solid var(--cal-bd);border-radius:var(--cal-br);padding:12px 10px 10px}
 .chd{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:4px}
@@ -516,6 +517,43 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .theme-swatch-preview{width:36px;height:56px;border-radius:10px;overflow:hidden;border:1px solid rgba(0,0,0,0.12);flex-shrink:0}
 .theme-swatch-name{font-size:9px;font-weight:700;color:var(--tx2);text-align:center;letter-spacing:.2px}
 
+
+/* Bloom: toggle sits on purple header, needs white text */
+[data-theme="bloom"] .vb{color:#fff}
+[data-theme="bloom"] .vt{background:rgba(255,255,255,0.18);border-color:rgba(255,255,255,0.25)}
+
+
+/* Floating theme button */
+.theme-fab{
+  position:fixed;bottom:90px;right:16px;
+  width:42px;height:42px;border-radius:50%;
+  background:var(--accent);border:none;
+  display:flex;align-items:center;justify-content:center;
+  font-size:19px;cursor:pointer;z-index:500;
+  box-shadow:0 4px 16px rgba(0,0,0,0.3);
+  transition:transform .2s;
+}
+.theme-fab:hover{transform:scale(1.08)}
+
+/* Theme panel popup */
+#theme-panel{
+  position:fixed;bottom:140px;right:12px;
+  background:var(--ec-bg);border:1px solid var(--ec-bd);
+  border-radius:18px;padding:10px 8px;
+  display:none;flex-direction:column;gap:6px;
+  z-index:500;box-shadow:0 8px 32px rgba(0,0,0,0.35);
+  min-width:80px;
+}
+#theme-panel .tp-row{
+  display:flex;align-items:center;gap:8px;
+  padding:6px 8px;border-radius:10px;cursor:pointer;
+  transition:background .12s;
+}
+#theme-panel .tp-row:hover{background:var(--ec-hover)}
+#theme-panel .tp-row.active{background:var(--ec-hover);outline:1.5px solid var(--accent)}
+.tp-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+.tp-name{font-size:11px;font-weight:700;color:var(--en-tx)}
+
 </style>
 </head>
 <body>
@@ -583,6 +621,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="bni" onclick="openMap()"><i class="ti ti-map-pin"></i><span>Carte</span></div>
     <div class="bni"><i class="ti ti-star"></i><span>Favoris</span></div>
     <div class="bni" id="bni-settings" onclick="openSettings()"><i class="ti ti-settings"></i><span>Réglages</span></div>
+  </div>
+
+  <!-- Floating theme switcher -->
+  <button class="theme-fab" onclick="openThemePanel()" title="Changer de thème">🎨</button>
+  <div id="theme-panel">
+    <div class="tp-row active" data-theme="bloom" onclick="setTheme('bloom')"><div class="tp-dot" style="background:linear-gradient(135deg,#7C6FE0,#A78BFA)"></div><span class="tp-name">Bloom</span></div>
+    <div class="tp-row" data-theme="cosmos" onclick="setTheme('cosmos')"><div class="tp-dot" style="background:#1C1845;border:1.5px solid rgba(167,139,250,0.4)"></div><span class="tp-name">Cosmos</span></div>
+    <div class="tp-row" data-theme="papier" onclick="setTheme('papier')"><div class="tp-dot" style="background:#F5F3EE;border:1.5px solid #D4622A"></div><span class="tp-name">Papier</span></div>
+    <div class="tp-row" data-theme="circuit" onclick="setTheme('circuit')"><div class="tp-dot" style="background:#00FF87"></div><span class="tp-name">Circuit</span></div>
+    <div class="tp-row" data-theme="aurora" onclick="setTheme('aurora')"><div class="tp-dot" style="background:linear-gradient(135deg,#A78BFA,#38BDF8)"></div><span class="tp-name">Aurora</span></div>
   </div>
 </div>
 
@@ -1216,7 +1264,8 @@ function getView(){
 }
 function showView(v){
   document.getElementById('view-mois').style.display=v==='Mois'?'':'none';
-  document.getElementById('view-semaine').style.display=v==='Semaine'?'':'none';
+  const semEl=document.getElementById('view-semaine');
+  if(semEl){semEl.style.display=v==='Semaine'?'flex':'none';semEl.style.flex=v==='Semaine'?'1':'';semEl.style.height=v==='Semaine'?'0':'';}
   document.getElementById('view-jour').style.display=v==='Jour'?'':'none';
 }
 function rAll(){
@@ -2402,47 +2451,38 @@ window.addEventListener('load', () => {
 // ══════════════════════════════════════════════════════════
 const THEMES = ['bloom','cosmos','papier','circuit','aurora'];
 
-function setTheme(name, el){
+function setTheme(name){
   document.documentElement.setAttribute('data-theme', name);
   localStorage.setItem('kalendi-theme', name);
-  // Update swatch active state
-  document.querySelectorAll('.theme-swatch').forEach(s => s.classList.remove('active'));
-  if(el) el.classList.add('active');
-  else {
-    const s = document.querySelector(`.theme-swatch[data-theme="${name}"]`);
-    if(s) s.classList.add('active');
-  }
-  // Update default pill color for 'all'
+  // Update swatches + panel rows
+  document.querySelectorAll('.theme-swatch, .tp-row').forEach(s => {
+    s.classList.toggle('active', s.dataset.theme === name);
+  });
+  // Update pill-all color
   const pillAll = document.getElementById('pill-all');
-  if(pillAll) {
+  if(pillAll){
     const cols = {bloom:'#7C6FE0',cosmos:'#A78BFA',papier:'#D4622A',circuit:'#00FF87',aurora:'#A78BFA'};
     const txs  = {bloom:'#fff',cosmos:'#fff',papier:'#fff',circuit:'#000',aurora:'#fff'};
     pillAll.style.background = cols[name]||'#A78BFA';
     pillAll.style.color = txs[name]||'#fff';
+    pillAll.style.borderColor = cols[name]||'#A78BFA';
   }
-  // Update Bloom wrapper visibility
-  applyBloomWrapper(name);
+  // Close theme panel
+  const tp = document.getElementById('theme-panel');
+  if(tp && tp.style.display !== 'none') tp.style.display = 'none';
 }
 
-function applyBloomWrapper(theme){
-  const wrap = document.getElementById('bloom-wrap');
-  const ch   = document.querySelector('.ch');
-  const vt   = document.querySelector('.vt');
-  if(!wrap) return;
-  if(theme === 'bloom'){
-    wrap.style.display = 'block';
-    if(ch) ch.style.background = 'transparent';
-    if(vt) vt.style.background = 'transparent';
-  } else {
-    wrap.style.display = 'none';
-    if(ch) ch.style.background = '';
-    if(vt) vt.style.background = '';
-  }
+function openThemePanel(){
+  const tp = document.getElementById('theme-panel');
+  if(!tp) return;
+  tp.style.display = (tp.style.display === 'flex') ? 'none' : 'flex';
 }
+
+
 
 function initTheme(){
   const saved = localStorage.getItem('kalendi-theme') || 'bloom';
-  setTheme(saved, null);
+  setTheme(saved);
 }
 
 // Run on load
@@ -2467,9 +2507,8 @@ document.addEventListener('DOMContentLoaded', () => {
       card.style.cssText = 'background:var(--scr-bg);border-radius:22px 22px 0 0;margin-top:-14px;overflow:hidden';
       scr.insertBefore(card, viewMois);
       card.appendChild(viewMois);
-      const vs = document.getElementById('view-semaine');
+      // keep view-semaine at scr level for correct full-height rendering
       const vj = document.getElementById('view-jour');
-      if(vs) card.appendChild(vs);
       if(vj) card.appendChild(vj);
       // Rebuild .els too if needed
     }
