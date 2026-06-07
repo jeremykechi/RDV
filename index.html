@@ -29,47 +29,46 @@
   --red:#7C6FE0;
   --dark:#7C6FE0;
   --shell:#7C6FE0;
-  --shell2:#6A5DD0;
-  --bg:#F8F6FF;
+  --bg:#F4F3FF;
   --sur:#FFFFFF;
   --sur2:#F0EEFF;
   --tx:#1A1A2E;
   --tx2:#6B6890;
   --tx3:#B0AECC;
-  --bd:rgba(124,111,224,0.12);
-  --bd2:rgba(124,111,224,0.22);
+  --bd:rgba(124,111,224,0.1);
+  --bd2:rgba(124,111,224,0.2);
   --accent:#7C6FE0;
   --accent2:#A78BFA;
   --pill-on-bg:#FFFFFF;
   --pill-on-tx:#7C6FE0;
-  --pill-off-bg:rgba(255,255,255,0.18);
-  --pill-off-tx:rgba(255,255,255,0.75);
+  --pill-off-bg:rgba(255,255,255,0.2);
+  --pill-off-tx:rgba(255,255,255,0.8);
   --bnav-bg:#FFFFFF;
-  --bnav-bd:rgba(124,111,224,0.1);
-  --sb-tx:rgba(255,255,255,0.8);
+  --bnav-bd:rgba(124,111,224,0.08);
+  --sb-tx:rgba(255,255,255,0.85);
   --logo-tx:#fff;
   --logo-em:#FDE68A;
-  --header-bg:linear-gradient(160deg,#7C6FE0,#A78BFA);
-  --cats-bg:linear-gradient(160deg,#7C6FE0,#A78BFA);
-  --scr-bg:#F8F6FF;
+  --header-bg:linear-gradient(160deg,#7C6FE0,#9B8FF5);
+  --cats-bg:linear-gradient(160deg,#7C6FE0,#9B8FF5);
+  --scr-bg:#FFFFFF;
   --cal-bg:#FFFFFF;
-  --cal-bd:rgba(124,111,224,0.15);
-  --cal-br:20px;
-  --day-tx:rgba(26,26,46,0.8);
-  --day-dim:rgba(26,26,46,0.25);
-  --day-hd:rgba(124,111,224,0.5);
+  --cal-bd:rgba(124,111,224,0.08);
+  --cal-br:0px;
+  --day-tx:#1A1A2E;
+  --day-dim:rgba(26,26,46,0.2);
+  --day-hd:rgba(124,111,224,0.45);
   --dn-sel-bg:#7C6FE0;
   --dc-sel:#EDE9FF;
-  --dc-sel-bd:rgba(124,111,224,0.3);
+  --dc-sel-bd:rgba(124,111,224,0.25);
   --elt-tx:#9390B8;
   --ec-bg:#FFFFFF;
-  --ec-bd:rgba(124,111,224,0.12);
+  --ec-bd:rgba(124,111,224,0.1);
   --ec-hover:#F7F5FF;
   --en-tx:#1A1A2E;
   --es-tx:#7B72B8;
   --cm-tx:#1A1A2E;
-  --cnav-tx:#B0AECC;
-  --ch-bg:#F8F6FF;
+  --cnav-tx:#C4BAF8;
+  --ch-bg:#FFFFFF;
   --vt-bg:#F0EEFF;
   --vb-tx:#7B72B8;
   --mode:light;
@@ -310,9 +309,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .mw.gone{display:none}
 .dw{display:none;flex-direction:column;flex:1;overflow:hidden;min-height:0}
 .dw.open{display:flex}
-.scr{flex:1;overflow-y:auto;scrollbar-width:none;display:flex;flex-direction:column;background:var(--scr-bg)}
+.scr{flex:1;overflow-y:auto;scrollbar-width:none;display:flex;flex-direction:column;background:var(--scr-bg);border-radius:22px 22px 0 0;margin-top:-16px;position:relative;z-index:1}
 .scr::-webkit-scrollbar{display:none}
-.ch{display:flex;align-items:center;justify-content:space-between;padding:14px 22px 9px;background:var(--ch-bg)}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:16px 22px 10px;background:var(--ch-bg)}
 .cm{font-size:17px;font-weight:700;color:var(--cm-tx)}
 .cnav{display:flex;gap:5px}
 .cnav button{background:none;border:none;cursor:pointer;color:var(--cnav-tx);font-size:26px;line-height:1;padding:0 6px}
@@ -523,26 +522,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 [data-theme="bloom"] .vt{background:rgba(255,255,255,0.18);border-color:rgba(255,255,255,0.25)}
 
 
-/* Floating theme button */
-.theme-fab{
-  position:fixed;bottom:90px;right:16px;
-  width:42px;height:42px;border-radius:50%;
-  background:var(--accent);border:none;
-  display:flex;align-items:center;justify-content:center;
-  font-size:19px;cursor:pointer;z-index:500;
-  box-shadow:0 4px 16px rgba(0,0,0,0.3);
-  transition:transform .2s;
-}
-.theme-fab:hover{transform:scale(1.08)}
 
-/* Theme panel popup */
+
+/* Theme panel popup — anchored under header */
 #theme-panel{
-  position:fixed;bottom:140px;right:12px;
+  position:absolute;top:100%;right:16px;
   background:var(--ec-bg);border:1px solid var(--ec-bd);
-  border-radius:18px;padding:10px 8px;
-  display:none;flex-direction:column;gap:6px;
-  z-index:500;box-shadow:0 8px 32px rgba(0,0,0,0.35);
-  min-width:80px;
+  border-radius:16px;padding:8px 6px;
+  display:none;flex-direction:column;gap:4px;
+  z-index:600;box-shadow:0 8px 32px rgba(0,0,0,0.25);
+  min-width:110px;
 }
 #theme-panel .tp-row{
   display:flex;align-items:center;gap:8px;
@@ -553,6 +542,42 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 #theme-panel .tp-row.active{background:var(--ec-hover);outline:1.5px solid var(--accent)}
 .tp-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0}
 .tp-name{font-size:11px;font-weight:700;color:var(--en-tx)}
+
+
+[data-theme="cosmos"] .scr,
+[data-theme="papier"] .scr,
+[data-theme="circuit"] .scr,
+[data-theme="aurora"] .scr {
+  border-radius:0;
+  margin-top:0;
+}
+
+
+[data-theme="bloom"] .cg {
+  margin:0;
+  background:transparent;
+  border:none;
+  border-radius:0;
+  padding:0 14px 4px;
+}
+[data-theme="bloom"] .ec {
+  background:#FFFFFF;
+  border:1px solid rgba(124,111,224,0.1);
+  box-shadow:0 2px 12px rgba(124,111,224,0.08);
+  border-radius:14px;
+}
+[data-theme="bloom"] .ec:hover {
+  box-shadow:0 4px 20px rgba(124,111,224,0.14);
+  border-color:rgba(124,111,224,0.2);
+}
+[data-theme="bloom"] .els {
+  padding:10px 14px;
+}
+[data-theme="bloom"] .bnav {
+  background:#FFFFFF;
+  border-top:1px solid rgba(124,111,224,0.08);
+  box-shadow:0 -2px 12px rgba(124,111,224,0.06);
+}
 
 </style>
 </head>
@@ -569,10 +594,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="mw" id="mw">
   <div class="ah">
     <div class="logo"><span style="color:#fff">Kalen</span><em style="color:var(--red);font-style:normal">di</em></div>
-    <div class="hico"><i class="ti ti-bell" onclick="openNotifs()" style="cursor:pointer"></i><i class="ti ti-settings" onclick="openSettings()" style="cursor:pointer"></i></div>
+    <div class="hico">
+      <i class="ti ti-bell" onclick="openNotifs()" style="cursor:pointer"></i>
+      <button onclick="openThemePanel()" id="theme-btn" style="background:rgba(255,255,255,0.2);border:none;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;flex-shrink:0" title="Thème">🎨</button>
+      <i class="ti ti-settings" onclick="openSettings()" style="cursor:pointer"></i>
+    </div>
+    <div id="theme-panel">
+      <div class="tp-row active" data-theme="bloom" onclick="setTheme('bloom')"><div class="tp-dot" style="background:linear-gradient(135deg,#7C6FE0,#A78BFA)"></div><span class="tp-name">Bloom</span></div>
+      <div class="tp-row" data-theme="cosmos" onclick="setTheme('cosmos')"><div class="tp-dot" style="background:#1C1845;border:1.5px solid rgba(167,139,250,0.4)"></div><span class="tp-name">Cosmos</span></div>
+      <div class="tp-row" data-theme="papier" onclick="setTheme('papier')"><div class="tp-dot" style="background:#F5F3EE;border:1.5px solid #D4622A"></div><span class="tp-name">Papier</span></div>
+      <div class="tp-row" data-theme="circuit" onclick="setTheme('circuit')"><div class="tp-dot" style="background:#00FF87"></div><span class="tp-name">Circuit</span></div>
+      <div class="tp-row" data-theme="aurora" onclick="setTheme('aurora')"><div class="tp-dot" style="background:linear-gradient(135deg,#A78BFA,#38BDF8)"></div><span class="tp-name">Aurora</span></div>
+    </div>
   </div>
   <div class="cats">
-    <div class="pill on" style="" onclick="sCat(this,'all')" id="pill-all">✦ Tout</div>
+    <div class="pill on" style="background:#fff;color:#7C6FE0;border-color:#fff" onclick="sCat(this,'all')" id="pill-all">✦ Tout</div>
     <div class="pill off" onclick="sCat(this,'feries')">🏛 Fériés</div>
     <div class="pill off" onclick="sCat(this,'vacances')">🏫 Vacances</div>
     <div class="pill off" onclick="sCat(this,'meteo')">🌤 Météo</div>
@@ -623,15 +659,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="bni" id="bni-settings" onclick="openSettings()"><i class="ti ti-settings"></i><span>Réglages</span></div>
   </div>
 
-  <!-- Floating theme switcher -->
-  <button class="theme-fab" onclick="openThemePanel()" title="Changer de thème">🎨</button>
-  <div id="theme-panel">
-    <div class="tp-row active" data-theme="bloom" onclick="setTheme('bloom')"><div class="tp-dot" style="background:linear-gradient(135deg,#7C6FE0,#A78BFA)"></div><span class="tp-name">Bloom</span></div>
-    <div class="tp-row" data-theme="cosmos" onclick="setTheme('cosmos')"><div class="tp-dot" style="background:#1C1845;border:1.5px solid rgba(167,139,250,0.4)"></div><span class="tp-name">Cosmos</span></div>
-    <div class="tp-row" data-theme="papier" onclick="setTheme('papier')"><div class="tp-dot" style="background:#F5F3EE;border:1.5px solid #D4622A"></div><span class="tp-name">Papier</span></div>
-    <div class="tp-row" data-theme="circuit" onclick="setTheme('circuit')"><div class="tp-dot" style="background:#00FF87"></div><span class="tp-name">Circuit</span></div>
-    <div class="tp-row" data-theme="aurora" onclick="setTheme('aurora')"><div class="tp-dot" style="background:linear-gradient(135deg,#A78BFA,#38BDF8)"></div><span class="tp-name">Aurora</span></div>
-  </div>
+
 </div>
 
 
