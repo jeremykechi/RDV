@@ -1823,16 +1823,24 @@ function toggleCat(el){
 function togglePrefInAll(el){
   const row=el.closest('.sw-pref-row');
   const chip=row?row.querySelector('.sw-chip'):null;
-  // Seulement si la sous-catégorie est active
-  if(chip&&!chip.classList.contains('on'))return;
+  const turningOn=!el.classList.contains('on');
   el.classList.toggle('on');
+  // Si on active ✦ et que le chip est off → on l'active automatiquement
+  if(turningOn && chip && !chip.classList.contains('on')){
+    toggleChip(chip);
+  }
 }
 function toggleInAll(el){
   const row=el.closest('.sw-cat-row');
   const chip=row?row.querySelector('.sw-chip'):null;
-  // Ne peut être actif que si la catégorie est active
-  if(!chip||!chip.classList.contains('on'))return;
+  const turningOn=!el.classList.contains('on');
   el.classList.toggle('on');
+  // Si on active ✦ et que le chip est off → on l'active automatiquement
+  if(turningOn && chip && !chip.classList.contains('on')){
+    chip.classList.add('on');
+    chip.style.background=getComputedStyle(el.closest('[style*="--cc"]')||document.documentElement).getPropertyValue('--cc')||'var(--accent)';
+    chip.style.color='#fff';
+  }
 }
 function toggleChip(el){
   const isOn=el.classList.contains('on');
