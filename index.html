@@ -1020,17 +1020,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
 
     <div class="sw-section">
-      <div class="sw-section-title">&#129354; Sports de combat</div>
-      <div class="sw-card"><div class="sw-chip-wrap" id="sw-combat">
-        <button class="sw-chip" data-pref="ufc" onclick="toggleChip(this)">&#129354; UFC / MMA</button>
-        <button class="sw-chip" data-pref="boxe" onclick="toggleChip(this)">&#129354; Boxe</button>
-        <button class="sw-chip" data-pref="kickboxing" onclick="toggleChip(this)">Kickboxing</button>
-        <button class="sw-chip" data-pref="judo" onclick="toggleChip(this)">&#129354; Judo</button>
-        <button class="sw-chip" data-pref="karate" onclick="toggleChip(this)">Karat&#233;</button>
-        <button class="sw-chip" data-pref="lutte" onclick="toggleChip(this)">Lutte</button>
-        <button class="sw-chip" data-pref="muay-thai" onclick="toggleChip(this)">Muay Thai</button>
-        <button class="sw-chip" data-pref="sumo" onclick="toggleChip(this)">Sumo</button>
-      </div></div>
+      <div class="sw-section-title">🥊 Sports de combat</div>
+      <div class="sw-card" id="sw-combat" style="padding:4px 0">
+        <div class="sw-pref-row"><button class="sw-chip on" style="background:#E8334A;color:#fff" data-pref="ufc" onclick="toggleChip(this)">🥊 UFC / MMA</button><button class="sw-pref-inall on" data-pref="ufc" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
+        <div class="sw-pref-row"><button class="sw-chip on" style="background:#E8334A;color:#fff" data-pref="pfl" onclick="toggleChip(this)">🥊 PFL</button><button class="sw-pref-inall on" data-pref="pfl" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
+        <div class="sw-pref-row"><button class="sw-chip" data-pref="boxe" onclick="toggleChip(this)">🥊 Boxe</button><button class="sw-pref-inall" data-pref="boxe" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
+        <div class="sw-pref-row"><button class="sw-chip" data-pref="kickboxing" onclick="toggleChip(this)">Kickboxing</button><button class="sw-pref-inall" data-pref="kickboxing" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
+        <div class="sw-pref-row"><button class="sw-chip" data-pref="judo" onclick="toggleChip(this)">🥋 Judo</button><button class="sw-pref-inall" data-pref="judo" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
+        <div class="sw-pref-row"><button class="sw-chip" data-pref="karate" onclick="toggleChip(this)">Karaté</button><button class="sw-pref-inall" data-pref="karate" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
+        <div class="sw-pref-row"><button class="sw-chip" data-pref="lutte" onclick="toggleChip(this)">Lutte</button><button class="sw-pref-inall" data-pref="lutte" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
+        <div class="sw-pref-row"><button class="sw-chip" data-pref="muay-thai" onclick="toggleChip(this)">Muay Thai</button><button class="sw-pref-inall" data-pref="muay-thai" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
+        <div class="sw-pref-row"><button class="sw-chip" data-pref="sumo" onclick="toggleChip(this)">Sumo</button><button class="sw-pref-inall" data-pref="sumo" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
+      </div>
     </div>
 
     <div class="sw-section">
