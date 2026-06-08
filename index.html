@@ -1240,11 +1240,19 @@ function srcMatchesPref(src,prefs){
   if(s.includes('rugby')&&prefs.includes('rugby'))return true;
   if(s.includes('cyclisme')&&prefs.includes('cyclisme'))return true;
   if(s.includes('golf')&&prefs.includes('golf'))return true;
-  // Si la source ne correspond à aucun pref connu, on l'affiche quand même
   if(s.includes('cdm')&&prefs.includes('cdm'))return true;
+  // UFC / MMA / PFL
+  if((s.includes('ufc')||s.includes('mma'))&&prefs.includes('ufc'))return true;
+  if(s.includes('pfl')&&prefs.includes('pfl'))return true;
+  // Boxe / arts martiaux
+  if(s.includes('boxe')&&prefs.includes('boxe'))return true;
+  if(s.includes('kickboxing')&&prefs.includes('kickboxing'))return true;
+  if(s.includes('judo')&&prefs.includes('judo'))return true;
+  if(s.includes('muay')&&prefs.includes('muay-thai'))return true;
+  if(s.includes('sumo')&&prefs.includes('sumo'))return true;
   if((s.includes('giro')||s.includes('tour de france')||s.includes('vuelta'))&&prefs.includes('cyclisme'))return true;
   if(s.includes('nba')){const nbaTeams=['knicks','spurs','lakers','celtics','warriors','bulls','heat','nuggets','thunder','cavaliers','76ers','pistons'];return nbaTeams.some(t=>prefs.includes(t)&&(s.includes(t)||true));}
-  const knownSrcs=['f1','motogp','cdm 2026','nba playoffs 2026','cyclisme 2026','tennis','foot','basket','rugby','cyclisme','golf'];
+  const knownSrcs=['f1','motogp','cdm 2026','nba playoffs 2026','cyclisme 2026','tennis','foot','basket','rugby','cyclisme','golf','ufc','pfl','mma','boxe'];
   if(!knownSrcs.some(k=>s.includes(k)))return true;
   return false;
 }
