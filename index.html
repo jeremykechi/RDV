@@ -1992,7 +1992,7 @@ async function loadEventsFromDB() {
       id: e.id,
       date: e.date,
       d: e.day,
-      m: e.month,
+      m: e.month - 1,  // Supabase month is 1-indexed, JS is 0-indexed
       y: e.year,
       cat: e.cat,
       i: e.icon,
