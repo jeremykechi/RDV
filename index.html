@@ -669,6 +669,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="pill off" onclick="sCat(this,'tourisme')">🗺 Sorties</div>
     <div class="pill off" onclick="sCat(this,'mode')">👗 Mode</div>
     <div class="pill off" onclick="sCat(this,'enfants')">👶 Enfants</div>
+    <div class="pill off" onclick="sCat(this,'autour')">📍 Autour de moi</div>
   </div>
   <div class="ptr-indicator" id="ptr">🔄</div>
   <div class="scr" id="main-scr">
@@ -824,6 +825,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <div class="sw-cat-row" data-cat="enfants" style="--cc:#F97316">
           <button class="sw-chip on" style="background:#F97316;color:#fff" data-cat="enfants" onclick="toggleCat(this)">👶 Enfants</button>
           <button class="sw-inall on" data-cat="enfants" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
+        </div>
+        <div class="sw-cat-row" data-cat="autour" style="--cc:#06B6D4">
+          <button class="sw-chip on" style="background:#06B6D4;color:#fff" data-cat="autour" onclick="toggleCat(this)">📍 Autour de moi</button>
+          <button class="sw-inall on" data-cat="autour" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
         </div>
       </div>
     </div>
@@ -1261,7 +1266,7 @@ function sCat(el,c){
   cat=c;
   document.querySelectorAll('.pill').forEach(p=>{p.className='pill off';p.style.background='';p.style.borderColor='';});
   el.className='pill on';
-  const cols={all:(document.documentElement.getAttribute('data-theme')==='circuit'?'#00FF87':document.documentElement.getAttribute('data-theme')==='papier'?'#D4622A':'#A78BFA'),feries:'#6366F1',vacances:'#8B5CF6',sport:'#1D4ED8',culture:'#7C3AED',business:'#059669',tourisme:'#10B981',mode:'#DB2777',meteo:'#0EA5E9',enfants:'#F97316'};
+  const cols={autour:'#06B6D4',all:(document.documentElement.getAttribute('data-theme')==='circuit'?'#00FF87':document.documentElement.getAttribute('data-theme')==='papier'?'#D4622A':'#A78BFA'),feries:'#6366F1',vacances:'#8B5CF6',sport:'#1D4ED8',culture:'#7C3AED',business:'#059669',tourisme:'#10B981',mode:'#DB2777',meteo:'#0EA5E9',enfants:'#F97316'};
   el.style.background=cols[c]||'#555';
   el.style.borderColor=cols[c]||'#555';
   rAll();
