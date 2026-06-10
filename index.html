@@ -877,21 +877,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="sw-card sw-group" style="margin-bottom:8px">
         <div class="sw-group-title" onclick="toggleGroup('g-foot')">
           <span>⚽ Football</span>
-          <div style="display:flex;align-items:center;gap:8px">
-            <button class="sport-inall on" data-sport="foot-all" onclick="event.stopPropagation();togglePrefInAll(this)" title="Dans Tout">✦</button>
-            <span id="g-foot-arrow" style="color:var(--tx3);font-size:14px">▾</span>
-          </div>
+          <span id="g-foot-arrow" style="color:var(--tx3);font-size:14px">▾</span>
         </div>
         <div id="g-foot" class="sw-group-body">
-          <!-- Compétitions -->
-          <div style="font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px;padding:4px 8px 2px">Compétitions</div>
-          <div class="sw-pref-row"><button class="sport-comp on" data-comp="ldc" onclick="toggleSportComp(this)">🏆 Ligue des Champions</button></div>
-          <div class="sw-pref-row"><button class="sport-comp on" data-comp="ligue1" onclick="toggleSportComp(this)">🇫🇷 Ligue 1</button></div>
-          <div class="sw-pref-row"><button class="sport-comp" data-comp="pl" onclick="toggleSportComp(this)">🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League</button></div>
-          <div class="sw-pref-row"><button class="sport-comp" data-comp="seriea" onclick="toggleSportComp(this)">🇮🇹 Serie A</button></div>
-          <div class="sw-pref-row"><button class="sport-comp" data-comp="bundesliga" onclick="toggleSportComp(this)">🇩🇪 Bundesliga</button></div>
-          <div class="sw-pref-row"><button class="sport-comp" data-comp="laliga" onclick="toggleSportComp(this)">🇪🇸 La Liga</button></div>
-          <div class="sw-pref-row"><button class="sport-comp on" data-comp="cdm" onclick="toggleSportComp(this)">🌍 Coupe du Monde</button></div>
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="ldc" onclick="toggleSportComp(this)">🏆 Ligue des Champions</button><button class="sport-inall on" data-sport="ldc" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="ligue1" onclick="toggleSportComp(this)">🇫🇷 Ligue 1</button><button class="sport-inall on" data-sport="ligue1" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="pl" onclick="toggleSportComp(this)">🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League</button><button class="sport-inall" data-sport="pl" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="seriea" onclick="toggleSportComp(this)">🇮🇹 Serie A</button><button class="sport-inall" data-sport="seriea" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="bundesliga" onclick="toggleSportComp(this)">🇩🇪 Bundesliga</button><button class="sport-inall" data-sport="bundesliga" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="laliga" onclick="toggleSportComp(this)">🇪🇸 La Liga</button><button class="sport-inall" data-sport="laliga" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="cdm" onclick="toggleSportComp(this)">🌍 Coupe du Monde</button><button class="sport-inall on" data-sport="cdm" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
           <!-- Équipes & nations favorites -->
           <div style="font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px;padding:8px 8px 4px">Mes équipes ⭐ (marquées sur les events)</div>
           <div class="sw-fav-chips" id="fav-foot">
@@ -915,14 +910,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="sw-card sw-group" style="margin-bottom:8px">
         <div class="sw-group-title" onclick="toggleGroup('g-tennis')">
           <span>🎾 Tennis</span>
-          <div style="display:flex;align-items:center;gap:8px">
-            <button class="sport-inall on" data-sport="tennis-all" onclick="event.stopPropagation();togglePrefInAll(this)" title="Dans Tout">✦</button>
-            <span id="g-tennis-arrow" style="color:var(--tx3);font-size:14px">▾</span>
-          </div>
+          <span id="g-tennis-arrow" style="color:var(--tx3);font-size:14px">▾</span>
         </div>
         <div id="g-tennis" class="sw-group-body">
-          <div class="sw-pref-row"><button class="sport-comp on" data-comp="tennis-gs" onclick="toggleSportComp(this)">🏆 Grand Chelems</button></div>
-          <div class="sw-pref-row"><button class="sport-comp on" data-comp="tennis-m1000" onclick="toggleSportComp(this)">⭐ Masters 1000</button></div>
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="tennis-gs" onclick="toggleSportComp(this)">🏆 Grand Chelems</button><button class="sport-inall on" data-sport="tennis-gs" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="tennis-m1000" onclick="toggleSportComp(this)">⭐ Masters 1000</button><button class="sport-inall on" data-sport="tennis-m1000" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
         </div>
       </div>
 
@@ -930,16 +922,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="sw-card sw-group" style="margin-bottom:8px">
         <div class="sw-group-title" onclick="toggleGroup('g-rugby')">
           <span>🏉 Rugby</span>
-          <div style="display:flex;align-items:center;gap:8px">
-            <button class="sport-inall" data-sport="rugby-all" onclick="event.stopPropagation();togglePrefInAll(this)" title="Dans Tout">✦</button>
-            <span id="g-rugby-arrow" style="color:var(--tx3);font-size:14px">▾</span>
-          </div>
+          <span id="g-rugby-arrow" style="color:var(--tx3);font-size:14px">▾</span>
         </div>
         <div id="g-rugby" class="sw-group-body">
-          <div class="sw-pref-row"><button class="sport-comp on" data-comp="rugby-6n" onclick="toggleSportComp(this)">🏆 6 Nations</button></div>
-          <div class="sw-pref-row"><button class="sport-comp on" data-comp="rugby-cc" onclick="toggleSportComp(this)">🏆 Champions Cup</button></div>
-          <div class="sw-pref-row"><button class="sport-comp" data-comp="rugby-t14" onclick="toggleSportComp(this)">🇫🇷 Top 14</button></div>
-          <div class="sw-pref-row"><button class="sport-comp" data-comp="rugby-nc" onclick="toggleSportComp(this)">🌍 Nations Championship</button></div>
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="rugby-6n" onclick="toggleSportComp(this)">🏆 6 Nations</button><button class="sport-inall on" data-sport="rugby-6n" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="rugby-cc" onclick="toggleSportComp(this)">🏆 Champions Cup</button><button class="sport-inall on" data-sport="rugby-cc" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="rugby-t14" onclick="toggleSportComp(this)">🇫🇷 Top 14</button><button class="sport-inall" data-sport="rugby-t14" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="rugby-nc" onclick="toggleSportComp(this)">🌍 Nations Championship</button><button class="sport-inall" data-sport="rugby-nc" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
           <div style="font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px;padding:8px 8px 4px">Équipes favorites ⭐</div>
           <div class="sw-fav-chips" id="fav-rugby">
             <button class="sw-fav-chip on" data-fav="france-rugby" onclick="toggleFav(this,'rugby')">🇫🇷 France</button>
@@ -998,15 +987,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="sw-card sw-group" style="margin-bottom:8px">
         <div class="sw-group-title" onclick="toggleGroup('g-cyclisme')">
           <span>🚴 Cyclisme</span>
-          <div style="display:flex;align-items:center;gap:8px">
-            <button class="sport-inall on" data-sport="cyclisme-all" onclick="event.stopPropagation();togglePrefInAll(this)" title="Dans Tout">✦</button>
-            <span id="g-cyclisme-arrow" style="color:var(--tx3);font-size:14px">▾</span>
-          </div>
+          <span id="g-cyclisme-arrow" style="color:var(--tx3);font-size:14px">▾</span>
         </div>
         <div id="g-cyclisme" class="sw-group-body">
-          <div class="sw-pref-row"><button class="sport-comp on" data-comp="cyclisme-tdf" onclick="toggleSportComp(this)">🇫🇷 Tour de France</button></div>
-          <div class="sw-pref-row"><button class="sport-comp" data-comp="cyclisme-giro" onclick="toggleSportComp(this)">🇮🇹 Giro d'Italia</button></div>
-          <div class="sw-pref-row"><button class="sport-comp" data-comp="cyclisme-vuelta" onclick="toggleSportComp(this)">🇪🇸 Vuelta</button></div>
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="cyclisme-tdf" onclick="toggleSportComp(this)">🇫🇷 Tour de France</button><button class="sport-inall on" data-sport="cyclisme-tdf" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="cyclisme-giro" onclick="toggleSportComp(this)">🇮🇹 Giro d'Italia</button><button class="sport-inall" data-sport="cyclisme-giro" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="cyclisme-vuelta" onclick="toggleSportComp(this)">🇪🇸 Vuelta</button><button class="sport-inall" data-sport="cyclisme-vuelta" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
         </div>
       </div>
 
@@ -1014,14 +1000,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="sw-card sw-group" style="margin-bottom:8px">
         <div class="sw-group-title" onclick="toggleGroup('g-golf')">
           <span>⛳ Golf</span>
-          <div style="display:flex;align-items:center;gap:8px">
-            <button class="sport-inall" data-sport="golf-all" onclick="event.stopPropagation();togglePrefInAll(this)" title="Dans Tout">✦</button>
-            <span id="g-golf-arrow" style="color:var(--tx3);font-size:14px">▾</span>
-          </div>
+          <span id="g-golf-arrow" style="color:var(--tx3);font-size:14px">▾</span>
         </div>
         <div id="g-golf" class="sw-group-body">
-          <div class="sw-pref-row"><button class="sport-comp on" data-comp="golf-gs" onclick="toggleSportComp(this)">🏆 Grands Chelems</button></div>
-          <div class="sw-pref-row"><button class="sport-comp" data-comp="golf-solheim" onclick="toggleSportComp(this)">👩 Solheim Cup</button></div>
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="golf-gs" onclick="toggleSportComp(this)">🏆 Grands Chelems</button><button class="sport-inall on" data-sport="golf-gs" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="golf-solheim" onclick="toggleSportComp(this)">👩 Solheim Cup</button><button class="sport-inall" data-sport="golf-solheim" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
         </div>
       </div>
 
@@ -1029,17 +1012,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="sw-card sw-group" style="margin-bottom:8px">
         <div class="sw-group-title" onclick="toggleGroup('g-combat')">
           <span>🥊 Sports de combat</span>
-          <div style="display:flex;align-items:center;gap:8px">
-            <button class="sport-inall on" data-sport="combat-all" onclick="event.stopPropagation();togglePrefInAll(this)" title="Dans Tout">✦</button>
-            <span id="g-combat-arrow" style="color:var(--tx3);font-size:14px">▾</span>
-          </div>
+          <span id="g-combat-arrow" style="color:var(--tx3);font-size:14px">▾</span>
         </div>
         <div id="g-combat" class="sw-group-body">
-          <div class="sw-pref-row"><button class="sport-comp on" data-comp="ufc" onclick="toggleSportComp(this)">🥊 UFC / MMA</button></div>
-          <div class="sw-pref-row"><button class="sport-comp on" data-comp="pfl" onclick="toggleSportComp(this)">🥊 PFL</button></div>
-          <div class="sw-pref-row"><button class="sport-comp" data-comp="boxe" onclick="toggleSportComp(this)">🥊 Boxe</button></div>
-          <div class="sw-pref-row"><button class="sport-comp" data-comp="judo" onclick="toggleSportComp(this)">🥋 Judo</button></div>
-          <div class="sw-pref-row"><button class="sport-comp" data-comp="muay-thai" onclick="toggleSportComp(this)">Muay Thai</button></div>
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="ufc" onclick="toggleSportComp(this)">🥊 UFC / MMA</button><button class="sport-inall on" data-sport="ufc" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="pfl" onclick="toggleSportComp(this)">🥊 PFL</button><button class="sport-inall on" data-sport="pfl" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="boxe" onclick="toggleSportComp(this)">🥊 Boxe</button><button class="sport-inall" data-sport="boxe" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="judo" onclick="toggleSportComp(this)">🥋 Judo</button><button class="sport-inall" data-sport="judo" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="muay-thai" onclick="toggleSportComp(this)">Muay Thai</button><button class="sport-inall" data-sport="muay-thai" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
         </div>
       </div>
 
@@ -1338,18 +1318,12 @@ function filt(){
       if(['feries','vacances','meteo','meteo-alerte'].includes(e.cat)){
         return vqPrefs.includes(e.cat);
       }
-      // Sport
+      // Sport : vérifier si la compétition spécifique a le ✦
       if(e.cat==='sport'){
-        const sp=getSportOfSrc(e.src);
-        const sportKey=sp+'-all';
-        if(!sportInAll.includes(sportKey))return false;
-        // Filtre compétition : si des comps sont cochées pour ce sport
-        const compsForSport=sportComps.filter(c=>COMP_MAP[c]&&srcMatchesComp(e.src,c)||false);
-        // Vérifier s'il existe des comps actives pour ce sport
-        const allCompsForSport=Object.keys(COMP_MAP).filter(c=>c.startsWith(sp)||c===sp+'-all'||c===sp);
-        const activeCompsForSport=sportComps.filter(c=>allCompsForSport.includes(c));
-        if(activeCompsForSport.length===0)return true; // pas de filtre comp = tout passe
-        return srcMatchesComp(e.src,activeCompsForSport.find(c=>srcMatchesComp(e.src,c)));
+        // Chercher une comp qui matche la source ET qui a le ✦
+        return Object.keys(COMP_MAP).some(comp=>
+          sportInAll.includes(comp) && srcMatchesComp(e.src,comp)
+        );
       }
       // Autres catégories : afficher si la catégorie est active dans réglages
       return true;
