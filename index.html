@@ -2025,31 +2025,28 @@ function toggleCat(el){
 // ── Toggles Vie quotidienne ──────────────────────────────────────────────────
 function toggleVQ(el){
   el.classList.toggle('on');
+  autoSave();
   rAll();
 }
 
 // ── Toggles Sport ✦ ──────────────────────────────────────────────────────────
 function toggleSportInAll(el){
   el.classList.toggle('on');
+  autoSave();
   rAll();
 }
 
 // ── Toggles Sport compétitions ────────────────────────────────────────────────
 function toggleSportComp(el){
   el.classList.toggle('on');
-  // Activer le ✦ parent si pas encore actif
-  const group=el.closest('.sw-group');
-  if(group && el.classList.contains('on')){
-    const inall=group.querySelector('.sport-inall');
-    if(inall && !inall.classList.contains('on')) inall.classList.add('on');
-  }
+  autoSave();
   rAll();
 }
 
 // ── Toggles Favoris ───────────────────────────────────────────────────────────
 function toggleFav(el,type){
   el.classList.toggle('on');
-  savePrefs();
+  autoSave();
   rAll();
 }
 
@@ -2101,84 +2098,89 @@ function toggleVille(el){
 }
 function toggleSwitch(el){el.classList.toggle('on');}
 function saveSettings(){
-  const cats=[];
-  document.querySelectorAll('.sw-cat-row .sw-chip.on').forEach(c=>cats.push(c.dataset.cat));
-  const inall=[];
-  document.querySelectorAll('.sw-inall.on').forEach(b=>inall.push(b.dataset.cat));
-  const inallPrefs=[];
-  document.querySelectorAll('.sw-pref-inall.on').forEach(b=>inallPrefs.push(b.dataset.pref));
-  const prefs=[];
-  document.querySelectorAll('.sw-chip.on[data-pref]').forEach(c=>prefs.push(c.dataset.pref));
-  const ville=document.querySelector('#sw-villes .sw-chip.on')?.dataset?.pref||'paris';
-  localStorage.setItem('kalendi-settings',JSON.stringify({cats,inall,inallPrefs,prefs,ville,savedAt:new Date().toISOString()}));
+  // Sauvegarder le nouvel état complet
+  const state={
+    // Vie quotidienne ✦
+    vqInAll:[...document.querySelectorAll('.vq-inall.on')].map(b=>b.dataset.sub),
+    // Sport compétitions actives
+    sportComps:[...document.querySelectorAll('.sport-comp.on')].map(b=>b.dataset.comp),
+    // Sport ✦ par compétition
+    sportInAll:[...document.querySelectorAll('.sport-inall.on')].map(b=>b.dataset.sport),
+    // Favoris
+    favs:[...document.querySelectorAll('.sw-fav-chip.on')].map(b=>b.dataset.fav),
+    // Ville météo
+    ville:document.querySelector('#sw-villes .sw-chip.on')?.dataset?.pref||'paris',
+    // Zone scolaire
+    zone:localStorage.getItem('kalendi-zone')||'B',
+    v:2 // version du format
+  };
+  localStorage.setItem('kalendi-settings', JSON.stringify(state));
   rAll();
   const toast=document.getElementById('savedToast');
   toast.classList.add('show');
   setTimeout(()=>toast.classList.remove('show'),2500);
   setTimeout(()=>closeSettings(),1200);
 }
+
+// Sauvegarde auto à chaque interaction réglage (sans toast)
+function autoSave(){
+  const state={
+    vqInAll:[...document.querySelectorAll('.vq-inall.on')].map(b=>b.dataset.sub),
+    sportComps:[...document.querySelectorAll('.sport-comp.on')].map(b=>b.dataset.comp),
+    sportInAll:[...document.querySelectorAll('.sport-inall.on')].map(b=>b.dataset.sport),
+    favs:[...document.querySelectorAll('.sw-fav-chip.on')].map(b=>b.dataset.fav),
+    ville:document.querySelector('#sw-villes .sw-chip.on')?.dataset?.pref||'paris',
+    zone:localStorage.getItem('kalendi-zone')||'B',
+    v:2
+  };
+  localStorage.setItem('kalendi-settings', JSON.stringify(state));
+}
 function loadSettings(){
-  const saved=localStorage.getItem('kalendi-settings');
-  if(!saved)return;
-  const s=JSON.parse(saved);
-  const colors={feries:'#6366F1',sport:'#1D4ED8',culture:'#7C3AED',business:'#059669',tourisme:'#10B981',mode:'#DB2777',meteo:'#0EA5E9',enfants:'#F97316'};
-  if(s.cats){
-    document.querySelectorAll('.sw-cat-row .sw-chip').forEach(c=>{
-      const on=s.cats.includes(c.dataset.cat);
-      c.classList.toggle('on',on);
-      c.style.background=on?(colors[c.dataset.cat]||'#E8334A'):'';
-      c.style.color=on?'#fff':'';
+  const raw=localStorage.getItem('kalendi-settings');
+  if(!raw)return;
+  const s=JSON.parse(raw);
+
+  // Support ancien format (v1) et nouveau format (v2)
+  if(s.v===2){
+    // ── Vie quotidienne ✦ ──
+    const vqInAll=s.vqInAll||['feries','vacances','meteo'];
+    document.querySelectorAll('.vq-inall').forEach(b=>{
+      b.classList.toggle('on', vqInAll.includes(b.dataset.sub));
     });
-  }
-  const inall=s.inall||['feries','vacances','meteo','sport','culture','business','tourisme','mode','enfants'];
-  document.querySelectorAll('.sw-inall').forEach(b=>{
-    const on=inall.includes(b.dataset.cat);
-    b.classList.toggle('on',on);
-  });
-  // Restaurer les prefs inall
-  const inallPrefs=s.inallPrefs;
-  if(inallPrefs){
-    document.querySelectorAll('.sw-pref-inall').forEach(b=>{
-      const on=inallPrefs.includes(b.dataset.pref);
-      b.classList.toggle('on',on);
+
+    // ── Sport compétitions ──
+    const sportComps=s.sportComps||['ldc','ligue1','cdm','tennis-gs','tennis-m1000','rugby-6n','rugby-cc','cyclisme-tdf','golf-gs','ufc','pfl'];
+    document.querySelectorAll('.sport-comp').forEach(b=>{
+      b.classList.toggle('on', sportComps.includes(b.dataset.comp));
     });
+
+    // ── Sport ✦ par compétition ──
+    const sportInAll=s.sportInAll||['ldc','ligue1','cdm','tennis-gs','tennis-m1000','rugby-6n','rugby-cc','cyclisme-tdf','golf-gs','ufc','pfl'];
+    document.querySelectorAll('.sport-inall').forEach(b=>{
+      b.classList.toggle('on', sportInAll.includes(b.dataset.sport));
+    });
+
+    // ── Favoris ──
+    const favs=s.favs||[];
+    document.querySelectorAll('.sw-fav-chip').forEach(b=>{
+      b.classList.toggle('on', favs.includes(b.dataset.fav));
+    });
+
   } else {
-    // Par défaut : activer ✦ pour tous les chips déjà cochés
-    document.querySelectorAll('.sw-chip.on[data-pref]').forEach(c=>{
-      const row=c.closest('.sw-pref-row');
-      const inallBtn=row?row.querySelector('.sw-pref-inall'):null;
-      if(inallBtn)inallBtn.classList.add('on');
-    });
+    // Ancien format v1 : ignorer, garder les défauts
+    return;
   }
-  if(s.prefs){
-    document.querySelectorAll('.sw-chip[data-pref]').forEach(c=>{
-      if(c.closest('#sw-villes'))return;
-      const on=s.prefs.includes(c.dataset.pref);
-      c.classList.toggle('on',on);
-      const wrap=c.closest('.sw-chip-wrap');
-      const cat=wrap?wrap.id.replace('sw-',''):'';
-      c.style.background=on?(colors[cat]||'#E8334A'):'';
-      c.style.color=on?'#fff':'';
-    });
-  }
+
+  // ── Ville météo ──
   if(s.ville){
     document.querySelectorAll('#sw-villes .sw-chip').forEach(c=>{
       const on=c.dataset.pref===s.ville;
       c.classList.toggle('on',on);
-      c.style.background=on?'#E8334A':'';
+      c.style.background=on?'#0EA5E9':'';
       c.style.color=on?'#fff':'';
     });
   }
-  // Restore zone scolaire
-  const zone=localStorage.getItem('kalendi-zone')||'B';
-  document.querySelectorAll('#sw-zone .sw-chip').forEach(c=>{
-    const on=c.dataset.pref===`zone-${zone.toLowerCase()}`;
-    c.classList.toggle('on',on);
-    c.style.background=on?'#6366F1':'';
-    c.style.color=on?'#fff':'';
-  });
 }
-
 
 // ── SUPABASE ─────────────────────────────────────────────────────────────────
 const SUPA_URL = 'https://lvgtjitlqxgqmzsgvfkl.supabase.co';
