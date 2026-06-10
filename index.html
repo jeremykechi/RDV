@@ -955,7 +955,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <div class="sw-group-title" onclick="toggleGroup('g-nba')">
           <span>🏀 NBA</span>
           <div style="display:flex;align-items:center;gap:8px">
-            <button class="sport-inall" data-sport="nba-all" onclick="event.stopPropagation();togglePrefInAll(this)" title="Dans Tout">✦</button>
+            <button class="sport-inall" data-sport="nba-all" onclick="event.stopPropagation();toggleSportInAll(this)" title="Dans Tout">✦</button>
             <span id="g-nba-arrow" style="color:var(--tx3);font-size:14px">▾</span>
           </div>
         </div>
@@ -982,7 +982,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="sw-card sw-group" style="margin-bottom:8px">
         <div class="sw-group-title">
           <span>🏎️ Formule 1</span>
-          <button class="sport-inall on" data-sport="f1-all" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+          <button class="sport-inall on" data-sport="f1-all" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button>
         </div>
       </div>
 
@@ -990,7 +990,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="sw-card sw-group" style="margin-bottom:8px">
         <div class="sw-group-title">
           <span>🏍️ MotoGP</span>
-          <button class="sport-inall on" data-sport="motogp-all" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+          <button class="sport-inall on" data-sport="motogp-all" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button>
         </div>
       </div>
 
@@ -2081,7 +2081,6 @@ function toggleFav(el,type){
 
 // Compatibilité anciens appels
 function togglePrefInAll(el){
-  if(el.classList.contains('sport-inall'))return toggleSportInAll(el);
   el.classList.toggle('on');
   rAll();
 }
@@ -2628,24 +2627,14 @@ async function loadCDMFromDB() {
 // Load NBA Playoffs 2026 from Supabase
 async function loadNBAFromDB() {
   try {
-    const prefs = getActivePrefs();
     const res = await fetch(`${SUPA_URL}/rest/v1/nba_playoffs_2026?select=*&order=date_match.asc`, {
       headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` }
     });
     const data = await res.json();
     if (!data || !data.length) return;
 
-    const nbaTeams = ['knicks','spurs','lakers','celtics','warriors','bulls','heat','nuggets','thunder','cavaliers','76ers','pistons'];
-    const activeTeams = prefs.filter(p => nbaTeams.includes(p));
-
-    // Filtrer : afficher si une des équipes est dans les préfs (ou toutes si aucune pref NBA)
-    const filtered = activeTeams.length === 0 ? data : data.filter(m => {
-      const e1 = m.equipe1.toLowerCase();
-      const e2 = m.equipe2.toLowerCase();
-      return activeTeams.some(t => e1.includes(t) || e2.includes(t));
-    });
-
-    const nbaEvents = filtered.map(m => {
+    // Charger tous les matchs, le filtrage est géré par filt()
+    const nbaEvents = data.map(m => {
       const score = m.termine && m.score1 !== null ? ` (${m.score1}-${m.score2})` : '';
       const label = m.termine ? `✓ ${m.equipe1} - ${m.equipe2}${score}` : `${m.equipe1} vs ${m.equipe2}`;
       return {
