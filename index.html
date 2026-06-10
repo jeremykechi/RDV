@@ -2001,6 +2001,17 @@ function openSettings(){
   document.getElementById('nw').classList.remove('open');
   document.getElementById('mapw').classList.remove('open');
   document.getElementById('sw').classList.add('open');
+  // Migrer ou nettoyer l'ancienne sauvegarde v1
+  const rawSettings = localStorage.getItem('kalendi-settings');
+  if(rawSettings){
+    try{
+      const parsed = JSON.parse(rawSettings);
+      if(!parsed.v || parsed.v < 2){
+        // Ancienne sauvegarde : la supprimer pour repartir de l'état HTML
+        localStorage.removeItem('kalendi-settings');
+      }
+    }catch(e){ localStorage.removeItem('kalendi-settings'); }
+  }
   loadSettings();
 }
 function closeSettings(){
@@ -2143,19 +2154,19 @@ function loadSettings(){
   // Support ancien format (v1) et nouveau format (v2)
   if(s.v===2){
     // ── Vie quotidienne ✦ ──
-    const vqInAll=s.vqInAll||['feries','vacances','meteo'];
+    const vqInAll=s.vqInAll||[];
     document.querySelectorAll('.vq-inall').forEach(b=>{
       b.classList.toggle('on', vqInAll.includes(b.dataset.sub));
     });
 
     // ── Sport compétitions ──
-    const sportComps=s.sportComps||['ldc','ligue1','cdm','tennis-gs','tennis-m1000','rugby-6n','rugby-cc','cyclisme-tdf','golf-gs','ufc','pfl'];
+    const sportComps=s.sportComps||[];
     document.querySelectorAll('.sport-comp').forEach(b=>{
       b.classList.toggle('on', sportComps.includes(b.dataset.comp));
     });
 
     // ── Sport ✦ par compétition ──
-    const sportInAll=s.sportInAll||['ldc','ligue1','cdm','tennis-gs','tennis-m1000','rugby-6n','rugby-cc','cyclisme-tdf','golf-gs','ufc','pfl'];
+    const sportInAll=s.sportInAll||[];
     document.querySelectorAll('.sport-inall').forEach(b=>{
       b.classList.toggle('on', sportInAll.includes(b.dataset.sport));
     });
