@@ -1025,6 +1025,44 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
     </div>
 
+
+    <div class="sw-section">
+      <div class="sw-section-title">📈 Business</div>
+
+      <!-- IPO -->
+      <div class="sw-card sw-group" style="margin-bottom:8px">
+        <div class="sw-group-title" onclick="toggleGroup('g-ipo')">
+          <span>🚀 Introductions en bourse (IPO)</span>
+          <span id="g-ipo-arrow" style="color:var(--tx3);font-size:14px">▾</span>
+        </div>
+        <div id="g-ipo" class="sw-group-body">
+          <div class="sw-pref-row">
+            <button class="sport-comp on" data-comp="ipo-major" onclick="toggleSportComp(this)">🌍 IPO majeures</button>
+            <button class="sport-inall on" data-sport="ipo-major" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Publications de résultats -->
+      <div class="sw-card sw-group" style="margin-bottom:8px">
+        <div class="sw-group-title" onclick="toggleGroup('g-resultats')">
+          <span>📊 Publications de comptes</span>
+          <span id="g-resultats-arrow" style="color:var(--tx3);font-size:14px">▾</span>
+        </div>
+        <div id="g-resultats" class="sw-group-body">
+          <div class="sw-pref-row">
+            <button class="sport-comp on" data-comp="resultats-tech" onclick="toggleSportComp(this)">💻 Big Tech (US)</button>
+            <button class="sport-inall on" data-sport="resultats-tech" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button>
+          </div>
+          <div class="sw-pref-row">
+            <button class="sport-comp on" data-comp="resultats-fr" onclick="toggleSportComp(this)">🇫🇷 Grandes entreprises FR</button>
+            <button class="sport-inall on" data-sport="resultats-fr" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
         <div class="sw-section">
       <div class="sw-section-title">&#127917; Culture &#8212; mes int&#233;r&#234;ts</div>
       <div class="sw-card" id="sw-culture" style="padding:4px 0">
@@ -1291,6 +1329,11 @@ const COMP_MAP={
   'f1-all':['f1 ','formula'],
   'motogp-all':['motogp'],
   'nba-all':['nba'],
+  // Business
+  'ipo-major':['ipo 2026'],
+  'resultats-tech':['résultats 2026'],
+  'resultats-fr':['résultats 2026'],
+  // Combat
   'ufc':['ufc','mma'],
   'pfl':['pfl'],
   'boxe':['boxe'],
@@ -1301,6 +1344,15 @@ const COMP_MAP={
 function srcMatchesComp(src,comp){
   if(!src)return false;
   const s=src.toLowerCase();
+  // Cas spécial résultats FR vs Tech
+  if(comp==='resultats-fr'){
+    const frNames=['lvmh','kering','hermès','hermes','totalenergies','total','bnp','société générale','airbus','air liquide'];
+    return s.includes('résultats 2026') && frNames.some(n=>true); // src='Résultats 2026' pour tous
+    // On différencie via le titre de l'event, pas le src — on laisse passer tout résultats-fr si src match
+  }
+  if(comp==='resultats-tech'){
+    return s.includes('résultats 2026');
+  }
   const patterns=COMP_MAP[comp]||[];
   return patterns.some(p=>s.includes(p));
 }
@@ -1321,6 +1373,12 @@ function filt(){
       // Sport : vérifier si la compétition spécifique a le ✦
       if(e.cat==='sport'){
         // Chercher une comp qui matche la source ET qui a le ✦
+        return Object.keys(COMP_MAP).some(comp=>
+          sportInAll.includes(comp) && srcMatchesComp(e.src,comp)
+        );
+      }
+      // Business : même logique que sport via COMP_MAP
+      if(e.cat==='business'){
         return Object.keys(COMP_MAP).some(comp=>
           sportInAll.includes(comp) && srcMatchesComp(e.src,comp)
         );
@@ -1356,6 +1414,11 @@ function filt(){
       });
     }
     // Si aucun sport L2 et aucune comp → montrer tout le sport
+  } else if(cat==='business'){
+    evts=evts.filter(e=>e.cat==='business');
+    // Filtre L2
+    if(catL2==='ipo') evts=evts.filter(e=>e.src&&e.src.toLowerCase().includes('ipo'));
+    else if(catL2==='resultats') evts=evts.filter(e=>e.src&&e.src.toLowerCase().includes('résultats'));
   } else {
     evts=evts.filter(e=>e.cat===cat);
   }
@@ -1368,6 +1431,10 @@ const L2_DEFS={
     {id:'feries',label:'🏛 Jours fériés',color:'#6366F1'},
     {id:'vacances',label:'🏖 Vacances',color:'#8B5CF6'},
     {id:'meteo',label:'🌤 Météo',color:'#0EA5E9'},
+  ],
+  business:[
+    {id:'ipo',label:'🚀 IPO',color:'#059669'},
+    {id:'resultats',label:'📊 Publications',color:'#B45309'},
   ],
   sport:[
     {id:'foot',label:'⚽ Football',color:'#1D4ED8'},
