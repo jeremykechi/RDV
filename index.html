@@ -636,6 +636,64 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 [data-theme="papier"] #theme-btn { color:rgba(0,0,0,0.5) !important; }
 [data-theme="papier"] .sb span   { color:rgba(0,0,0,0.4) !important; }
 
+
+/* ── Pills niveau 2 ── */
+#cats-l2{background:var(--cats-bg);padding-top:0}
+#cats-l2 .pill{font-size:11px;padding:5px 11px}
+[data-theme="bloom"] #cats-l2{background:linear-gradient(160deg,#7C6FE0,#9B8FF5)}
+
+/* ── Marqueur favori ── */
+.fav-badge{
+  position:absolute;top:-4px;right:-4px;
+  font-size:9px;line-height:1;
+  background:gold;color:#000;border-radius:50%;
+  width:14px;height:14px;display:flex;align-items:center;justify-content:center;
+}
+.ec{position:relative}
+.ei-wrap{position:relative;display:inline-flex}
+
+/* ── Réglages — nouvelle hiérarchie ── */
+.sw-group{margin-bottom:4px}
+.sw-group-title{
+  font-size:12px;font-weight:700;color:var(--en-tx);
+  padding:10px 16px 6px;
+  display:flex;align-items:center;justify-content:space-between;
+  cursor:pointer;
+}
+.sw-group-title .sw-inall{margin-left:auto}
+.sw-group-body{padding:0 8px 6px}
+.sw-group-body .sw-pref-row{padding:4px 8px}
+.sw-subgroup{background:var(--sur2);border-radius:10px;margin:4px 0;overflow:hidden}
+.sw-subgroup-title{
+  font-size:11px;font-weight:600;color:var(--tx2);
+  padding:8px 12px;display:flex;align-items:center;gap:8px;
+  cursor:pointer;
+}
+.sw-fav-chips{display:flex;flex-wrap:wrap;gap:6px;padding:4px 12px 10px}
+.sw-fav-chip{
+  padding:4px 10px;border-radius:14px;font-size:11px;font-weight:600;
+  cursor:pointer;border:1.5px solid var(--bd2);background:none;
+  color:var(--tx2);font-family:inherit;transition:all .2s;
+}
+.sw-fav-chip.on{background:gold;color:#000;border-color:gold}
+
+
+/* Marqueur favori */
+.fav-dot{position:absolute;top:-3px;right:-3px;font-size:8px;line-height:1}
+.ei{position:relative}
+.ei-fav{outline:1.5px solid gold;border-radius:5px}
+
+
+/* Sport comp chips */
+.sport-comp{padding:5px 11px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--bd2);background:none;color:var(--tx2);font-family:inherit;transition:all .2s}
+.sport-comp.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+/* Sport inall ✦ */
+.sport-inall{width:28px;height:28px;border-radius:50%;border:1px solid var(--bd2);background:none;color:var(--tx3);font-size:12px;cursor:pointer;flex-shrink:0;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.sport-inall.on{background:var(--accent);color:#fff;border-color:transparent}
+/* VQ inall ✦ */
+.vq-inall{width:28px;height:28px;border-radius:50%;border:1px solid var(--bd2);background:none;color:var(--tx3);font-size:12px;cursor:pointer;flex-shrink:0;transition:all .2s;display:flex;align-items:center;justify-content:center}
+.vq-inall.on{background:var(--accent);color:#fff;border-color:transparent}
+
 </style>
 </head>
 <body>
@@ -664,11 +722,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="tp-row" data-theme="circuit" onclick="setTheme('circuit')"><div class="tp-dot" style="background:#00FF87"></div><span class="tp-name">Circuit</span></div>
     <div class="tp-row" data-theme="aurora" onclick="setTheme('aurora')"><div class="tp-dot" style="background:linear-gradient(135deg,#A78BFA,#38BDF8)"></div><span class="tp-name">Aurora</span></div>
   </div>
-  <div class="cats">
+  <div class="cats" id="cats-l1">
     <div class="pill on" style="background:#fff;color:#7C6FE0;border-color:#fff" onclick="sCat(this,'all')" id="pill-all">✦ Tout</div>
-    <div class="pill off" onclick="sCat(this,'feries')">🏛 Fériés</div>
-    <div class="pill off" onclick="sCat(this,'vacances')">🏫 Vacances</div>
-    <div class="pill off" onclick="sCat(this,'meteo')">🌤 Météo</div>
+    <div class="pill off" onclick="sCat(this,'quotidien')">🏠 Vie quotidienne</div>
     <div class="pill off" onclick="sCat(this,'sport')">⚽ Sport</div>
     <div class="pill off" onclick="sCat(this,'culture')">🎭 Culture</div>
     <div class="pill off" onclick="sCat(this,'business')">📈 Business</div>
@@ -677,6 +733,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="pill off" onclick="sCat(this,'enfants')">👶 Enfants</div>
     <div class="pill off" onclick="sCat(this,'autour')">📍 Autour de moi</div>
   </div>
+  <!-- Pills niveau 2 (sous-catégories) -->
+  <div class="cats" id="cats-l2" style="display:none;padding-top:0;padding-bottom:10px"></div>
   <div class="ptr-indicator" id="ptr">🔄</div>
   <div class="scr" id="main-scr">
     <div class="ch">
@@ -792,249 +850,202 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="sw-avatar-info"><h3>Mon compte</h3><p>Pr&#233;f&#233;rences sauvegard&#233;es localement</p></div>
     </div>
 
+    <!-- ══ VIE QUOTIDIENNE ══ -->
     <div class="sw-section">
-      <div class="sw-section-title">&#128197; Catégories</div>
-      <div style="padding:0 16px 10px;font-size:11px;color:var(--tx2)">Active les catégories · ✦ = visible dans "Tout"</div>
+      <div class="sw-section-title">🏠 Vie quotidienne</div>
       <div class="sw-card" style="padding:4px 8px">
         <div class="sw-cat-row" data-cat="feries" style="--cc:#6366F1">
-          <button class="sw-chip on" style="background:#6366F1;color:#fff" data-cat="feries" onclick="toggleCat(this)">🏛 Fériés</button>
-          <button class="sw-inall on" data-cat="feries" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
+          <button class="sw-chip on" style="background:#6366F1;color:#fff" data-cat="feries" onclick="toggleCat(this)">🏛 Jours fériés</button>
+          <button class="vq-inall on" data-sub="feries" onclick="toggleVQ(this)" title="Dans Tout">✦</button>
         </div>
         <div class="sw-cat-row" data-cat="vacances" style="--cc:#8B5CF6">
-          <button class="sw-chip on" style="background:#8B5CF6;color:#fff" data-cat="vacances" onclick="toggleCat(this)">🏫 Vacances</button>
-          <button class="sw-inall on" data-cat="vacances" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
+          <button class="sw-chip on" style="background:#8B5CF6;color:#fff" data-cat="vacances" onclick="toggleCat(this)">🏫 Vacances scolaires</button>
+          <button class="vq-inall on" data-sub="vacances" onclick="toggleVQ(this)" title="Dans Tout">✦</button>
         </div>
         <div class="sw-cat-row" data-cat="meteo" style="--cc:#0EA5E9">
           <button class="sw-chip on" style="background:#0EA5E9;color:#fff" data-cat="meteo" onclick="toggleCat(this)">🌤 Météo</button>
-          <button class="sw-inall on" data-cat="meteo" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
-        </div>
-        <div class="sw-cat-row" data-cat="sport" style="--cc:#1D4ED8">
-          <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-cat="sport" onclick="toggleCat(this)">⚽ Sport</button>
-          <button class="sw-inall on" data-cat="sport" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
-        </div>
-        <div class="sw-cat-row" data-cat="culture" style="--cc:#7C3AED">
-          <button class="sw-chip on" style="background:#7C3AED;color:#fff" data-cat="culture" onclick="toggleCat(this)">🎭 Culture</button>
-          <button class="sw-inall on" data-cat="culture" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
-        </div>
-        <div class="sw-cat-row" data-cat="business" style="--cc:#059669">
-          <button class="sw-chip on" style="background:#059669;color:#fff" data-cat="business" onclick="toggleCat(this)">📈 Business</button>
-          <button class="sw-inall on" data-cat="business" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
-        </div>
-        <div class="sw-cat-row" data-cat="tourisme" style="--cc:#10B981">
-          <button class="sw-chip on" style="background:#10B981;color:#fff" data-cat="tourisme" onclick="toggleCat(this)">🗺 Sorties</button>
-          <button class="sw-inall on" data-cat="tourisme" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
-        </div>
-        <div class="sw-cat-row" data-cat="mode" style="--cc:#DB2777">
-          <button class="sw-chip on" style="background:#DB2777;color:#fff" data-cat="mode" onclick="toggleCat(this)">👗 Mode</button>
-          <button class="sw-inall on" data-cat="mode" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
-        </div>
-        <div class="sw-cat-row" data-cat="enfants" style="--cc:#F97316">
-          <button class="sw-chip on" style="background:#F97316;color:#fff" data-cat="enfants" onclick="toggleCat(this)">👶 Enfants</button>
-          <button class="sw-inall on" data-cat="enfants" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
-        </div>
-        <div class="sw-cat-row" data-cat="autour" style="--cc:#06B6D4">
-          <button class="sw-chip on" style="background:#06B6D4;color:#fff" data-cat="autour" onclick="toggleCat(this)">📍 Autour de moi</button>
-          <button class="sw-inall on" data-cat="autour" onclick="toggleInAll(this)" title="Afficher dans Tout">✦</button>
+          <button class="vq-inall on" data-sub="meteo" onclick="toggleVQ(this)" title="Dans Tout">✦</button>
         </div>
       </div>
     </div>
 
+    <!-- ══ SPORT ══ -->
     <div class="sw-section">
-      <div class="sw-section-title">🏫 Zone de vacances scolaires</div>
-      <div class="sw-card"><div class="sw-chip-wrap" id="sw-zone">
-        <button class="sw-chip" data-pref="zone-a" onclick="setZone(this,'A')">Zone A</button>
-        <button class="sw-chip on" style="background:#6366F1;color:#fff" data-pref="zone-b" onclick="setZone(this,'B')">Zone B</button>
-        <button class="sw-chip" data-pref="zone-c" onclick="setZone(this,'C')">Zone C</button>
-      </div></div>
-      <div style="padding:0 16px 12px;font-size:11px;color:var(--tx2)">
-        Zone A : Besançon, Bordeaux, Clermont-Ferrand, Dijon, Grenoble, Limoges, Lyon, Poitiers<br>
-        Zone B : Aix-Marseille, Amiens, Caen, Lille, Nancy-Metz, Nantes, Nice, Orléans-Tours, Reims, Rennes, Rouen, Strasbourg<br>
-        Zone C : Créteil, Montpellier, Paris, Toulouse, Versailles
-      </div>
-    </div>
+      <div class="sw-section-title">⚽ Sport</div>
 
-    <div class="sw-section">
-      <div class="sw-section-title">&#9917; Football</div>
-      <div class="sw-card" id="sw-foot" style="padding:4px 0">
-        <div class="sw-pref-row">
-          <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="cdm" onclick="toggleChip(this)">🏆 Coupe du Monde</button>
-          <button class="sw-pref-inall on" data-pref="cdm" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+      <!-- Football -->
+      <div class="sw-card sw-group" style="margin-bottom:8px">
+        <div class="sw-group-title" onclick="toggleGroup('g-foot')">
+          <span>⚽ Football</span>
+          <div style="display:flex;align-items:center;gap:8px">
+            <button class="sport-inall on" data-sport="foot-all" onclick="event.stopPropagation();togglePrefInAll(this)" title="Dans Tout">✦</button>
+            <span id="g-foot-arrow" style="color:var(--tx3);font-size:14px">▾</span>
+          </div>
         </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="psg" onclick="toggleChip(this)">PSG</button>
-          <button class="sw-pref-inall on" data-pref="psg" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="om" onclick="toggleChip(this)">OM</button>
-          <button class="sw-pref-inall" data-pref="om" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="ol" onclick="toggleChip(this)">OL</button>
-          <button class="sw-pref-inall" data-pref="ol" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="monaco" onclick="toggleChip(this)">Monaco</button>
-          <button class="sw-pref-inall" data-pref="monaco" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="rennes" onclick="toggleChip(this)">Rennes</button>
-          <button class="sw-pref-inall" data-pref="rennes" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="lens" onclick="toggleChip(this)">Lens</button>
-          <button class="sw-pref-inall" data-pref="lens" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="nice" onclick="toggleChip(this)">Nice</button>
-          <button class="sw-pref-inall" data-pref="nice" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="juventus" onclick="toggleChip(this)">Juventus</button>
-          <button class="sw-pref-inall" data-pref="juventus" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="arsenal" onclick="toggleChip(this)">Arsenal</button>
-          <button class="sw-pref-inall" data-pref="arsenal" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="barca" onclick="toggleChip(this)">FC Barcelone</button>
-          <button class="sw-pref-inall" data-pref="barca" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="real" onclick="toggleChip(this)">Real Madrid</button>
-          <button class="sw-pref-inall" data-pref="real" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        <div id="g-foot" class="sw-group-body">
+          <!-- Compétitions -->
+          <div style="font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px;padding:4px 8px 2px">Compétitions</div>
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="ldc" onclick="toggleSportComp(this)">🏆 Ligue des Champions</button></div>
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="ligue1" onclick="toggleSportComp(this)">🇫🇷 Ligue 1</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="pl" onclick="toggleSportComp(this)">🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="seriea" onclick="toggleSportComp(this)">🇮🇹 Serie A</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="bundesliga" onclick="toggleSportComp(this)">🇩🇪 Bundesliga</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="laliga" onclick="toggleSportComp(this)">🇪🇸 La Liga</button></div>
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="cdm" onclick="toggleSportComp(this)">🌍 Coupe du Monde</button></div>
+          <!-- Équipes & nations favorites -->
+          <div style="font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px;padding:8px 8px 4px">Mes équipes ⭐ (marquées sur les events)</div>
+          <div class="sw-fav-chips" id="fav-foot">
+            <button class="sw-fav-chip on" data-fav="psg" onclick="toggleFav(this,'foot')">🔵 PSG</button>
+            <button class="sw-fav-chip" data-fav="om" onclick="toggleFav(this,'foot')">🔵 OM</button>
+            <button class="sw-fav-chip" data-fav="ol" onclick="toggleFav(this,'foot')">🔴 OL</button>
+            <button class="sw-fav-chip" data-fav="monaco" onclick="toggleFav(this,'foot')">⚽ Monaco</button>
+            <button class="sw-fav-chip" data-fav="rennes" onclick="toggleFav(this,'foot')">⚽ Rennes</button>
+            <button class="sw-fav-chip" data-fav="lens" onclick="toggleFav(this,'foot')">🟡 Lens</button>
+            <button class="sw-fav-chip" data-fav="arsenal" onclick="toggleFav(this,'foot')">🔴 Arsenal</button>
+            <button class="sw-fav-chip on" data-fav="juventus" onclick="toggleFav(this,'foot')">⚫ Juventus</button>
+            <button class="sw-fav-chip" data-fav="barca" onclick="toggleFav(this,'foot')">🔵 Barça</button>
+            <button class="sw-fav-chip" data-fav="real" onclick="toggleFav(this,'foot')">⚪ Real Madrid</button>
+            <button class="sw-fav-chip on" data-fav="france-foot" onclick="toggleFav(this,'foot')">🇫🇷 France</button>
+            <button class="sw-fav-chip on" data-fav="italie-foot" onclick="toggleFav(this,'foot')">🇮🇹 Italie</button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="sw-section">
-      <div class="sw-section-title">&#127936; NBA — mes équipes</div>
-      <div class="sw-card" id="sw-nba" style="padding:4px 0">
-        <div class="sw-pref-row">
-          <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="knicks" onclick="toggleChip(this)">🗽 Knicks</button>
-          <button class="sw-pref-inall on" data-pref="knicks" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+      <!-- Tennis -->
+      <div class="sw-card sw-group" style="margin-bottom:8px">
+        <div class="sw-group-title" onclick="toggleGroup('g-tennis')">
+          <span>🎾 Tennis</span>
+          <div style="display:flex;align-items:center;gap:8px">
+            <button class="sport-inall on" data-sport="tennis-all" onclick="event.stopPropagation();togglePrefInAll(this)" title="Dans Tout">✦</button>
+            <span id="g-tennis-arrow" style="color:var(--tx3);font-size:14px">▾</span>
+          </div>
         </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="spurs" onclick="toggleChip(this)">🤠 Spurs</button>
-          <button class="sw-pref-inall on" data-pref="spurs" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="lakers" onclick="toggleChip(this)">💛 Lakers</button>
-          <button class="sw-pref-inall" data-pref="lakers" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="celtics" onclick="toggleChip(this)">🍀 Celtics</button>
-          <button class="sw-pref-inall" data-pref="celtics" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="warriors" onclick="toggleChip(this)">🌉 Warriors</button>
-          <button class="sw-pref-inall" data-pref="warriors" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="bulls" onclick="toggleChip(this)">🐂 Bulls</button>
-          <button class="sw-pref-inall" data-pref="bulls" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="heat" onclick="toggleChip(this)">🔥 Heat</button>
-          <button class="sw-pref-inall" data-pref="heat" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="nuggets" onclick="toggleChip(this)">⛏️ Nuggets</button>
-          <button class="sw-pref-inall" data-pref="nuggets" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="thunder" onclick="toggleChip(this)">⚡ Thunder</button>
-          <button class="sw-pref-inall" data-pref="thunder" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="cavaliers" onclick="toggleChip(this)">⚔️ Cavaliers</button>
-          <button class="sw-pref-inall" data-pref="cavaliers" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="76ers" onclick="toggleChip(this)">🔔 76ers</button>
-          <button class="sw-pref-inall" data-pref="76ers" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="pistons" onclick="toggleChip(this)">🔧 Pistons</button>
-          <button class="sw-pref-inall" data-pref="pistons" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        <div id="g-tennis" class="sw-group-body">
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="tennis-gs" onclick="toggleSportComp(this)">🏆 Grand Chelems</button></div>
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="tennis-m1000" onclick="toggleSportComp(this)">⭐ Masters 1000</button></div>
         </div>
       </div>
-    </div>
 
-    <div class="sw-section">
-      <div class="sw-section-title">&#127941; Autres sports</div>
-      <div class="sw-card" id="sw-sport" style="padding:4px 0">
-        <div class="sw-pref-row">
-          <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="f1" onclick="toggleChip(this)">🏎️ F1</button>
-          <button class="sw-pref-inall on" data-pref="f1" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+      <!-- Rugby -->
+      <div class="sw-card sw-group" style="margin-bottom:8px">
+        <div class="sw-group-title" onclick="toggleGroup('g-rugby')">
+          <span>🏉 Rugby</span>
+          <div style="display:flex;align-items:center;gap:8px">
+            <button class="sport-inall" data-sport="rugby-all" onclick="event.stopPropagation();togglePrefInAll(this)" title="Dans Tout">✦</button>
+            <span id="g-rugby-arrow" style="color:var(--tx3);font-size:14px">▾</span>
+          </div>
         </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="motogp" onclick="toggleChip(this)">🏍️ MotoGP</button>
-          <button class="sw-pref-inall on" data-pref="motogp" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="tennis" onclick="toggleChip(this)">🎾 Tennis</button>
-          <button class="sw-pref-inall on" data-pref="tennis" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="basket" onclick="toggleChip(this)">🏀 Basket / NBA</button>
-          <button class="sw-pref-inall" data-pref="basket" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="rugby" onclick="toggleChip(this)">🏉 Rugby</button>
-          <button class="sw-pref-inall" data-pref="rugby" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip on" style="background:#1D4ED8;color:#fff" data-pref="cyclisme" onclick="toggleChip(this)">🚴 Cyclisme</button>
-          <button class="sw-pref-inall on" data-pref="cyclisme" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="golf" onclick="toggleChip(this)">⛳ Golf</button>
-          <button class="sw-pref-inall" data-pref="golf" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="running" onclick="toggleChip(this)">🏃 Running</button>
-          <button class="sw-pref-inall" data-pref="running" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="natation" onclick="toggleChip(this)">🏊 Natation</button>
-          <button class="sw-pref-inall" data-pref="natation" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="handball" onclick="toggleChip(this)">Handball</button>
-          <button class="sw-pref-inall" data-pref="handball" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="volley" onclick="toggleChip(this)">🏐 Volley</button>
-          <button class="sw-pref-inall" data-pref="volley" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="ski" onclick="toggleChip(this)">⛷️ Ski alpin</button>
-          <button class="sw-pref-inall" data-pref="ski" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="athletisme" onclick="toggleChip(this)">🏃 Athlétisme</button>
-          <button class="sw-pref-inall" data-pref="athletisme" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        <div id="g-rugby" class="sw-group-body" style="display:none">
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="rugby-6n" onclick="toggleSportComp(this)">🏆 6 Nations</button></div>
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="rugby-cc" onclick="toggleSportComp(this)">🏆 Champions Cup</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="rugby-t14" onclick="toggleSportComp(this)">🇫🇷 Top 14</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="rugby-nc" onclick="toggleSportComp(this)">🌍 Nations Championship</button></div>
+          <div style="font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px;padding:8px 8px 4px">Équipes favorites ⭐</div>
+          <div class="sw-fav-chips" id="fav-rugby">
+            <button class="sw-fav-chip on" data-fav="france-rugby" onclick="toggleFav(this,'rugby')">🇫🇷 France</button>
+            <button class="sw-fav-chip" data-fav="ubb" onclick="toggleFav(this,'rugby')">⚫ UBB</button>
+            <button class="sw-fav-chip" data-fav="toulouse" onclick="toggleFav(this,'rugby')">🔴 Toulouse</button>
+            <button class="sw-fav-chip" data-fav="toulon" onclick="toggleFav(this,'rugby')">🔴 Toulon</button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="sw-section">
-      <div class="sw-section-title">🥊 Sports de combat</div>
-      <div class="sw-card" id="sw-combat" style="padding:4px 0">
-        <div class="sw-pref-row"><button class="sw-chip on" style="background:#E8334A;color:#fff" data-pref="ufc" onclick="toggleChip(this)">🥊 UFC / MMA</button><button class="sw-pref-inall on" data-pref="ufc" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip on" style="background:#E8334A;color:#fff" data-pref="pfl" onclick="toggleChip(this)">🥊 PFL</button><button class="sw-pref-inall on" data-pref="pfl" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="boxe" onclick="toggleChip(this)">🥊 Boxe</button><button class="sw-pref-inall" data-pref="boxe" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="kickboxing" onclick="toggleChip(this)">Kickboxing</button><button class="sw-pref-inall" data-pref="kickboxing" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="judo" onclick="toggleChip(this)">🥋 Judo</button><button class="sw-pref-inall" data-pref="judo" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="karate" onclick="toggleChip(this)">Karaté</button><button class="sw-pref-inall" data-pref="karate" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="lutte" onclick="toggleChip(this)">Lutte</button><button class="sw-pref-inall" data-pref="lutte" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="muay-thai" onclick="toggleChip(this)">Muay Thai</button><button class="sw-pref-inall" data-pref="muay-thai" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
-        <div class="sw-pref-row"><button class="sw-chip" data-pref="sumo" onclick="toggleChip(this)">Sumo</button><button class="sw-pref-inall" data-pref="sumo" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button></div>
+      <!-- NBA -->
+      <div class="sw-card sw-group" style="margin-bottom:8px">
+        <div class="sw-group-title" onclick="toggleGroup('g-nba')">
+          <span>🏀 NBA</span>
+          <div style="display:flex;align-items:center;gap:8px">
+            <button class="sport-inall" data-sport="nba-all" onclick="event.stopPropagation();togglePrefInAll(this)" title="Dans Tout">✦</button>
+            <span id="g-nba-arrow" style="color:var(--tx3);font-size:14px">▾</span>
+          </div>
+        </div>
+        <div id="g-nba" class="sw-group-body" style="display:none">
+          <div style="font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px;padding:4px 8px 6px">Mon équipe favorite ⭐</div>
+          <div class="sw-fav-chips" id="fav-nba">
+            <button class="sw-fav-chip" data-fav="knicks" onclick="toggleFav(this,'nba')">🗽 Knicks</button>
+            <button class="sw-fav-chip on" data-fav="spurs" onclick="toggleFav(this,'nba')">🤠 Spurs</button>
+            <button class="sw-fav-chip" data-fav="lakers" onclick="toggleFav(this,'nba')">💛 Lakers</button>
+            <button class="sw-fav-chip" data-fav="celtics" onclick="toggleFav(this,'nba')">🍀 Celtics</button>
+            <button class="sw-fav-chip" data-fav="warriors" onclick="toggleFav(this,'nba')">🌉 Warriors</button>
+            <button class="sw-fav-chip" data-fav="bulls" onclick="toggleFav(this,'nba')">🐂 Bulls</button>
+            <button class="sw-fav-chip" data-fav="heat" onclick="toggleFav(this,'nba')">🔥 Heat</button>
+            <button class="sw-fav-chip" data-fav="nuggets" onclick="toggleFav(this,'nba')">⛏️ Nuggets</button>
+            <button class="sw-fav-chip" data-fav="thunder" onclick="toggleFav(this,'nba')">⚡ Thunder</button>
+            <button class="sw-fav-chip" data-fav="cavaliers" onclick="toggleFav(this,'nba')">⚔️ Cavaliers</button>
+            <button class="sw-fav-chip" data-fav="76ers" onclick="toggleFav(this,'nba')">🔔 76ers</button>
+            <button class="sw-fav-chip" data-fav="pistons" onclick="toggleFav(this,'nba')">🔧 Pistons</button>
+          </div>
+        </div>
       </div>
+
+      <!-- F1 -->
+      <div class="sw-card sw-group" style="margin-bottom:8px">
+        <div class="sw-group-title">
+          <span>🏎️ Formule 1</span>
+          <button class="sport-inall on" data-sport="f1-all" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+      </div>
+
+      <!-- MotoGP -->
+      <div class="sw-card sw-group" style="margin-bottom:8px">
+        <div class="sw-group-title">
+          <span>🏍️ MotoGP</span>
+          <button class="sport-inall on" data-sport="motogp-all" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        </div>
+      </div>
+
+      <!-- Cyclisme -->
+      <div class="sw-card sw-group" style="margin-bottom:8px">
+        <div class="sw-group-title" onclick="toggleGroup('g-cyclisme')">
+          <span>🚴 Cyclisme</span>
+          <div style="display:flex;align-items:center;gap:8px">
+            <button class="sport-inall on" data-sport="cyclisme-all" onclick="event.stopPropagation();togglePrefInAll(this)" title="Dans Tout">✦</button>
+            <span id="g-cyclisme-arrow" style="color:var(--tx3);font-size:14px">▾</span>
+          </div>
+        </div>
+        <div id="g-cyclisme" class="sw-group-body" style="display:none">
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="cyclisme-tdf" onclick="toggleSportComp(this)">🇫🇷 Tour de France</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="cyclisme-giro" onclick="toggleSportComp(this)">🇮🇹 Giro d'Italia</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="cyclisme-vuelta" onclick="toggleSportComp(this)">🇪🇸 Vuelta</button></div>
+        </div>
+      </div>
+
+      <!-- Golf -->
+      <div class="sw-card sw-group" style="margin-bottom:8px">
+        <div class="sw-group-title" onclick="toggleGroup('g-golf')">
+          <span>⛳ Golf</span>
+          <div style="display:flex;align-items:center;gap:8px">
+            <button class="sport-inall" data-sport="golf-all" onclick="event.stopPropagation();togglePrefInAll(this)" title="Dans Tout">✦</button>
+            <span id="g-golf-arrow" style="color:var(--tx3);font-size:14px">▾</span>
+          </div>
+        </div>
+        <div id="g-golf" class="sw-group-body" style="display:none">
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="golf-gs" onclick="toggleSportComp(this)">🏆 Grands Chelems</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="golf-solheim" onclick="toggleSportComp(this)">👩 Solheim Cup</button></div>
+        </div>
+      </div>
+
+      <!-- Combat -->
+      <div class="sw-card sw-group" style="margin-bottom:8px">
+        <div class="sw-group-title" onclick="toggleGroup('g-combat')">
+          <span>🥊 Sports de combat</span>
+          <div style="display:flex;align-items:center;gap:8px">
+            <button class="sport-inall on" data-sport="combat-all" onclick="event.stopPropagation();togglePrefInAll(this)" title="Dans Tout">✦</button>
+            <span id="g-combat-arrow" style="color:var(--tx3);font-size:14px">▾</span>
+          </div>
+        </div>
+        <div id="g-combat" class="sw-group-body" style="display:none">
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="ufc" onclick="toggleSportComp(this)">🥊 UFC / MMA</button></div>
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="pfl" onclick="toggleSportComp(this)">🥊 PFL</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="boxe" onclick="toggleSportComp(this)">🥊 Boxe</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="judo" onclick="toggleSportComp(this)">🥋 Judo</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="muay-thai" onclick="toggleSportComp(this)">Muay Thai</button></div>
+        </div>
+      </div>
+
     </div>
 
-    <div class="sw-section">
+        <div class="sw-section">
       <div class="sw-section-title">&#127917; Culture &#8212; mes int&#233;r&#234;ts</div>
       <div class="sw-card" id="sw-culture" style="padding:4px 0">
         <div class="sw-pref-row">
@@ -1213,78 +1224,284 @@ let cM=now.getMonth(),cY=now.getFullYear(),sDay=now.getDate(),cat='all';
 const EVT=[];
 
 // ─── LOGIQUE APP ──────────────────────────────────────────────────────────────
-function getActiveCats(){
-  // Catégories actives = sw-chip.on dans sw-cat-row
-  const chips=document.querySelectorAll('.sw-cat-row .sw-chip.on');
-  return chips.length?[...chips].map(c=>c.dataset.cat):null;
+
+// ── Getters préférences ──────────────────────────────────────────────────────
+
+// Retourne les catégories "Vie quotidienne" actives (✦ dans réglages)
+function getVQPrefs(){
+  return [...document.querySelectorAll('.vq-inall.on')].map(b=>b.dataset.sub);
 }
-function getInAllCats(){
-  return [...document.querySelectorAll('.sw-inall.on')].map(b=>b.dataset.cat);
+
+// Retourne les sous-catégories sport avec ✦ actif (ex: 'foot-all','tennis-all'...)
+function getSportInAll(){
+  return [...document.querySelectorAll('.sport-inall.on')].map(b=>b.dataset.sport);
 }
-function getInAllPrefs(){
-  return [...document.querySelectorAll('.sw-pref-inall.on')].map(b=>b.dataset.pref);
+
+// Retourne les compétitions sport actives (les ☑ cochés dans chaque groupe)
+function getSportComps(){
+  return [...document.querySelectorAll('.sport-comp.on')].map(b=>b.dataset.comp);
 }
-function getActivePrefs(){
-  const chips=document.querySelectorAll('#sw-sport .sw-chip.on, #sw-foot .sw-chip.on, #sw-nba .sw-chip.on');
-  return [...chips].map(c=>c.dataset.pref);
+
+// Retourne les favoris actifs
+function getFavs(){
+  return [...document.querySelectorAll('.sw-fav-chip.on')].map(b=>b.dataset.fav);
 }
-function srcMatchesPrefInAll(src,prefs){return srcMatchesPref(src,prefs);}
-function srcMatchesPref(src,prefs){
-  if(!src)return true;
+
+// Sous-catégorie L2 active (ex: 'foot','tennis','rugby'...)
+let catL2='';
+// ── Mapping src → sport ─────────────────────────────────────────────────────
+const SRC_MAP=[
+  {k:'f1 ',s:'f1'},{k:'formula',s:'f1'},
+  {k:'motogp',s:'motogp'},
+  {k:'open australie',s:'tennis'},{k:'roland-garros',s:'tennis'},
+  {k:'wimbledon',s:'tennis'},{k:'us open',s:'tennis'},
+  {k:'indian wells',s:'tennis'},{k:'miami 20',s:'tennis'},
+  {k:'monte-carlo',s:'tennis'},{k:'madrid 20',s:'tennis'},
+  {k:'rome 20',s:'tennis'},{k:'canadian open',s:'tennis'},
+  {k:'cincinnati',s:'tennis'},{k:'shanghai',s:'tennis'},
+  {k:'paris masters',s:'tennis'},
+  {k:'ligue 1',s:'foot'},{k:'ldc ',s:'foot'},{k:'ldc2',s:'foot'},
+  {k:'premier league',s:'foot'},{k:'serie a',s:'foot'},
+  {k:'bundesliga',s:'foot'},{k:'la liga',s:'foot'},
+  {k:'cdm ',s:'foot'},{k:'foot',s:'foot'},
+  {k:'6 nations',s:'rugby'},{k:'champions cup',s:'rugby'},
+  {k:'top 14',s:'rugby'},{k:'nations championship',s:'rugby'},{k:'rugby',s:'rugby'},
+  {k:'cyclisme',s:'cyclisme'},{k:'giro',s:'cyclisme'},
+  {k:'tour de france',s:'cyclisme'},{k:'vuelta',s:'cyclisme'},
+  {k:'masters 20',s:'golf'},{k:'pga championship',s:'golf'},
+  {k:'us open golf',s:'golf'},{k:'the open',s:'golf'},
+  {k:'solheim',s:'golf'},{k:'golf',s:'golf'},
+  {k:'nba',s:'nba'},
+  {k:'ufc',s:'ufc'},{k:'mma',s:'ufc'},{k:'pfl',s:'pfl'},
+  {k:'boxe',s:'boxe'},{k:'kickboxing',s:'kickboxing'},
+  {k:'judo',s:'judo'},{k:'muay',s:'muay-thai'},{k:'sumo',s:'sumo'},
+];
+
+// Retourne le sport d'un event (ex: 'foot','tennis','rugby'...)
+function getSportOfSrc(src){
+  if(!src)return null;
   const s=src.toLowerCase();
-  if(s.includes('f1')&&prefs.includes('f1'))return true;
-  if(s.includes('motogp')&&prefs.includes('motogp'))return true;
-  if(s.includes('tennis')&&prefs.includes('tennis'))return true;
-  if(s.includes('foot')&&prefs.includes('foot'))return true;
-  if(s.includes('basket')&&prefs.includes('basket'))return true;
-  if(s.includes('rugby')&&prefs.includes('rugby'))return true;
-  if(s.includes('cyclisme')&&prefs.includes('cyclisme'))return true;
-  if(s.includes('golf')&&prefs.includes('golf'))return true;
-  if(s.includes('cdm')&&prefs.includes('cdm'))return true;
-  // UFC / MMA / PFL
-  if((s.includes('ufc')||s.includes('mma'))&&prefs.includes('ufc'))return true;
-  if(s.includes('pfl')&&prefs.includes('pfl'))return true;
-  // Boxe / arts martiaux
-  if(s.includes('boxe')&&prefs.includes('boxe'))return true;
-  if(s.includes('kickboxing')&&prefs.includes('kickboxing'))return true;
-  if(s.includes('judo')&&prefs.includes('judo'))return true;
-  if(s.includes('muay')&&prefs.includes('muay-thai'))return true;
-  if(s.includes('sumo')&&prefs.includes('sumo'))return true;
-  if((s.includes('giro')||s.includes('tour de france')||s.includes('vuelta'))&&prefs.includes('cyclisme'))return true;
-  if(s.includes('nba')){const nbaTeams=['knicks','spurs','lakers','celtics','warriors','bulls','heat','nuggets','thunder','cavaliers','76ers','pistons'];return nbaTeams.some(t=>prefs.includes(t)&&(s.includes(t)||true));}
-  const knownSrcs=['f1','motogp','cdm 2026','nba playoffs 2026','cyclisme 2026','tennis','foot','basket','rugby','cyclisme','golf','ufc','pfl','mma','boxe'];
-  if(!knownSrcs.some(k=>s.includes(k)))return true;
-  return false;
+  for(const {k,sp} of SRC_MAP.map(m=>({k:m.k,sp:m.s}))){
+    if(s.includes(k))return sp;
+  }
+  return null;
 }
+
+// Vérifie si une source passe le filtre de compétition
+// comp = data-comp sur les sw-sport-comp chips
+const COMP_MAP={
+  'ldc':['ldc ','ldc2'],
+  'ligue1':['ligue 1'],
+  'pl':['premier league'],
+  'seriea':['serie a'],
+  'bundesliga':['bundesliga'],
+  'laliga':['la liga'],
+  'cdm':['cdm ','foot'],
+  'tennis-gs':['open australie','roland-garros','wimbledon','us open'],
+  'tennis-m1000':['indian wells','miami 20','monte-carlo','madrid 20','rome 20','canadian open','cincinnati','shanghai','paris masters'],
+  'rugby-6n':['6 nations'],
+  'rugby-cc':['champions cup'],
+  'rugby-t14':['top 14'],
+  'rugby-nc':['nations championship'],
+  'cyclisme-tdf':['tour de france'],
+  'cyclisme-giro':['giro'],
+  'cyclisme-vuelta':['vuelta'],
+  'golf-gs':['masters 20','pga championship','us open golf','the open'],
+  'golf-solheim':['solheim'],
+  'f1-all':['f1 ','formula'],
+  'motogp-all':['motogp'],
+  'nba-all':['nba'],
+  'ufc':['ufc','mma'],
+  'pfl':['pfl'],
+  'boxe':['boxe'],
+  'judo':['judo'],
+  'muay-thai':['muay'],
+};
+
+function srcMatchesComp(src,comp){
+  if(!src)return false;
+  const s=src.toLowerCase();
+  const patterns=COMP_MAP[comp]||[];
+  return patterns.some(p=>s.includes(p));
+}
+
+// ── Filtrage principal ────────────────────────────────────────────────────────
 function filt(){
-  const activeCats=getActiveCats();
-  const inAllCats=getInAllCats();
-  const inAllPrefs=getInAllPrefs();
-  const activePrefs=getActivePrefs();
+  const vqPrefs=getVQPrefs();        // ['feries','vacances','meteo'] avec ✦
+  const sportInAll=getSportInAll();  // ['foot-all','tennis-all',...] avec ✦
+  const sportComps=getSportComps();  // ['ldc','ligue1','tennis-gs',...] cochés
   let evts=EVT;
+
   if(cat==='all'){
-    // Catégories ✦ actives
-    evts=evts.filter(e=>inAllCats.includes(e.cat));
-    // Pour sport : seuls les sous-éléments avec ✦ activé
-    evts=evts.filter(e=>e.cat!=='sport'||srcMatchesPrefInAll(e.src,inAllPrefs));
-  } else {
-    if(activeCats&&!activeCats.includes(cat)){return [];}
-    evts=evts.filter(e=>e.cat===cat);
-    if(cat==='sport'){
-      evts=evts.filter(e=>srcMatchesPref(e.src,activePrefs));
+    evts=evts.filter(e=>{
+      // Vie quotidienne
+      if(['feries','vacances','meteo','meteo-alerte'].includes(e.cat)){
+        return vqPrefs.includes(e.cat);
+      }
+      // Sport
+      if(e.cat==='sport'){
+        const sp=getSportOfSrc(e.src);
+        const sportKey=sp+'-all';
+        if(!sportInAll.includes(sportKey))return false;
+        // Filtre compétition : si des comps sont cochées pour ce sport
+        const compsForSport=sportComps.filter(c=>COMP_MAP[c]&&srcMatchesComp(e.src,c)||false);
+        // Vérifier s'il existe des comps actives pour ce sport
+        const allCompsForSport=Object.keys(COMP_MAP).filter(c=>c.startsWith(sp)||c===sp+'-all'||c===sp);
+        const activeCompsForSport=sportComps.filter(c=>allCompsForSport.includes(c));
+        if(activeCompsForSport.length===0)return true; // pas de filtre comp = tout passe
+        return srcMatchesComp(e.src,activeCompsForSport.find(c=>srcMatchesComp(e.src,c)));
+      }
+      // Autres catégories : afficher si la catégorie est active dans réglages
+      return true;
+    });
+  } else if(cat==='quotidien'){
+    evts=evts.filter(e=>['feries','vacances','meteo','meteo-alerte'].includes(e.cat));
+    // Filtre L2
+    if(catL2) evts=evts.filter(e=>e.cat===catL2);
+  } else if(cat==='sport'){
+    evts=evts.filter(e=>e.cat==='sport');
+    // Filtre L2 (sous-sport)
+    if(catL2){
+      const sp=catL2; // ex: 'foot','tennis','rugby'...
+      evts=evts.filter(e=>getSportOfSrc(e.src)===sp);
     }
+    // Filtre compétition
+    if(sportComps.length>0){
+      evts=evts.filter(e=>{
+        // Trouver les comps actives pour ce sport
+        const sp=getSportOfSrc(e.src);
+        const compsForSport=sportComps.filter(c=>{
+          if(!COMP_MAP[c])return false;
+          return COMP_MAP[c].some(p=>e.src&&e.src.toLowerCase().includes(p));
+        });
+        if(compsForSport.length>0)return true;
+        // Aucune comp active pour ce sport → vérifier s'il y a des comps dispo pour ce sport
+        const allCompsForSport=Object.keys(COMP_MAP).filter(c=>c.startsWith(sp+'_')||c===sp+'-all'||c.startsWith(sp+'-'));
+        const hasCompsForSport=allCompsForSport.some(c=>sportComps.includes(c));
+        return !hasCompsForSport; // pas de filtre comp défini = tout passe
+      });
+    }
+    // Si aucun sport L2 et aucune comp → montrer tout le sport
+  } else {
+    evts=evts.filter(e=>e.cat===cat);
   }
   return evts;
 }
 
+// Définition des sous-catégories L2 par catégorie
+const L2_DEFS={
+  quotidien:[
+    {id:'feries',label:'🏛 Jours fériés',color:'#6366F1'},
+    {id:'vacances',label:'🏖 Vacances',color:'#8B5CF6'},
+    {id:'meteo',label:'🌤 Météo',color:'#0EA5E9'},
+  ],
+  sport:[
+    {id:'foot',label:'⚽ Football',color:'#1D4ED8'},
+    {id:'tennis',label:'🎾 Tennis',color:'#C84B00'},
+    {id:'rugby',label:'🏉 Rugby',color:'#001E62'},
+    {id:'nba',label:'🏀 NBA',color:'#C8102E'},
+    {id:'f1',label:'🏎️ F1',color:'#E8334A'},
+    {id:'motogp',label:'🏍️ MotoGP',color:'#CC0000'},
+    {id:'cyclisme',label:'🚴 Cyclisme',color:'#F97316'},
+    {id:'golf',label:'⛳ Golf',color:'#006747'},
+    {id:'ufc',label:'🥊 Combat',color:'#E8334A'},
+  ],
+};
+
+const CAT_COLORS={
+  all:'var(--accent)',
+  quotidien:'#8B5CF6',
+  sport:'#1D4ED8',
+  culture:'#7C3AED',
+  business:'#059669',
+  tourisme:'#10B981',
+  mode:'#DB2777',
+  enfants:'#F97316',
+  autour:'#06B6D4',
+};
+
 function sCat(el,c){
-  cat=c;
-  document.querySelectorAll('.pill').forEach(p=>{p.className='pill off';p.style.background='';p.style.borderColor='';});
+  cat=c; catL2='';
+  // Reset toutes les pills L1
+  document.querySelectorAll('#cats-l1 .pill').forEach(p=>{
+    p.className='pill off';p.style.background='';p.style.borderColor='';
+  });
   el.className='pill on';
-  const cols={autour:'#06B6D4',all:(document.documentElement.getAttribute('data-theme')==='circuit'?'#00FF87':document.documentElement.getAttribute('data-theme')==='papier'?'#D4622A':'#A78BFA'),feries:'#6366F1',vacances:'#8B5CF6',sport:'#1D4ED8',culture:'#7C3AED',business:'#059669',tourisme:'#10B981',mode:'#DB2777',meteo:'#0EA5E9',enfants:'#F97316'};
-  el.style.background=cols[c]||'#555';
-  el.style.borderColor=cols[c]||'#555';
+  const col=CAT_COLORS[c]||'#555';
+  el.style.background=col; el.style.borderColor=col;
+  // Mettre à jour pills L2
+  updateL2Pills(c);
   rAll();
+}
+
+function sCatL2(el,sp){
+  catL2=(catL2===sp)?'':sp; // toggle
+  document.querySelectorAll('#cats-l2 .pill').forEach(p=>{
+    p.className='pill off';p.style.background='';p.style.borderColor='';
+  });
+  if(catL2){
+    el.className='pill on';
+    el.style.background=el.dataset.color;
+    el.style.borderColor=el.dataset.color;
+  }
+  rAll();
+}
+
+function updateL2Pills(c){
+  const l2=document.getElementById('cats-l2');
+  const defs=L2_DEFS[c]||[];
+  if(!defs.length){l2.style.display='none';l2.innerHTML='';return;}
+  l2.innerHTML=defs.map(d=>
+    `<div class="pill off" data-color="${d.color}" onclick="sCatL2(this,'${d.id}')">${d.label}</div>`
+  ).join('');
+  l2.style.display='flex';
+}
+
+
+// ── Vérification favoris ──────────────────────────────────────────────────────
+const FAV_KEYWORDS={
+  // Football clubs
+  'psg':['psg','paris saint-germain','paris sg'],
+  'om':['marseille','om '],
+  'ol':['lyon','ol ','olympique lyon'],
+  'monaco':['monaco'],
+  'rennes':['rennes'],
+  'lens':['lens'],
+  'arsenal':['arsenal'],
+  'juventus':['juventus','juve'],
+  'barca':['barcelone','barcelona','barça','barca'],
+  'real':['real madrid'],
+  // Équipes nationales foot
+  'france-foot':['france','français','bleus'],
+  'italie-foot':['italie','italy','italia','azzurri'],
+  // Rugby
+  'france-rugby':['france','xv de france','bleus'],
+  'ubb':['ubb','bordeaux bègles','bordeaux begles'],
+  'toulouse':['toulouse','stade toulousain'],
+  'toulon':['toulon','rc toulon'],
+  // NBA
+  'knicks':['knicks','new york knicks'],
+  'spurs':['spurs','san antonio'],
+  'lakers':['lakers','los angeles lakers'],
+  'celtics':['celtics','boston'],
+  'warriors':['warriors','golden state'],
+  'bulls':['bulls','chicago'],
+  'heat':['heat','miami heat'],
+  'nuggets':['nuggets','denver'],
+  'thunder':['thunder','oklahoma'],
+  'cavaliers':['cavaliers','cavs','cleveland'],
+  '76ers':['76ers','sixers','philadelphia'],
+  'pistons':['pistons','detroit'],
+};
+
+function eventHasFav(e){
+  const favs=getFavs();
+  if(!favs.length)return false;
+  const text=(e.t+' '+(e.s||'')+' '+(e.desc||'')).toLowerCase();
+  return favs.some(fav=>{
+    const keywords=FAV_KEYWORDS[fav]||[];
+    return keywords.some(k=>text.includes(k));
+  });
 }
 
 function rCal(){
@@ -1317,7 +1534,10 @@ function rCal(){
         icEvts=[ev[0]];
       }
     }
-    const ic=icEvts.length?'<div class="dico">'+icEvts.map(e=>'<div class="ei" style="background:'+e.bg+'" title="'+e.t+'">'+e.i+'</div>').join('')+'</div>':'';
+    const ic=icEvts.length?'<div class="dico">'+icEvts.map(e=>{
+        const hasFav=eventHasFav(e);
+        return '<div class="ei'+(hasFav?' ei-fav':'')+'" style="background:'+e.bg+'" title="'+e.t+(hasFav?' ⭐':'')+'">'+(hasFav?'<span class="fav-dot">⭐</span>':'')+e.i+'</div>';
+      }).join('')+'</div>':'';
     return '<div class="dc'+(sel?' sel':'')+'"'+(oth?'':' onclick="sD('+d+')"')+'>'+
       '<span class="'+nc+'">'+d+'</span>'+ic+'</div>';
   };
@@ -1345,7 +1565,7 @@ function rEvts(){
         <div class="etm">${e.h.split(' ')[0]}</div>
       </div>
       <div style="flex:1;min-width:0">
-        <div class="en">${e.t}</div>
+        <div class="en">${e.t}${eventHasFav(e)?'<span style="margin-left:4px;font-size:11px">⭐</span>':''}</div>
         <div class="es">${e.s}</div>
         <div style="display:flex;align-items:center;margin-top:4px;flex-wrap:wrap;gap:3px">
           <span class="eb" style="background:${e.bg};color:${e.c}">${e.h}</span>
@@ -1390,7 +1610,7 @@ function rDay(){
         <div class="etm">${e.h.split(' ')[0]}</div>
       </div>
       <div style="flex:1;min-width:0">
-        <div class="en">${e.t}</div>
+        <div class="en">${e.t}${eventHasFav(e)?'<span style="margin-left:4px;font-size:11px">⭐</span>':''}</div>
         <div class="es">${e.s}</div>
         <div style="display:flex;align-items:center;margin-top:4px;flex-wrap:wrap;gap:3px">
           <span class="eb" style="background:${e.bg};color:${e.c}">${e.h}</span>
@@ -1828,15 +2048,42 @@ function toggleCat(el){
     el.style.background=colors[cat]||'#E8334A';el.style.color='#fff';
   }
 }
-function togglePrefInAll(el){
-  const row=el.closest('.sw-pref-row');
-  const chip=row?row.querySelector('.sw-chip'):null;
-  const turningOn=!el.classList.contains('on');
+// ── Toggles Vie quotidienne ──────────────────────────────────────────────────
+function toggleVQ(el){
   el.classList.toggle('on');
-  // Si on active ✦ et que le chip est off → on l'active automatiquement
-  if(turningOn && chip && !chip.classList.contains('on')){
-    toggleChip(chip);
+  rAll();
+}
+
+// ── Toggles Sport ✦ ──────────────────────────────────────────────────────────
+function toggleSportInAll(el){
+  el.classList.toggle('on');
+  rAll();
+}
+
+// ── Toggles Sport compétitions ────────────────────────────────────────────────
+function toggleSportComp(el){
+  el.classList.toggle('on');
+  // Activer le ✦ parent si pas encore actif
+  const group=el.closest('.sw-group');
+  if(group && el.classList.contains('on')){
+    const inall=group.querySelector('.sport-inall');
+    if(inall && !inall.classList.contains('on')) inall.classList.add('on');
   }
+  rAll();
+}
+
+// ── Toggles Favoris ───────────────────────────────────────────────────────────
+function toggleFav(el,type){
+  el.classList.toggle('on');
+  savePrefs();
+  rAll();
+}
+
+// Compatibilité anciens appels
+function togglePrefInAll(el){
+  if(el.classList.contains('sport-inall'))return toggleSportInAll(el);
+  el.classList.toggle('on');
+  rAll();
 }
 function toggleInAll(el){
   const row=el.closest('.sw-cat-row');
