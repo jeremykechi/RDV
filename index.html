@@ -1505,17 +1505,28 @@ function filt(){
     evts=evts.filter(e=>e.cat==='culture');
     // Filtre L2 uniquement si une sous-catégorie est sélectionnée
     if(catL2){
-      const cultL2Map={
-        'cinema':['cinema-sortie'],'concerts':['concerts-date','concerts-billetterie'],
-        'festivals':['festivals-musique','festivals-cinema','festivals-theatre'],
-        'theatre':['theatre-spectacle'],'streaming':['streaming-series','streaming-films'],
-        'jeux':['jeux-sortie'],'expos':['expos-paris','expos-france'],
-        'livres':['livres-prix','livres-salons'],'albums':['albums-sortie'],
+      // Mapping direct catL2 → mots-clés dans src (insensible à la casse)
+      const cultSrcMap={
+        'cinema':   ['cinéma','cinema'],
+        'concerts': ['concerts 2026','concert 2026'],
+        'festivals':['festivals musique','festivals cinéma','festivals cinema','festivals théâtre','festivals theatre','cannes','hellfest','coachella','glastonbury','vieilles charrues','rock en seine','we love green','solidays','francofolies','eurockéennes','main square'],
+        'theatre':  ['théâtre','theatre','comédie musicale','comedie musicale'],
+        'streaming':['streaming série','streaming serie','streaming film','série 2026','serie 2026'],
+        'jeux':     ['jeux vidéo','jeux video','jeu vidéo','jeu video'],
+        'expos':    ['expo paris','exposition paris','expo france','exposition france'],
+        'livres':   ['prix littéraire','prix litteraire','prix goncourt','renaudot','femina','médicis','medicis','livres salons 2026','livres salons','salon du livre','livres sorties'],
+        'albums':   ['albums 2026','album 2026','albums','album '],
       };
-      const comps=cultL2Map[catL2]||[];
-      if(comps.length) evts=evts.filter(e=>comps.some(c=>srcMatchesComp(e.src,c)));
+      const keywords=cultSrcMap[catL2]||[];
+      if(keywords.length){
+        evts=evts.filter(e=>{
+          if(!e.src)return false;
+          const s=e.src.toLowerCase();
+          return keywords.some(k=>s.includes(k));
+        });
+      }
     }
-    // Sans L2 → tout afficher (pas de filtre comp)
+    // Sans L2 → tout afficher
   } else {
     evts=evts.filter(e=>e.cat===cat);
   }
