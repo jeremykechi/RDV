@@ -51,7 +51,7 @@ Tâches : ✅ Fait · [ ] À faire
 
 **À faire :**
 - [ ] Mettre en place une trace systématique de l'investissement dans la base (pour activer le droit sui generis le jour où c'est nécessaire).
-- [ ] Déposer une e-Soleau du concept + specs actuelles (preuve d'antériorité, faible coût).
+- ✅ e-Soleau **déposée** (2026-06-11) — PDF « Description de création » (concept + app + roadmap + monétisation + marque) déposé sur le portail Soleau INPI. Récépissé horodaté + code confidentiel de restitution à conserver.
 - [ ] Prioriser les leviers de moat (réseau d'abord) dans la roadmap produit.
 - [ ] (Si levée de fonds / enjeu fort) consulter un conseil en PI.
 
@@ -140,11 +140,37 @@ Tâches : ✅ Fait · [ ] À faire
 
 **Séquencement proposé :** (1) développer les fonctions « natives » (notifications, géoloc, onboarding — sujet 3) → (2) wrapper Capacitor → (3) **Android d'abord** → (4) **iOS** une fois le risque 4.2 levé.
 
-**À faire :**
-- [ ] Confirmer la dispo d'un Mac (ou trancher la solution de build iOS).
-- [ ] Créer les comptes développeurs (Google 25 $, Apple 99 $).
-- [ ] Implémenter les fonctions natives requises pour passer la 4.2 (lien fort avec sujet 3).
-- [ ] Wrapper Capacitor + publier Android, puis iOS.
+**Décision Mac (2026-06-11) :** Mac **empruntable ponctuellement** → Android se fait sans Mac dès maintenant ; les builds iOS seront calés sur les créneaux d'emprunt du Mac, une fois les fonctions natives prêtes.
+
+### Plan d'action séquencé
+
+**Phase 0 — Préparation (sans Mac, sans coût)**
+- [ ] Choisir l'identifiant d'app (bundle id), ex. `fr.kalendi.app`, cohérent Android + iOS.
+- [ ] Installer l'environnement : Node.js, Android Studio (gratuit), JDK.
+- [ ] Vérifier que l'app fonctionne en assets statiques bundlés (index.html) + Supabase distant (déjà le cas : aucune dépendance à la fonction serverless).
+
+**Phase 1 — Wrapper Capacitor (sans Mac)**
+- [ ] Initialiser Capacitor dans le projet (`@capacitor/core`, `@capacitor/cli`, `npx cap init`).
+- [ ] `webDir` = dossier des assets statiques ; `npx cap add android` ; `npx cap sync`.
+- [ ] Icônes / splash à partir de `icon.png`, nom « Kalendi ».
+
+**Phase 2 — Publier sur le Play Store (sans Mac, ~25 $ une fois)**
+- [ ] Créer le compte Google Play Console (25 $).
+- [ ] Générer un AAB signé, remplir la fiche (visuels, description, classification).
+- [ ] Fournir la **politique de confidentialité** + écrans de **compte/consentements** → dépend du sujet 6 (Légal).
+- [ ] Soumettre.
+
+**Phase 3 — Fonctions natives pour passer la règle Apple 4.2 (lien sujet 3)**
+- [ ] Notifications push (`@capacitor/push-notifications`).
+- [ ] Géolocalisation (`@capacitor/geolocation`).
+- [ ] Navigation native / barre de statut / gestion hors-ligne propre.
+
+**Phase 4 — Publier sur l'App Store (Mac emprunté requis, 99 $/an)**
+- [ ] Sur Mac : Xcode 26, `npx cap add ios`, `npx cap sync`, build.
+- [ ] Compte Apple Developer Program (99 $/an).
+- [ ] Fiche App Store Connect + étiquettes de confidentialité, soumission.
+
+**Dépendances clés :** Phase 2 et 4 nécessitent les pages légales du **sujet 6** ; Phase 3 recoupe le **sujet 3** (fonctionnalités).
 
 ---
 
@@ -202,6 +228,7 @@ Tâches : ✅ Fait · [ ] À faire
 _(à compléter au fil des sessions)_
 
 - **2026-06-11** : structuration du projet en 8 sujets. Connecteurs Supabase et Make connectés. Contrainte transverse actée : coûts de run minimaux.
+- **2026-06-11** : 🛡️ e-Soleau déposée à l'INPI (preuve d'antériorité du concept KALENDI + roadmap). Récépissé + code de restitution conservés par Jérémy.
 - **2026-06-11** : 🧹 nettoyage code — suppression de toutes les API externes sauf la météo dans `functions/api.js` (retirées : jours fériés gouv.fr, OpenF1, TMDB, football-data + clés associées). Confirmé : aucune référence résiduelle. Charte « données & contenus » ajoutée en tête de doc.
 - **2026-06-11** : étude des sujets 1 (PI) et 5 (stores). Conclusions clés — PI : l'idée n'est pas protégeable, l'actif défendable est la base (droit sui generis) + le moat (réseau, données, exécution) ; e-Soleau à faible coût pour dater. Stores : approche Capacitor, Android d'abord, iOS bloqué par la règle Apple 4.2 (nécessite des fonctions natives déjà prévues au sujet 3) + un Mac pour builder.
 - **2026-06-11** : 🔒 RLS activé sur les 11 tables (migration `enable_rls_public_read_content_tables`). Politiques : lecture publique (anon+authenticated) sur les tables de contenu, écriture réservée au service_role ; `favorites`/`profiles` restent en accès « chacun ses données ». Vérifié : lecture anon OK, écriture anon refusée.
