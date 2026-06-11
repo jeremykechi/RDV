@@ -109,7 +109,10 @@ Tâches : ✅ Fait · [ ] À faire
 
 **Objectif :** optimiser le rendu graphique et l'UX (objectif initial du « redesign »).
 
+**Point connu :** l'app est bien adaptée au **mobile**, mais la **version desktop n'est pas responsive** (mise en page cassée / non optimisée sur grand écran). À corriger — d'autant que la PWA reste la porte d'entrée web/desktop.
+
 **À faire :**
+- [ ] **Rendre le desktop responsive** (layout large écran : calendrier, listes, filtres).
 - [ ] Audit UX/UI de l'app actuelle.
 - [ ] Définir une direction artistique cohérente avec la marque KALENDI.
 - [ ] Itérer sur les écrans clés (accueil/calendrier, détail événement, filtres, onboarding).
@@ -141,6 +144,19 @@ Tâches : ✅ Fait · [ ] À faire
 **Séquencement proposé :** (1) développer les fonctions « natives » (notifications, géoloc, onboarding — sujet 3) → (2) wrapper Capacitor → (3) **Android d'abord** → (4) **iOS** une fois le risque 4.2 levé.
 
 **Décision Mac (2026-06-11) :** Mac **empruntable ponctuellement** → Android se fait sans Mac dès maintenant ; les builds iOS seront calés sur les créneaux d'emprunt du Mac, une fois les fonctions natives prêtes.
+
+### Architecture & convertibilité (garde-fous)
+
+Avec Capacitor, **pas de réécriture** : l'app web actuelle devient telle quelle l'app iOS/Android. Tout ce qui est construit aujourd'hui dans la PWA sert directement aux stores. Pour que l'emballage reste sans friction, respecter à chaque évolution :
+- **Mobile-first / responsive** (déjà le cas) — l'app tourne dans une webview au format téléphone.
+- **Hors-ligne propre** (service worker / cache) — utile à la PWA + exigé par la règle Apple 4.2.
+- **Préférer des fonctions ayant un équivalent natif** — certaines API web diffèrent en app (ex. push iOS) ; elles seront remplacées par un plugin Capacitor au wrap (additif, pas une réécriture).
+- **Auth Supabase compatible app** — prévoir les redirections de connexion vers le schéma de l'app (pas seulement une URL web).
+- **Pas de dépendance à un domaine web en dur** (cookies, liens absolus) qui casserait une fois empaqueté.
+
+**Modèle de mise à jour à deux niveaux :**
+- **Mises à jour « web »** (contenu, design, features HTML/CSS/JS) → diffusables **sans revue des stores** via OTA (déploiement Vercel / bundle OTA type Capgo, gratuit/open-source). Reste presque aussi simple qu'aujourd'hui. Autorisé par Apple (3.3.2 / 2.5.2) tant que ça ne change pas la nature de l'app.
+- **Mises à jour « natives »** (nouveau plugin/permission, montée Capacitor/SDK) → **rebuild + soumission stores** (revue ~1-2 j Apple, souvent < 1 j Google ; Mac requis pour iOS). Plus rares.
 
 ### Plan d'action séquencé
 
@@ -224,6 +240,25 @@ Tâches : ✅ Fait · [ ] À faire
 
 ---
 
+## 9 — COMMUNICATION  🔴
+
+**Objectif :** faire connaître KALENDI et acquérir des utilisateurs, en cohérence avec la marque et la contrainte de coûts minimaux.
+
+**Pistes à structurer (à détailler avec Jérémy) :**
+- Identité de marque / ton éditorial (lien sujet 4 — Design).
+- Présence réseaux sociaux (quelles plateformes, ligne éditoriale, cadence).
+- Site vitrine / landing page de présentation et de collecte d'e-mails avant lancement.
+- ASO (App Store Optimization) pour le passage en stores (lien sujet 5).
+- Acquisition : bouche-à-oreille, presse/médias, partenariats, communautés.
+- Cohérence avec la monétisation (sujet 7) : les créateurs d'événements sont aussi une cible de communication.
+
+**À faire :**
+- [ ] Définir le positionnement et le message clé de KALENDI.
+- [ ] Choisir les canaux prioritaires (sous contrainte coût ~0).
+- [ ] Planifier les actions de pré-lancement et de lancement.
+
+---
+
 ## Journal des décisions
 _(à compléter au fil des sessions)_
 
@@ -232,3 +267,4 @@ _(à compléter au fil des sessions)_
 - **2026-06-11** : 🧹 nettoyage code — suppression de toutes les API externes sauf la météo dans `functions/api.js` (retirées : jours fériés gouv.fr, OpenF1, TMDB, football-data + clés associées). Confirmé : aucune référence résiduelle. Charte « données & contenus » ajoutée en tête de doc.
 - **2026-06-11** : étude des sujets 1 (PI) et 5 (stores). Conclusions clés — PI : l'idée n'est pas protégeable, l'actif défendable est la base (droit sui generis) + le moat (réseau, données, exécution) ; e-Soleau à faible coût pour dater. Stores : approche Capacitor, Android d'abord, iOS bloqué par la règle Apple 4.2 (nécessite des fonctions natives déjà prévues au sujet 3) + un Mac pour builder.
 - **2026-06-11** : 🔒 RLS activé sur les 11 tables (migration `enable_rls_public_read_content_tables`). Politiques : lecture publique (anon+authenticated) sur les tables de contenu, écriture réservée au service_role ; `favorites`/`profiles` restent en accès « chacun ses données ». Vérifié : lecture anon OK, écriture anon refusée.
+- **2026-06-12** : ajout du sujet 9 — Communication (le projet compte désormais 9 sujets).
