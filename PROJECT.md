@@ -1,0 +1,207 @@
+# KALENDI — Suivi de projet
+
+> Calendrier d'événements intelligent. Marque **KALENDI** (déposée INPI ~mai 2026), domaine `kalendi.fr`.
+> App actuelle : PWA déployée sur **Vercel** (anciennement Netlify) — `index.html` (~3 040 lignes), qui appelle directement Supabase.
+> ⚠️ Résidus Netlify à nettoyer : `netlify.toml` et `functions/api.js` (proxy au format Netlify, **non appelé** par l'app) sont du legacy.
+> Données : Supabase (projet « KALENDI », région eu-west-3, Postgres 17). Table `events` = 287 lignes + 10 tables thématiques.
+> Automatisations : Make.com.
+
+## Principe directeur transverse
+**Coûts de run à 0 ou minimaux.** Toute décision technique (hébergement, base, automatisations, stores) est arbitrée d'abord sous l'angle du coût récurrent. Privilégier les offres gratuites (Vercel, Supabase free, Make free) tant qu'elles tiennent, et documenter les seuils de bascule.
+
+## Charte « données & contenus » (pour rester clean juridiquement)
+Règles permanentes à respecter à chaque ajout de données :
+1. **Aucune API externe sauf la météo (Open-Meteo).** 100 % des autres données sont composées par Claude à partir d'infos publiques (faits non protégés), pas aspirées d'une autre base.
+2. **Descriptions : 100 % rédigées par Claude.** Ne pas recopier ni s'inspirer de trop près de textes existants (communiqués, sites, Wikipédia).
+3. **Images / affiches / logos / visuels : générés par Claude.** Pas d'affiche, de pochette ou de logo tiers. (Les emojis Unicode standard sont OK ; tout visuel custom = généré.)
+4. **Données officielles : citer la source** (ex. jours fériés / vacances scolaires → mention gouv.fr).
+5. **Météo : point de vigilance** — Open-Meteo gratuit = usage non commercial uniquement + attribution « Weather data by Open-Meteo.com ». À revoir au moment de la monétisation (sujet 7).
+
+## Légende des statuts
+Sections : 🔴 Pas commencé · 🟡 En cours · 🟢 Fait · 💡 Idée à creuser
+Tâches : ✅ Fait · [ ] À faire
+
+---
+
+## 1 — PROPRIÉTÉ INTELLECTUELLE  🟡
+
+**Objectif :** sécuriser le concept au-delà de la marque, sachant qu'il est techniquement simple et facilement copiable.
+
+**Acquis :**
+- Marque KALENDI déposée à l'INPI (~2 semaines avant le 11/06/2026).
+- Nom de domaine `kalendi.fr`.
+
+> ⚖️ _Note : informations factuelles, pas un avis juridique. Pour les enjeux importants, valider avec un conseil en PI._
+
+### Analyse (étude du 2026-06-11)
+
+**Ce qui n'est PAS protégeable :** l'idée / le concept en lui-même. Personne ne peut s'approprier « un calendrier d'événements ». Le brevet est exclu (pas d'invention technique).
+
+**Ce qui EST protégeable :**
+
+1. **La base de données — l'actif le plus défendable.** Le *droit sui generis des producteurs de bases de données* (art. L341-1 CPI, Directive 96/9/CE) protège le **contenu** d'une base dès lors qu'on prouve un **investissement substantiel** (financier, matériel ou humain) dans sa **constitution, sa vérification ou sa présentation**. Il interdit l'extraction/réutilisation d'une partie substantielle de la base par un tiers. Protection **automatique** (pas de dépôt), **15 ans**, **renouvelable** à chaque nouvel investissement substantiel. → C'est exactement ce que produisent l'enrichissement continu (sujet 2) et l'automatisation Make : il faut **garder les preuves de cet investissement** (heures, coûts, sources, logs de vérification, historique git, ce `PROJECT.md`).
+2. **Le code et le design** : protégés par le droit d'auteur, automatiquement (l'historique git date la création).
+3. **La marque + le nom de domaine** : déjà sécurisés.
+4. **e-Soleau (INPI)** : dépôt en ligne pour **dater** un document (concept, specs, maquettes) et prouver l'antériorité. Ce n'est PAS un titre de propriété, juste une preuve de date. Coût modique (~15 €, à confirmer page tarifs INPI), conservation 5 ans renouvelable jusqu'à 20 ans. Aligné avec la contrainte coût.
+
+**La vraie protection est stratégique, pas juridique (le « moat ») :** un concept copiable se défend par l'exécution, pas par le droit. Leviers :
+- **Effet de réseau** : la catégorie « Communauté / Team Kalendi » (sujet 3) — plus il y a d'utilisateurs et d'événements créés, plus c'est dur à rattraper.
+- **Exhaustivité + fraîcheur des données** : une base mieux tenue et plus à jour que celle d'un copieur (sujets 2 et 8).
+- **Marque + avance + vitesse d'exécution** : être le premier référent.
+
+**À faire :**
+- [ ] Mettre en place une trace systématique de l'investissement dans la base (pour activer le droit sui generis le jour où c'est nécessaire).
+- [ ] Déposer une e-Soleau du concept + specs actuelles (preuve d'antériorité, faible coût).
+- [ ] Prioriser les leviers de moat (réseau d'abord) dans la roadmap produit.
+- [ ] (Si levée de fonds / enjeu fort) consulter un conseil en PI.
+
+---
+
+## 2 — BASE DE DONNÉES  🟡
+
+**Objectif :** enrichir, fiabiliser et automatiser la liste d'événements.
+
+**Trois chantiers :**
+1. **Compléter** la liste d'événements intéressants.
+2. **Vérifier** à intervalles réguliers (ex. : concert décalé, date modifiée).
+3. **Automatiser** l'actualisation (via Make + APIs / scraping léger).
+
+**Nouvelles catégories souhaitées (pas encore dans l'app) :**
+- [ ] **Mode** : Fashion Weeks Paris / Milan / Londres / NYC + salons.
+- [ ] **Shopping** : dates des soldes, Black Friday, dates de lancement (ex. collab Audemars Piguet × Swatch).
+- [ ] **Salons** : Salon de l'auto, Salon de l'agriculture, etc.
+- [ ] **Scolaire** : épreuves du Bac / examens + dates clés Parcoursup.
+- [ ] **Étudiants** : (à préciser).
+- [ ] **Enfants** : activités et sorties pour enfants.
+
+**Point technique en attente :** bug de cohérence date repéré — `album-vendredi-ultra` daté 2026-01-17 (un samedi) alors que le libellé dit « Vendredi » (le vendredi = 16/01).
+
+**À faire :**
+- [ ] Définir le schéma / catégories pour les nouveaux types d'événements.
+- [ ] Identifier des sources fiables par catégorie (officielles de préférence).
+- [ ] Afficher l'attribution des données officielles dans l'app (ex. « Jours fériés : data.gouv.fr »).
+- [ ] Concevoir les scénarios Make d'actualisation automatique + de contrôle de validité.
+- [ ] Corriger le bug de date album-vendredi-ultra.
+
+---
+
+## 3 — FONCTIONNALITÉS  🔴 / 💡
+
+**Objectif :** faire évoluer l'app au-delà du calendrier en lecture seule.
+
+**Idées listées :**
+- 💡 Catégorie **« Communauté » / « Team Kalendi »** : événements créés par les utilisateurs.
+- 💡 Événements utilisateurs **privés** (visibles par soi seul), **publics** (visibles de tous), **semi-publics** (visibles sur autorisation).
+- 💡 **Liens** vers sites de diffusion / billetterie / vente.
+- 💡 **Notifications**.
+- 💡 **Personnalisation** des résultats par géolocalisation et caractéristiques de l'utilisateur.
+- 💡 **Onboarding** au premier lancement pour un ciblage fin et des suggestions pertinentes.
+- 💡 **Expansion géographique** : autres pays d'Europe, puis au-delà.
+
+**À faire :**
+- [ ] Prioriser les fonctionnalités (impact vs effort vs coût de run).
+- [ ] Spécifier le modèle d'événements utilisateurs (privé/public/semi-public) — impacte directement le schéma DB et le RLS.
+- [ ] Maquetter l'onboarding.
+
+---
+
+## 4 — DESIGN  🔴
+
+**Objectif :** optimiser le rendu graphique et l'UX (objectif initial du « redesign »).
+
+**À faire :**
+- [ ] Audit UX/UI de l'app actuelle.
+- [ ] Définir une direction artistique cohérente avec la marque KALENDI.
+- [ ] Itérer sur les écrans clés (accueil/calendrier, détail événement, filtres, onboarding).
+
+---
+
+## 5 — VRAIES APPLICATIONS (stores)  🟡
+
+**Objectif :** passer de la PWA à de vraies apps **App Store** et **Play Store**. Frais incompressibles **acceptés** par Jérémy.
+
+### Analyse (étude du 2026-06-11)
+
+**Coûts incompressibles :**
+- Apple Developer Program : **99 $/an** (récurrent).
+- Google Play : **25 $ une fois** (pas de récurrent).
+- Commissions stores sur achats in-app : 15–30 % (15 % via le Small Business Program < 1 M$/an) — concerne le sujet 7 (monétisation), pas le lancement gratuit.
+
+**Approche recommandée (compatible coût-run ~0) : wrapper la PWA avec Capacitor.**
+- Capacitor est **open-source / gratuit**, garde le workflow web actuel (`index.html`) et donne accès aux **API natives** (push, géoloc) — précisément ce dont on a besoin pour le sujet 3 ET pour passer la revue Apple.
+- PWABuilder est plus simple pour Android (TWA) mais son **rendu iOS risque le rejet**.
+
+**Android : facile.** TWA (PWABuilder ou Capacitor). Moins cher (25 $ une fois), revue plus souple. → à faire en premier.
+
+**iOS : le vrai obstacle.**
+- Nécessite un **Mac + Xcode** (Capacitor 8 exige Xcode 26) pour builder. Sans Mac : services de build cloud (Ionic Appflow, Capgo…) mais souvent payants → un Mac reste l'option la moins chère si disponible.
+- **Règle Apple 4.2 (« minimum functionality ») :** un simple wrapper d'un site web **est rejeté**. Il faut une vraie expérience « app » : **notifications push** (Safari iOS ≠ web push), navigation native, gestion hors-ligne propre, géolocalisation.
+- 👍 Bonne nouvelle : ces fonctions natives sont **déjà sur la roadmap (sujet 3)** — les construire sert à la fois le produit et l'acceptation App Store.
+
+**Séquencement proposé :** (1) développer les fonctions « natives » (notifications, géoloc, onboarding — sujet 3) → (2) wrapper Capacitor → (3) **Android d'abord** → (4) **iOS** une fois le risque 4.2 levé.
+
+**À faire :**
+- [ ] Confirmer la dispo d'un Mac (ou trancher la solution de build iOS).
+- [ ] Créer les comptes développeurs (Google 25 $, Apple 99 $).
+- [ ] Implémenter les fonctions natives requises pour passer la 4.2 (lien fort avec sujet 3).
+- [ ] Wrapper Capacitor + publier Android, puis iOS.
+
+---
+
+## 6 — LÉGAL  🔴
+
+**Objectif :** produire toutes les pages/dispositifs indispensables au passage en store.
+
+**À faire :**
+- [ ] Création de compte (parcours + politique).
+- [ ] Mentions légales.
+- [ ] CGV (lié au sujet 7 — Monétisation).
+- [ ] Politique de confidentialité (RGPD).
+- [ ] Consentement à l'accès aux infos d'autres apps du téléphone.
+- [ ] Consentement aux notifications.
+- [ ] Consentement à la synchronisation avec l'agenda du téléphone.
+- ✅ **Sécurité base de données** : RLS activé sur les 11 tables + politiques de lecture publique / écriture protégée (2026-06-11). Lecture anon OK, écriture anon bloquée. ⚠️ À vérifier : que les scénarios **Make** qui écrivent dans la base utilisent bien la clé `service_role` (qui contourne le RLS) et non la clé `anon` — sinon leurs écritures seront désormais refusées.
+
+---
+
+## 7 — MONÉTISATION  💡
+
+**Objectif :** modèle économique sans dégrader la gratuité de départ.
+
+**Principe :** app **100 % gratuite au lancement**. Monétisation envisagée à grande échelle :
+- **Idée 1 :** les créateurs d'événements **publics** paient pour être diffusés auprès des inscrits correspondant à leurs critères (ciblage).
+- **Idée 2 :** annonceurs / producteurs paient pour un **lien sponsorisé** vers leur événement.
+
+**À faire :**
+- [ ] Modéliser les deux pistes (qui paie, pour quoi, à quel prix).
+- [ ] Vérifier l'articulation avec les règles des stores (paiements, pub) et les CGV.
+- [ ] Définir le seuil d'utilisateurs à partir duquel la monétisation devient pertinente.
+
+---
+
+## 8 — SCALABILITÉ  🔴
+
+**Objectif :** savoir jusqu'où la structure actuelle (100 % gratuite) peut nous porter avant de devoir payer, et identifier les paliers de bascule.
+
+**Stack actuelle à cadrer :**
+- **Supabase free** : DB 500 Mo (lecture seule au-delà), 1 Go disque, ~5 Go egress/mois, pause après ~1 sem. d'inactivité, 50 000 utilisateurs actifs/mois (MAU) sur l'auth.
+- **Make.com free** : ~1 000 opérations/mois, intervalle mini 15 min — à valider selon le volume de scénarios d'actualisation (sujet 2).
+- **Claude Max 5×** : ~5× l'usage de Pro par session (fenêtre 5 h + plafonds hebdo).
+- **GitHub free** : dépôts illimités, limites CI/Actions à surveiller si on en ajoute.
+- **Vercel free (Hobby)** : hébergement du front statique. Quotas à documenter (bande passante ~100 Go/mois, invocations serverless). Usage commercial : vérifier les conditions du plan Hobby.
+
+**À faire :**
+- [ ] Établir un tableau « quota gratuit → seuil de bascule → coût au-delà » pour chaque service.
+- [ ] Estimer la consommation réelle (taille DB, egress, opérations Make) aux paliers 1 k / 10 k / 100 k utilisateurs.
+- [ ] Nettoyer le legacy Netlify (`netlify.toml`, `functions/api.js`) une fois confirmé inutile.
+- [ ] Identifier le 1er goulot d'étranglement probable et son coût de levée.
+
+---
+
+## Journal des décisions
+_(à compléter au fil des sessions)_
+
+- **2026-06-11** : structuration du projet en 8 sujets. Connecteurs Supabase et Make connectés. Contrainte transverse actée : coûts de run minimaux.
+- **2026-06-11** : 🧹 nettoyage code — suppression de toutes les API externes sauf la météo dans `functions/api.js` (retirées : jours fériés gouv.fr, OpenF1, TMDB, football-data + clés associées). Confirmé : aucune référence résiduelle. Charte « données & contenus » ajoutée en tête de doc.
+- **2026-06-11** : étude des sujets 1 (PI) et 5 (stores). Conclusions clés — PI : l'idée n'est pas protégeable, l'actif défendable est la base (droit sui generis) + le moat (réseau, données, exécution) ; e-Soleau à faible coût pour dater. Stores : approche Capacitor, Android d'abord, iOS bloqué par la règle Apple 4.2 (nécessite des fonctions natives déjà prévues au sujet 3) + un Mac pour builder.
+- **2026-06-11** : 🔒 RLS activé sur les 11 tables (migration `enable_rls_public_read_content_tables`). Politiques : lecture publique (anon+authenticated) sur les tables de contenu, écriture réservée au service_role ; `favorites`/`profiles` restent en accès « chacun ses données ». Vérifié : lecture anon OK, écriture anon refusée.
