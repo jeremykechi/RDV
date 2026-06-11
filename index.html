@@ -479,18 +479,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   /* catégories : restent horizontales, pleine largeur en haut */
   .cats{padding-left:24px;padding-right:24px}
 
-  /* zone principale : pas de scroll global, c'est le panneau d'événements qui scrolle */
+  /* zone principale : pas de scroll global */
   #main-scr{overflow:hidden}
-  /* vue mois : calendrier à gauche, liste d'événements à droite (scroll indépendant) */
+  /* vue mois : calendrier à gauche, panneau d'événements scrollable à droite */
   #view-mois{
     display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);
-    grid-template-rows:minmax(0,1fr);
-    gap:10px;padding:0 12px 12px;flex:1;min-height:0;
+    gap:10px;align-items:start;padding:0 12px 12px;
   }
-  .cg{margin:0;align-self:start}
+  .cg{margin:0}
   .dc{min-height:96px}
   .dico{max-width:none}
-  .els{padding:4px 14px 16px;overflow-y:auto;min-height:0}
+  .els{padding:4px 14px 16px;max-height:calc(94vh - 210px);overflow-y:auto}
   .vt{max-width:380px;margin-right:auto}
 }
 
