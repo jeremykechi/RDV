@@ -1064,43 +1064,110 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     </div>
 
         <div class="sw-section">
-      <div class="sw-section-title">&#127917; Culture &#8212; mes int&#233;r&#234;ts</div>
-      <div class="sw-card" id="sw-culture" style="padding:4px 0">
-        <div class="sw-pref-row">
-          <button class="sw-chip on" style="background:#7C3AED;color:#fff" data-pref="cinema" onclick="toggleChip(this)">🎬 Cinéma</button>
-          <button class="sw-pref-inall on" data-pref="cinema" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+      <div class="sw-section-title">🎭 Culture</div>
+
+      <!-- Cinéma -->
+      <div class="sw-card sw-group" style="margin-bottom:8px">
+        <div class="sw-group-title" onclick="toggleGroup('g-cinema')">
+          <span>🎬 Cinéma</span>
+          <span id="g-cinema-arrow" style="color:var(--tx3);font-size:14px">▾</span>
         </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip on" style="background:#7C3AED;color:#fff" data-pref="concerts" onclick="toggleChip(this)">🎵 Concerts</button>
-          <button class="sw-pref-inall on" data-pref="concerts" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        <div id="g-cinema" class="sw-group-body">
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="cinema-sortie" onclick="toggleSportComp(this)">🎬 Sorties films (FR)</button><button class="sport-inall on" data-sport="cinema-sortie" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
         </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="musees" onclick="toggleChip(this)">🏛️ Musées</button>
-          <button class="sw-pref-inall" data-pref="musees" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+      </div>
+
+      <!-- Concerts -->
+      <div class="sw-card sw-group" style="margin-bottom:8px">
+        <div class="sw-group-title" onclick="toggleGroup('g-concerts')">
+          <span>🎵 Concerts</span>
+          <span id="g-concerts-arrow" style="color:var(--tx3);font-size:14px">▾</span>
         </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="festivals" onclick="toggleChip(this)">🎪 Festivals</button>
-          <button class="sw-pref-inall" data-pref="festivals" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        <div id="g-concerts" class="sw-group-body">
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="concerts-date" onclick="toggleSportComp(this)">🎵 Date de concert</button><button class="sport-inall on" data-sport="concerts-date" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="concerts-billetterie" onclick="toggleSportComp(this)">🎟️ Ouverture billetterie</button><button class="sport-inall on" data-sport="concerts-billetterie" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
         </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="theatre" onclick="toggleChip(this)">🎭 Théâtre</button>
-          <button class="sw-pref-inall" data-pref="theatre" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+      </div>
+
+      <!-- Festivals -->
+      <div class="sw-card sw-group" style="margin-bottom:8px">
+        <div class="sw-group-title" onclick="toggleGroup('g-festivals')">
+          <span>🎪 Festivals</span>
+          <span id="g-festivals-arrow" style="color:var(--tx3);font-size:14px">▾</span>
         </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="opera" onclick="toggleChip(this)">🎤 Opéra</button>
-          <button class="sw-pref-inall" data-pref="opera" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        <div id="g-festivals" class="sw-group-body">
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="festivals-musique" onclick="toggleSportComp(this)">🎸 Festivals musique</button><button class="sport-inall on" data-sport="festivals-musique" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="festivals-cinema" onclick="toggleSportComp(this)">🎥 Festivals cinéma (Cannes...)</button><button class="sport-inall on" data-sport="festivals-cinema" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="festivals-theatre" onclick="toggleSportComp(this)">🎭 Festivals théâtre (Avignon...)</button><button class="sport-inall" data-sport="festivals-theatre" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
         </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="jeux-video" onclick="toggleChip(this)">🎮 Jeux vidéo</button>
-          <button class="sw-pref-inall" data-pref="jeux-video" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+      </div>
+
+      <!-- Théâtre -->
+      <div class="sw-card sw-group" style="margin-bottom:8px">
+        <div class="sw-group-title" onclick="toggleGroup('g-theatre')">
+          <span>🎭 Théâtre</span>
+          <span id="g-theatre-arrow" style="color:var(--tx3);font-size:14px">▾</span>
         </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="bd" onclick="toggleChip(this)">📚 BD / Manga</button>
-          <button class="sw-pref-inall" data-pref="bd" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+        <div id="g-theatre" class="sw-group-body">
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="theatre-spectacle" onclick="toggleSportComp(this)">🎭 Spectacles & comédies musicales</button><button class="sport-inall" data-sport="theatre-spectacle" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
         </div>
-        <div class="sw-pref-row">
-          <button class="sw-chip" data-pref="photo" onclick="toggleChip(this)">📷 Photo</button>
-          <button class="sw-pref-inall" data-pref="photo" onclick="togglePrefInAll(this)" title="Dans Tout">✦</button>
+      </div>
+
+      <!-- Streaming -->
+      <div class="sw-card sw-group" style="margin-bottom:8px">
+        <div class="sw-group-title" onclick="toggleGroup('g-streaming')">
+          <span>📺 Streaming</span>
+          <span id="g-streaming-arrow" style="color:var(--tx3);font-size:14px">▾</span>
+        </div>
+        <div id="g-streaming" class="sw-group-body">
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="streaming-series" onclick="toggleSportComp(this)">📺 Séries très attendues</button><button class="sport-inall on" data-sport="streaming-series" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="streaming-films" onclick="toggleSportComp(this)">🎬 Films streaming</button><button class="sport-inall" data-sport="streaming-films" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
+        </div>
+      </div>
+
+      <!-- Jeux vidéo -->
+      <div class="sw-card sw-group" style="margin-bottom:8px">
+        <div class="sw-group-title" onclick="toggleGroup('g-jeux')">
+          <span>🎮 Jeux vidéo</span>
+          <span id="g-jeux-arrow" style="color:var(--tx3);font-size:14px">▾</span>
+        </div>
+        <div id="g-jeux" class="sw-group-body">
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="jeux-sortie" onclick="toggleSportComp(this)">🎮 Sorties très attendues</button><button class="sport-inall on" data-sport="jeux-sortie" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
+        </div>
+      </div>
+
+      <!-- Expositions -->
+      <div class="sw-card sw-group" style="margin-bottom:8px">
+        <div class="sw-group-title" onclick="toggleGroup('g-expos')">
+          <span>🖼️ Expositions</span>
+          <span id="g-expos-arrow" style="color:var(--tx3);font-size:14px">▾</span>
+        </div>
+        <div id="g-expos" class="sw-group-body">
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="expos-paris" onclick="toggleSportComp(this)">🖼️ Expositions Paris</button><button class="sport-inall on" data-sport="expos-paris" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="expos-france" onclick="toggleSportComp(this)">🗺️ Expositions France</button><button class="sport-inall" data-sport="expos-france" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
+        </div>
+      </div>
+
+      <!-- Livres -->
+      <div class="sw-card sw-group" style="margin-bottom:8px">
+        <div class="sw-group-title" onclick="toggleGroup('g-livres')">
+          <span>📚 Livres</span>
+          <span id="g-livres-arrow" style="color:var(--tx3);font-size:14px">▾</span>
+        </div>
+        <div id="g-livres" class="sw-group-body">
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="livres-prix" onclick="toggleSportComp(this)">🏆 Prix littéraires (Goncourt...)</button><button class="sport-inall on" data-sport="livres-prix" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
+          <div class="sw-pref-row"><button class="sport-comp" data-comp="livres-salons" onclick="toggleSportComp(this)">📖 Salons du livre</button><button class="sport-inall" data-sport="livres-salons" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
+        </div>
+      </div>
+
+      <!-- Albums -->
+      <div class="sw-card sw-group" style="margin-bottom:8px">
+        <div class="sw-group-title" onclick="toggleGroup('g-albums')">
+          <span>💿 Albums</span>
+          <span id="g-albums-arrow" style="color:var(--tx3);font-size:14px">▾</span>
+        </div>
+        <div id="g-albums" class="sw-group-body">
+          <div class="sw-pref-row"><button class="sport-comp on" data-comp="albums-sortie" onclick="toggleSportComp(this)">💿 Sorties albums très attendues</button><button class="sport-inall on" data-sport="albums-sortie" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
         </div>
       </div>
     </div>
@@ -1329,6 +1396,22 @@ const COMP_MAP={
   'f1-all':['f1 ','formula'],
   'motogp-all':['motogp'],
   'nba-all':['nba'],
+  // Culture
+  'cinema-sortie':['cinéma 2026','cinema 2026'],
+  'concerts-date':['concert 2026','concerts 2026'],
+  'concerts-billetterie':['billetterie 2026'],
+  'festivals-musique':['festival musique 2026','hellfest','coachella','glastonbury','lollapalooza','les vieilles charrues','rock en seine'],
+  'festivals-cinema':['festival cinéma 2026','cannes 2026','festival de cannes'],
+  'festivals-theatre':['festival théâtre 2026','festival avignon','avignon 2026'],
+  'theatre-spectacle':['théâtre 2026','comedie musicale 2026','comédie musicale 2026'],
+  'streaming-series':['streaming série 2026','série 2026'],
+  'streaming-films':['streaming film 2026'],
+  'jeux-sortie':['jeux vidéo 2026','jeu vidéo 2026'],
+  'expos-paris':['expo paris 2026','exposition paris 2026'],
+  'expos-france':['expo france 2026','exposition france 2026'],
+  'livres-prix':['prix littéraire 2026','prix goncourt','renaudot','femina','médicis'],
+  'livres-salons':['salon du livre 2026','salon livre 2026'],
+  'albums-sortie':['album 2026','albums 2026'],
   // Business
   'ipo-major':['ipo 2026'],
   'resultats-tech':['résultats 2026'],
@@ -1377,8 +1460,8 @@ function filt(){
           sportInAll.includes(comp) && srcMatchesComp(e.src,comp)
         );
       }
-      // Business : même logique que sport via COMP_MAP
-      if(e.cat==='business'){
+      // Business & Culture : même logique que sport via COMP_MAP
+      if(e.cat==='business'||e.cat==='culture'){
         return Object.keys(COMP_MAP).some(comp=>
           sportInAll.includes(comp) && srcMatchesComp(e.src,comp)
         );
@@ -1416,9 +1499,21 @@ function filt(){
     // Si aucun sport L2 et aucune comp → montrer tout le sport
   } else if(cat==='business'){
     evts=evts.filter(e=>e.cat==='business');
-    // Filtre L2
     if(catL2==='ipo') evts=evts.filter(e=>e.src&&e.src.toLowerCase().includes('ipo'));
     else if(catL2==='resultats') evts=evts.filter(e=>e.src&&e.src.toLowerCase().includes('résultats'));
+  } else if(cat==='culture'){
+    evts=evts.filter(e=>e.cat==='culture');
+    const cultL2Map={
+      'cinema':'cinema-sortie','concerts':['concerts-date','concerts-billetterie'],
+      'festivals':['festivals-musique','festivals-cinema','festivals-theatre'],
+      'theatre':'theatre-spectacle','streaming':['streaming-series','streaming-films'],
+      'jeux':'jeux-sortie','expos':['expos-paris','expos-france'],
+      'livres':['livres-prix','livres-salons'],'albums':'albums-sortie',
+    };
+    if(catL2){
+      const comps=[].concat(cultL2Map[catL2]||[]);
+      if(comps.length) evts=evts.filter(e=>comps.some(c=>srcMatchesComp(e.src,c)));
+    }
   } else {
     evts=evts.filter(e=>e.cat===cat);
   }
@@ -1435,6 +1530,17 @@ const L2_DEFS={
   business:[
     {id:'ipo',label:'🚀 IPO',color:'#059669'},
     {id:'resultats',label:'📊 Publications',color:'#B45309'},
+  ],
+  culture:[
+    {id:'cinema',label:'🎬 Cinéma',color:'#7C3AED'},
+    {id:'concerts',label:'🎵 Concerts',color:'#7C3AED'},
+    {id:'festivals',label:'🎪 Festivals',color:'#7C3AED'},
+    {id:'theatre',label:'🎭 Théâtre',color:'#7C3AED'},
+    {id:'streaming',label:'📺 Streaming',color:'#7C3AED'},
+    {id:'jeux',label:'🎮 Jeux vidéo',color:'#7C3AED'},
+    {id:'expos',label:'🖼️ Expos',color:'#7C3AED'},
+    {id:'livres',label:'📚 Livres',color:'#7C3AED'},
+    {id:'albums',label:'💿 Albums',color:'#7C3AED'},
   ],
   sport:[
     {id:'foot',label:'⚽ Football',color:'#1D4ED8'},
