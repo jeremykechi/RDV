@@ -80,8 +80,8 @@ Tâches : ✅ Fait · [ ] À faire
 - [ ] Définir le schéma / catégories pour les nouveaux types d'événements.
 - [ ] Identifier des sources fiables par catégorie (officielles de préférence).
 - [ ] Afficher l'attribution des données officielles dans l'app (ex. « Jours fériés : data.gouv.fr »).
-- [ ] Concevoir les scénarios Make d'actualisation automatique + de contrôle de validité.
-- [ ] Corriger le bug de date album-vendredi-ultra.
+- ✅ **Automatisation quotidienne** (2026-06-12) : tâche planifiée Cowork « kalendi-maj-base-quotidienne » (~6h/jour) qui, en autonomie, vérifie dates/annulations (60 j à venir), corrige les incohérences, nettoie les doublons, ajoute de nouveaux événements (≤10/j), écrit dans Supabase (service_role) et journalise dans `public.data_jobs_log` + compte-rendu quotidien. Respecte la charte données.
+- [ ] Corriger le bug de date album-vendredi-ultra → sera traité automatiquement au 1er run de la tâche (ou via « Run now »).
 
 ---
 
@@ -112,7 +112,7 @@ Tâches : ✅ Fait · [ ] À faire
 **Point connu :** l'app est bien adaptée au **mobile**, mais la **version desktop n'est pas responsive** (mise en page cassée / non optimisée sur grand écran). À corriger — d'autant que la PWA reste la porte d'entrée web/desktop.
 
 **À faire :**
-- [ ] **Rendre le desktop responsive** (layout large écran : calendrier, listes, filtres).
+- ✅ **Desktop responsive** (2026-06-12) : layout large écran — catégories horizontales en haut, vue Mois en 2 colonnes (calendrier + panneau d'événements scrollable), vue « Jour » retirée. Mobile inchangé (bloc `@media ≥1024px`).
 - [ ] Audit UX/UI de l'app actuelle.
 - [ ] Définir une direction artistique cohérente avec la marque KALENDI.
 - [ ] Itérer sur les écrans clés (accueil/calendrier, détail événement, filtres, onboarding).
@@ -259,6 +259,25 @@ Avec Capacitor, **pas de réécriture** : l'app web actuelle devient telle quell
 
 ---
 
+## 10 — RELATION CLIENTS  🔴
+
+**Objectif :** construire et entretenir le lien avec les utilisateurs de KALENDI (support, écoute, fidélisation).
+
+**Pistes à structurer (à détailler avec Jérémy) :**
+- Canal de support / contact (e-mail, formulaire in-app, chat).
+- Collecte et traitement des retours utilisateurs (bugs, idées, demandes).
+- Gestion des avis sur les stores (réponses, notes) — lien sujet 5.
+- FAQ / centre d'aide / onboarding d'accompagnement.
+- Communication directe (e-mails de bienvenue, nouveautés) — lien sujet 9.
+- Lien avec les créateurs d'événements (cible pro / monétisation) — lien sujet 7.
+
+**À faire :**
+- [ ] Choisir le(s) canal(aux) de contact et support.
+- [ ] Mettre en place une boucle de feedback (collecte → tri → suivi).
+- [ ] Définir le ton et les modèles de réponse.
+
+---
+
 ## Journal des décisions
 _(à compléter au fil des sessions)_
 
@@ -266,5 +285,7 @@ _(à compléter au fil des sessions)_
 - **2026-06-11** : 🛡️ e-Soleau déposée à l'INPI (preuve d'antériorité du concept KALENDI + roadmap). Récépissé + code de restitution conservés par Jérémy.
 - **2026-06-11** : 🧹 nettoyage code — suppression de toutes les API externes sauf la météo dans `functions/api.js` (retirées : jours fériés gouv.fr, OpenF1, TMDB, football-data + clés associées). Confirmé : aucune référence résiduelle. Charte « données & contenus » ajoutée en tête de doc.
 - **2026-06-11** : étude des sujets 1 (PI) et 5 (stores). Conclusions clés — PI : l'idée n'est pas protégeable, l'actif défendable est la base (droit sui generis) + le moat (réseau, données, exécution) ; e-Soleau à faible coût pour dater. Stores : approche Capacitor, Android d'abord, iOS bloqué par la règle Apple 4.2 (nécessite des fonctions natives déjà prévues au sujet 3) + un Mac pour builder.
+- **2026-06-12** : 🖥️ refonte desktop responsive (sujet 4) — catégories horizontales, vue Mois en 2 colonnes, panneau d'événements scrollable, vue « Jour » supprimée. Sauvegarde `outputs/index.html.bak`.
+- **2026-06-12** : 🤖 mise en place de l'automatisation quotidienne de la base (sujet 2) — tâche planifiée Cowork ~6h, écriture auto Supabase + compte-rendu, table de log `data_jobs_log` créée (RLS, privée).
 - **2026-06-11** : 🔒 RLS activé sur les 11 tables (migration `enable_rls_public_read_content_tables`). Politiques : lecture publique (anon+authenticated) sur les tables de contenu, écriture réservée au service_role ; `favorites`/`profiles` restent en accès « chacun ses données ». Vérifié : lecture anon OK, écriture anon refusée.
 - **2026-06-12** : ajout du sujet 9 — Communication (le projet compte désormais 9 sujets).
