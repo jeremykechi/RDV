@@ -2471,6 +2471,9 @@ function openSettings(){
     }catch(e){ localStorage.removeItem('kalendi-settings'); }
   }
   loadSettings();
+  // Toujours rouvrir les réglages tout en haut
+  const sc=document.querySelector('#sw .sw-scr');
+  if(sc) sc.scrollTop=0;
 }
 function closeSettings(){
   document.getElementById('sw').classList.remove('open');
