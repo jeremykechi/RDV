@@ -2711,7 +2711,7 @@ async function loadF1FromDB() {
 🏆 Grand Prix — Round ${r.round}/22
 📍 ${r.circuit}, ${r.ville}
 ⏰ ${r.heure_course}`,
-        rel: [], src: 'F1 2026'
+        res: r.resultat, rel: [], src: 'F1 2026'
       });
     });
 
@@ -2780,7 +2780,7 @@ async function loadMotoGPFromDB() {
         h: r.heure_course, dt: r.date_course,
         lieu: r.circuit, v: r.ville, px: '',
         desc: `🏍️ ${r.nom}\n🏆 Grand Prix — Round ${r.round}/22\n📍 ${r.circuit}, ${r.ville}\n⏰ ${r.heure_course}`,
-        rel: [], src: 'MotoGP 2026'
+        res: r.resultat, rel: [], src: 'MotoGP 2026'
       });
     });
 
@@ -2821,6 +2821,7 @@ async function loadCDMFromDB() {
         v: m.ville,
         px: '',
         desc: `⚽ Coupe du Monde 2026\n🏟️ Groupe ${m.groupe}\n${m.equipe1} vs ${m.equipe2}\n📍 ${m.stade}, ${m.ville}\n⏰ ${m.heure_match}\n📺 ${chaine}`,
+        res: m.resultat,
         rel: [],
         src: 'CDM 2026'
       };
@@ -2864,6 +2865,7 @@ async function loadNBAFromDB() {
         v: 'NBA',
         px: '',
         desc: `🏀 NBA Playoffs 2026\n${m.round} — Game ${m.game}\n${m.equipe1} vs ${m.equipe2}\n⏰ ${m.heure_fr}${score ? '\n🏁 Score : ' + m.score1 + ' - ' + m.score2 : ''}`,
+        res: m.resultat,
         rel: [],
         src: 'NBA Playoffs 2026'
       };
@@ -2916,6 +2918,7 @@ async function loadCyclismeFromDB() {
         v: e.arrivee || '',
         px: '',
         desc: `🚴 ${e.course}\n${e.nom}${trajet ? '\n📍 ' + trajet : ''}${km ? '\n📏' + km : ''}`,
+        res: e.resultat,
         rel: [],
         src: 'Cyclisme 2026'
       };
