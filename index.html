@@ -360,6 +360,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .dres{background:var(--ec-bg);border:1px solid var(--ec-bd);border-radius:12px;padding:11px 13px;margin-bottom:13px}
 .dres-t{font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
 .dres-c{font-size:13px;color:var(--en-tx);line-height:1.6;white-space:pre-line}
+.auth-modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:2000;display:flex;align-items:center;justify-content:center;padding:20px}
+.auth-box{position:relative;width:100%;max-width:340px;background:var(--sur);border:1px solid var(--bd2);border-radius:18px;padding:24px 20px 20px;display:flex;flex-direction:column;gap:10px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.auth-title{font-size:18px;font-weight:700;color:var(--en-tx)}
+.auth-box input{background:var(--ec-bg);border:1px solid var(--bd2);border-radius:10px;padding:11px 12px;font-size:14px;color:var(--en-tx);font-family:inherit;outline:none}
+.auth-box input:focus{border-color:var(--accent)}
+.auth-submit{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:4px}
+.auth-submit:disabled{opacity:.6}
+.auth-err{font-size:12px;color:#ff6b6b;min-height:14px;line-height:1.4}
+.auth-switch{font-size:12px;color:var(--tx2);text-align:center;margin-top:2px}
+.auth-switch a{color:var(--accent);cursor:pointer;font-weight:600}
+.auth-close{position:absolute;top:10px;right:12px;background:none;border:none;color:var(--tx3);font-size:18px;cursor:pointer;line-height:1}
 .dr{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--bd)}
 .dr i{font-size:17px;color:var(--accent);margin-top:1px;flex-shrink:0}
 .drt p{font-size:13px;color:var(--en-tx);font-weight:600}
@@ -877,9 +888,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   </div>
   <div class="sw-scr">
 
-    <div class="sw-profile-header">
-      <div class="sw-avatar">&#128100;</div>
-      <div class="sw-avatar-info"><h3>Mon compte</h3><p>Pr&#233;f&#233;rences sauvegard&#233;es localement</p></div>
+    <div class="sw-profile-header" id="profile-header">
+      <div class="sw-avatar" id="profile-avatar">&#128100;</div>
+      <div class="sw-avatar-info" style="flex:1"><h3 id="profile-name">Mon compte</h3><p id="profile-sub">Non connect&#233; &middot; r&#233;glages locaux</p></div>
+      <button class="ab" id="auth-btn" onclick="openAuth()" style="flex:0 0 auto;width:auto;padding:8px 14px">Se connecter</button>
+    </div>
+
+    <div id="auth-modal" class="auth-modal-bg" style="display:none">
+      <div class="auth-box">
+        <button class="auth-close" onclick="closeAuth()">&#10005;</button>
+        <div class="auth-title" id="auth-title">Connexion</div>
+        <input type="email" id="auth-email" placeholder="E-mail" autocomplete="email">
+        <input type="password" id="auth-pwd" placeholder="Mot de passe" autocomplete="current-password">
+        <div class="auth-err" id="auth-err"></div>
+        <button class="auth-submit" id="auth-submit" onclick="doAuth()">Se connecter</button>
+        <div class="auth-switch"><span id="auth-switch-txt">Pas encore de compte&nbsp;?</span> <a id="auth-switch-link" onclick="setAuthMode(authMode==='login'?'signup':'login')">Cr&#233;er un compte</a></div>
+      </div>
     </div>
 
     <!-- ══ VIE QUOTIDIENNE ══ -->
@@ -2549,6 +2573,7 @@ function saveSettings(){
     v:2 // version du format
   };
   localStorage.setItem('kalendi-settings', JSON.stringify(state));
+  syncSettingsToProfile();
   rAll();
   const toast=document.getElementById('savedToast');
   toast.classList.add('show');
@@ -3191,6 +3216,86 @@ function tick(){
 tick();
 setInterval(tick,30000);
 
+// ════ Compte utilisateur (Supabase Auth) ════
+let currentUser=null, authMode='login';
+function openAuth(){setAuthMode('login');document.getElementById('auth-email').value='';document.getElementById('auth-pwd').value='';document.getElementById('auth-modal').style.display='flex';}
+function closeAuth(){document.getElementById('auth-modal').style.display='none';}
+function setAuthMode(m){
+  authMode=m;
+  document.getElementById('auth-title').textContent=m==='login'?'Connexion':'Créer un compte';
+  document.getElementById('auth-submit').textContent=m==='login'?'Se connecter':"S'inscrire";
+  document.getElementById('auth-switch-txt').textContent=m==='login'?'Pas encore de compte ?':'Déjà inscrit ?';
+  document.getElementById('auth-switch-link').textContent=m==='login'?'Créer un compte':'Se connecter';
+  _authErr('');
+}
+function _authErr(msg,ok){const e=document.getElementById('auth-err');if(!e)return;e.style.color=ok?'var(--accent)':'#ff6b6b';e.textContent=msg;}
+function _tradAuth(m){m=(m||'').toLowerCase();
+  if(m.includes('invalid login'))return 'E-mail ou mot de passe incorrect.';
+  if(m.includes('already')&&m.includes('regist'))return 'Un compte existe déjà avec cet e-mail.';
+  if(m.includes('password')&&(m.includes('least')||m.includes('6')))return 'Mot de passe trop court (6 caractères minimum).';
+  if(m.includes('valid email')||m.includes('invalid email'))return 'Adresse e-mail invalide.';
+  if(m.includes('email not confirmed'))return 'E-mail non confirmé. Vérifie ta boîte mail.';
+  return m;}
+async function doAuth(){
+  if(!supa){_authErr('Service indisponible.');return;}
+  const email=document.getElementById('auth-email').value.trim();
+  const pwd=document.getElementById('auth-pwd').value;
+  if(!email||!pwd){_authErr('E-mail et mot de passe requis.');return;}
+  const btn=document.getElementById('auth-submit');btn.disabled=true;_authErr('');
+  try{
+    const res=authMode==='signup'
+      ? await supa.auth.signUp({email,password:pwd})
+      : await supa.auth.signInWithPassword({email,password:pwd});
+    if(res.error){_authErr(_tradAuth(res.error.message));btn.disabled=false;return;}
+    if(authMode==='signup'&&!res.data.session){
+      _authErr('Compte créé ! Vérifie tes e-mails pour confirmer, puis connecte-toi.',true);
+      btn.disabled=false;return;
+    }
+    closeAuth();
+  }catch(e){_authErr('Erreur : '+e.message);}
+  btn.disabled=false;
+}
+async function doLogout(){ if(supa) await supa.auth.signOut(); }
+function refreshAuthUI(user){
+  currentUser=user;
+  const n=document.getElementById('profile-name'),s=document.getElementById('profile-sub'),
+        b=document.getElementById('auth-btn'),a=document.getElementById('profile-avatar');
+  if(!n||!b)return;
+  if(user){
+    n.textContent=user.email; s.textContent='Connecté · synchronisé ✓'; if(a)a.textContent='✅';
+    b.textContent='Se déconnecter'; b.setAttribute('onclick','doLogout()');
+  }else{
+    n.textContent='Mon compte'; s.textContent='Non connecté · réglages locaux'; if(a)a.textContent='👤';
+    b.textContent='Se connecter'; b.setAttribute('onclick','openAuth()');
+  }
+}
+function buildSettingsState(){
+  return {
+    vqInAll:[...document.querySelectorAll('.vq-inall.on')].map(b=>b.dataset.sub),
+    sportComps:[...document.querySelectorAll('.sport-comp.on')].map(b=>b.dataset.comp),
+    sportInAll:[...document.querySelectorAll('.sport-inall.on')].map(b=>b.dataset.sport),
+    favs:[...document.querySelectorAll('.sw-fav-chip.on')].map(b=>b.dataset.fav),
+    ville:document.querySelector('#sw-villes .sw-chip.on')?.dataset?.pref||'paris',
+    zone:localStorage.getItem('kalendi-zone')||'B', v:2
+  };
+}
+async function syncSettingsToProfile(){
+  if(!supa||!currentUser)return;
+  try{ await supa.from('profiles').upsert({id:currentUser.id,username:currentUser.email,preferences:buildSettingsState(),updated_at:new Date().toISOString()}); }
+  catch(e){ console.log('sync err',e.message); }
+}
+async function loadProfilePrefs(user){
+  if(!supa||!user)return;
+  try{
+    const {data}=await supa.from('profiles').select('preferences').eq('id',user.id).maybeSingle();
+    if(data&&data.preferences&&Object.keys(data.preferences).length){
+      localStorage.setItem('kalendi-settings',JSON.stringify(data.preferences));
+      if(data.preferences.zone)localStorage.setItem('kalendi-zone',data.preferences.zone);
+      loadSettings(); rAll();
+    }else{ syncSettingsToProfile(); }
+  }catch(e){ console.log('loadProfilePrefs err',e.message); }
+}
+
 // Init on load
 window.addEventListener('load', () => {
   // Appliquer les préférences avant le premier rendu
@@ -3199,6 +3304,16 @@ window.addEventListener('load', () => {
   // Connect to Supabase
   if (initSupabase()) {
     loadEventsFromDB();
+    supa.auth.getSession().then(({data})=>{
+      const u=data.session?data.session.user:null;
+      refreshAuthUI(u);
+      if(u) loadProfilePrefs(u);
+    });
+    supa.auth.onAuthStateChange((_e,session)=>{
+      const u=session?session.user:null;
+      refreshAuthUI(u);
+      if(u) loadProfilePrefs(u);
+    });
   }
 });
 
