@@ -283,6 +283,8 @@ Avec Capacitor, **pas de réécriture** : l'app web actuelle devient telle quell
 ## Journal des décisions
 _(à compléter au fil des sessions)_
 
+- **2026-06-13** : ⚽ favoris « par compétition » + matchs de clubs — favoris foot réorganisés par compétition (Ligue 1 complète, nations Mondial) ; drapeau nation (sport uniquement) et pastille couleurs+initiales club affichés dans le calendrier ; un favori apparaît dans « Tout » même si sa compétition n'a pas le ✦. Compte utilisateur (Supabase Auth) + synchro prefs. Tâche quotidienne étendue : maintien des matchs à venir d'une liste de ~22 grands clubs dans `events`. Couverture « toutes compétitions » exhaustive = nécessiterait une source de données sportives (coût + à arbitrer vs charte) — décision reportée.
+
 - **2026-06-11** : structuration du projet en 8 sujets. Connecteurs Supabase et Make connectés. Contrainte transverse actée : coûts de run minimaux.
 - **2026-06-11** : 🛡️ e-Soleau déposée à l'INPI (preuve d'antériorité du concept KALENDI + roadmap). Récépissé + code de restitution conservés par Jérémy.
 - **2026-06-11** : 🧹 nettoyage code — suppression de toutes les API externes sauf la météo dans `functions/api.js` (retirées : jours fériés gouv.fr, OpenF1, TMDB, football-data + clés associées). Confirmé : aucune référence résiduelle. Charte « données & contenus » ajoutée en tête de doc.
