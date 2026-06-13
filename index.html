@@ -1819,6 +1819,35 @@ const FAV_KEYWORDS={
   'cdm-uruguay':['uruguay'],
 };
 
+// Drapeaux des nations favorites (pour l'affichage dans le calendrier)
+const FAV_FLAG={
+  'france-foot':'🇫🇷','italie-foot':'🇮🇹',
+  'cdm-afrsud':'🇿🇦','cdm-algerie':'🇩🇿','cdm-allemagne':'🇩🇪','cdm-angleterre':'🏴󠁧󠁢󠁥󠁮󠁧󠁿','cdm-arabie':'🇸🇦',
+  'cdm-argentine':'🇦🇷','cdm-australie':'🇦🇺','cdm-autriche':'🇦🇹','cdm-belgique':'🇧🇪','cdm-bosnie':'🇧🇦',
+  'cdm-bresil':'🇧🇷','cdm-canada':'🇨🇦','cdm-capvert':'🇨🇻','cdm-colombie':'🇨🇴','cdm-coree':'🇰🇷',
+  'cdm-civoire':'🇨🇮','cdm-croatie':'🇭🇷','cdm-curacao':'🇨🇼','cdm-ecosse':'🏴󠁧󠁢󠁳󠁣󠁴󠁿','cdm-egypte':'🇪🇬',
+  'cdm-equateur':'🇪🇨','cdm-espagne':'🇪🇸','cdm-usa':'🇺🇸','cdm-ghana':'🇬🇭','cdm-haiti':'🇭🇹',
+  'cdm-irak':'🇮🇶','cdm-iran':'🇮🇷','cdm-japon':'🇯🇵','cdm-jordanie':'🇯🇴','cdm-maroc':'🇲🇦',
+  'cdm-mexique':'🇲🇽','cdm-norvege':'🇳🇴','cdm-nz':'🇳🇿','cdm-ouzbekistan':'🇺🇿','cdm-panama':'🇵🇦',
+  'cdm-paraguay':'🇵🇾','cdm-paysbas':'🇳🇱','cdm-portugal':'🇵🇹','cdm-qatar':'🇶🇦','cdm-rdcongo':'🇨🇩',
+  'cdm-senegal':'🇸🇳','cdm-suede':'🇸🇪','cdm-suisse':'🇨🇭','cdm-tchequie':'🇨🇿','cdm-tunisie':'🇹🇳',
+  'cdm-turquie':'🇹🇷','cdm-uruguay':'🇺🇾'
+};
+
+// Renvoie le drapeau d'une nation favorite active correspondant à l'événement, sinon ''
+function favFlagOf(e){
+  const favs=getFavs();
+  if(!favs.length)return '';
+  const text=(e.t+' '+(e.s||'')+' '+(e.desc||'')).toLowerCase();
+  for(const f of favs){
+    const flag=FAV_FLAG[f];
+    if(!flag)continue;
+    const kws=FAV_KEYWORDS[f]||[];
+    if(kws.some(k=>text.includes(k)))return flag;
+  }
+  return '';
+}
+
 function eventHasFav(e){
   const favs=getFavs();
   if(!favs.length)return false;
@@ -1843,9 +1872,14 @@ function rCal(){
     const nc='dn'+(tod?' tod':oth?' dim':'');
     let icEvts=[];
     if(ev.length){
+      const favFlagEv=ev.filter(e=>favFlagOf(e));            // matchs d'une nation favorite
       const france=ev.find(e=>e.i==='🇫🇷');
-      const autres=ev.filter(e=>e.i!=='🇫🇷');
-      if(france&&autres.length>0){
+      const autres=ev.filter(e=>!favFlagEv.includes(e)&&e.i!=='🇫🇷');
+      if(favFlagEv.length>=2){
+        icEvts=[favFlagEv[0],favFlagEv[1]];
+      } else if(favFlagEv.length===1){
+        icEvts=autres.length?[favFlagEv[0],autres[0]]:[favFlagEv[0]];
+      } else if(france&&autres.length>0){
         // France + un autre événement favori
         icEvts=[france, autres[0]];
       } else if(france){
@@ -1861,7 +1895,8 @@ function rCal(){
     }
     const ic=icEvts.length?'<div class="dico">'+icEvts.map(e=>{
         const hasFav=eventHasFav(e);
-        return '<div class="ei'+(hasFav?' ei-fav':'')+'" style="background:'+e.bg+'" title="'+e.t+(hasFav?' ⭐':'')+'">'+(hasFav?'<span class="fav-dot">⭐</span>':'')+e.i+'</div>';
+        const disp=favFlagOf(e)||e.i;                         // drapeau du favori si match
+        return '<div class="ei'+(hasFav?' ei-fav':'')+'" style="background:'+e.bg+'" title="'+e.t+(hasFav?' ⭐':'')+'">'+(hasFav?'<span class="fav-dot">⭐</span>':'')+disp+'</div>';
       }).join('')+'</div>':'';
     return '<div class="dc'+(sel?' sel':'')+'"'+(oth?'':' onclick="sD('+d+')"')+'>'+
       '<span class="'+nc+'">'+d+'</span>'+ic+'</div>';
