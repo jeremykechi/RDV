@@ -1836,6 +1836,7 @@ const FAV_FLAG={
 
 // Renvoie le drapeau d'une nation favorite active correspondant à l'événement, sinon ''
 function favFlagOf(e){
+  if(e.cat!=='sport')return '';          // drapeaux nations : sport uniquement
   const favs=getFavs();
   if(!favs.length)return '';
   const text=(e.t+' '+(e.s||'')+' '+(e.desc||'')).toLowerCase();
@@ -1846,6 +1847,36 @@ function favFlagOf(e){
     if(kws.some(k=>text.includes(k)))return flag;
   }
   return '';
+}
+
+// Clubs favoris : pastille couleurs + initiales (pas de logo tiers)
+const FAV_CLUB={
+  'psg':{a:'PSG',bg:'#00004B',fg:'#E30613'},'om':{a:'OM',bg:'#2FAEE0',fg:'#fff'},
+  'ol':{a:'OL',bg:'#DA251D',fg:'#fff'},'monaco':{a:'ASM',bg:'#E2001A',fg:'#fff'},
+  'rennes':{a:'SRFC',bg:'#E03A3E',fg:'#000'},'lens':{a:'RCL',bg:'#FFE500',fg:'#000'},
+  'lille':{a:'LOSC',bg:'#E01E13',fg:'#fff'},'nice':{a:'OGCN',bg:'#CC0000',fg:'#fff'},
+  'lorient':{a:'FCL',bg:'#F28E00',fg:'#000'},'parisfc':{a:'PFC',bg:'#0046A8',fg:'#fff'},
+  'metz':{a:'FCM',bg:'#7A0026',fg:'#fff'},'auxerre':{a:'AJA',bg:'#1E4C9A',fg:'#fff'},
+  'toulouse-foot':{a:'TFC',bg:'#5F259F',fg:'#fff'},'strasbourg':{a:'RCSA',bg:'#009FE3',fg:'#fff'},
+  'angers':{a:'SCO',bg:'#1B1B1B',fg:'#fff'},'brest':{a:'SB29',bg:'#E2001A',fg:'#fff'},
+  'nantes':{a:'FCN',bg:'#FCD405',fg:'#007A33'},'lehavre':{a:'HAC',bg:'#00529F',fg:'#fff'},
+  'arsenal':{a:'ARS',bg:'#EF0107',fg:'#fff'},'barca':{a:'FCB',bg:'#A50044',fg:'#EDBB00'},
+  'real':{a:'RMA',bg:'#FEBE10',fg:'#00529F'},'juventus':{a:'JUV',bg:'#000000',fg:'#fff'}
+};
+
+// Renvoie {a,bg,fg} d'un club favori actif correspondant à l'événement sport, sinon null
+function favClubOf(e){
+  if(e.cat!=='sport')return null;
+  const favs=getFavs();
+  if(!favs.length)return null;
+  const text=(e.t+' '+(e.s||'')+' '+(e.desc||'')).toLowerCase();
+  for(const f of favs){
+    const c=FAV_CLUB[f];
+    if(!c)continue;
+    const kws=FAV_KEYWORDS[f]||[];
+    if(kws.some(k=>text.includes(k)))return c;
+  }
+  return null;
 }
 
 function eventHasFav(e){
@@ -1872,13 +1903,13 @@ function rCal(){
     const nc='dn'+(tod?' tod':oth?' dim':'');
     let icEvts=[];
     if(ev.length){
-      const favFlagEv=ev.filter(e=>favFlagOf(e));            // matchs d'une nation favorite
+      const favEv=ev.filter(e=>favFlagOf(e)||favClubOf(e));  // matchs d'une nation ou d'un club favori
       const france=ev.find(e=>e.i==='🇫🇷');
-      const autres=ev.filter(e=>!favFlagEv.includes(e)&&e.i!=='🇫🇷');
-      if(favFlagEv.length>=2){
-        icEvts=[favFlagEv[0],favFlagEv[1]];
-      } else if(favFlagEv.length===1){
-        icEvts=autres.length?[favFlagEv[0],autres[0]]:[favFlagEv[0]];
+      const autres=ev.filter(e=>!favEv.includes(e)&&e.i!=='🇫🇷');
+      if(favEv.length>=2){
+        icEvts=[favEv[0],favEv[1]];
+      } else if(favEv.length===1){
+        icEvts=autres.length?[favEv[0],autres[0]]:[favEv[0]];
       } else if(france&&autres.length>0){
         // France + un autre événement favori
         icEvts=[france, autres[0]];
@@ -1895,8 +1926,12 @@ function rCal(){
     }
     const ic=icEvts.length?'<div class="dico">'+icEvts.map(e=>{
         const hasFav=eventHasFav(e);
-        const disp=favFlagOf(e)||e.i;                         // drapeau du favori si match
-        return '<div class="ei'+(hasFav?' ei-fav':'')+'" style="background:'+e.bg+'" title="'+e.t+(hasFav?' ⭐':'')+'">'+(hasFav?'<span class="fav-dot">⭐</span>':'')+disp+'</div>';
+        const flag=favFlagOf(e);
+        const club=flag?null:favClubOf(e);
+        let inner=e.i, bg=e.bg;
+        if(flag){ inner=flag; }
+        else if(club){ inner='<span style="font-size:8px;font-weight:800;line-height:1;color:'+club.fg+'">'+club.a+'</span>'; bg=club.bg; }
+        return '<div class="ei'+(hasFav?' ei-fav':'')+'" style="background:'+bg+'" title="'+e.t+(hasFav?' ⭐':'')+'">'+(hasFav?'<span class="fav-dot">⭐</span>':'')+inner+'</div>';
       }).join('')+'</div>':'';
     return '<div class="dc'+(sel?' sel':'')+'"'+(oth?'':' onclick="sD('+d+')"')+'>'+
       '<span class="'+nc+'">'+d+'</span>'+ic+'</div>';
