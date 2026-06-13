@@ -1862,6 +1862,7 @@ const FAV_FLAG={
 // Renvoie le drapeau d'une nation favorite active correspondant à l'événement, sinon ''
 function favFlagOf(e){
   if(e.cat!=='sport')return '';          // drapeaux nations : sport uniquement
+  const _sp=getSportOfSrc(e.src); if(_sp&&_sp!=='foot')return '';  // pas de drapeau foot sur tennis/rugby/etc.
   const favs=getFavs();
   if(!favs.length)return '';
   const text=(e.t+' '+(e.s||'')+' '+(e.desc||'')).toLowerCase();
@@ -1892,6 +1893,7 @@ const FAV_CLUB={
 // Renvoie {a,bg,fg} d'un club favori actif correspondant à l'événement sport, sinon null
 function favClubOf(e){
   if(e.cat!=='sport')return null;
+  const _sp=getSportOfSrc(e.src); if(_sp&&_sp!=='foot')return null;
   const favs=getFavs();
   if(!favs.length)return null;
   const text=(e.t+' '+(e.s||'')+' '+(e.desc||'')).toLowerCase();
@@ -1904,12 +1906,19 @@ function favClubOf(e){
   return null;
 }
 
+function favSportOf(f){
+  if(/-rugby$/.test(f)||f==='ubb'||f==='toulouse'||f==='toulon')return 'rugby';
+  if(['knicks','spurs','lakers','celtics','warriors','bulls','heat','nuggets','thunder','cavaliers','76ers','pistons'].includes(f))return 'nba';
+  return 'foot';
+}
 function eventHasFav(e){
   if(e.cat!=='sport')return false;       // les favoris (clubs/nations) ne concernent que le sport
   const favs=getFavs();
   if(!favs.length)return false;
+  const sp=getSportOfSrc(e.src);
   const text=(e.t+' '+(e.s||'')+' '+(e.desc||'')).toLowerCase();
   return favs.some(fav=>{
+    if(sp && favSportOf(fav)!==sp)return false;   // un favori ne matche que son propre sport
     const keywords=FAV_KEYWORDS[fav]||[];
     return keywords.some(k=>text.includes(k));
   });
