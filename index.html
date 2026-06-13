@@ -893,6 +893,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="sw-avatar-info" style="flex:1"><h3 id="profile-name">Mon compte</h3><p id="profile-sub">Non connect&#233; &middot; r&#233;glages locaux</p></div>
       <button class="ab" id="auth-btn" onclick="openAuth()" style="flex:0 0 auto;width:auto;padding:8px 14px">Se connecter</button>
     </div>
+    <div id="delete-account-row" style="display:none;padding:2px 20px 0;text-align:right">
+      <button onclick="doDeleteAccount()" style="background:none;border:none;color:#ff6b6b;font-size:12px;cursor:pointer;text-decoration:underline;font-family:inherit">Supprimer mon compte</button>
+    </div>
 
     <div id="auth-modal" class="auth-modal-bg" style="display:none">
       <div class="auth-box">
@@ -3261,6 +3264,7 @@ async function doAuth(){
       ? await supa.auth.signUp({email,password:pwd})
       : await supa.auth.signInWithPassword({email,password:pwd});
     if(res.error){_authErr(_tradAuth(res.error.message));btn.disabled=false;return;}
+    if(authMode==='signup'&&res.data.user){ logAnalytics('signup',null,res.data.user.id); }
     if(authMode==='signup'&&!res.data.session){
       _authErr('Compte créé ! Vérifie tes e-mails pour confirmer, puis connecte-toi.',true);
       btn.disabled=false;return;
@@ -3270,6 +3274,37 @@ async function doAuth(){
   btn.disabled=false;
 }
 async function doLogout(){ if(supa) await supa.auth.signOut(); }
+
+// ── Analytics (audience) ──
+function logAnalytics(type,sec,uid){
+  if(!supa)return;
+  try{ supa.from('analytics_events').insert({user_id:uid||(currentUser?currentUser.id:null),event_type:type,duration_sec:sec||null}); }catch(e){}
+}
+let _sessStart=Date.now();
+function _flushSession(){
+  const sec=Math.round((Date.now()-_sessStart)/1000); _sessStart=Date.now();
+  if(sec<2||sec>21600)return; // ignore <2s ou >6h
+  try{
+    fetch(SUPA_URL+'/rest/v1/analytics_events',{method:'POST',keepalive:true,
+      headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},
+      body:JSON.stringify([{user_id:currentUser?currentUser.id:null,event_type:'session',duration_sec:sec}])});
+  }catch(e){}
+}
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden')_flushSession(); else _sessStart=Date.now(); });
+window.addEventListener('pagehide',_flushSession);
+async function doDeleteAccount(){
+  if(!supa||!currentUser)return;
+  if(!confirm('Supprimer définitivement ton compte ? Cette action est irréversible.'))return;
+  try{
+    const {data:{session}}=await supa.auth.getSession();
+    const res=await fetch(SUPA_URL+'/functions/v1/delete-account',{method:'POST',
+      headers:{'Authorization':'Bearer '+(session?session.access_token:''),'apikey':SUPA_KEY,'Content-Type':'application/json'}});
+    const j=await res.json().catch(()=>({}));
+    if(!res.ok||j.error){alert('Erreur : '+(j.error||('HTTP '+res.status)));return;}
+    await supa.auth.signOut();
+    alert('Compte supprimé. À bientôt !');
+  }catch(e){ alert('Erreur : '+e.message); }
+}
 function refreshAuthUI(user){
   currentUser=user;
   const n=document.getElementById('profile-name'),s=document.getElementById('profile-sub'),
@@ -3282,6 +3317,7 @@ function refreshAuthUI(user){
     n.textContent='Mon compte'; s.textContent='Non connecté · réglages locaux'; if(a)a.textContent='👤';
     b.textContent='Se connecter'; b.setAttribute('onclick','openAuth()');
   }
+  const dr=document.getElementById('delete-account-row'); if(dr) dr.style.display=user?'block':'none';
 }
 function buildSettingsState(){
   return {
@@ -3323,10 +3359,11 @@ window.addEventListener('load', () => {
       refreshAuthUI(u);
       if(u) loadProfilePrefs(u);
     });
-    supa.auth.onAuthStateChange((_e,session)=>{
+    supa.auth.onAuthStateChange((evt,session)=>{
       const u=session?session.user:null;
       refreshAuthUI(u);
       if(u) loadProfilePrefs(u);
+      if(evt==='SIGNED_IN' && u) logAnalytics('login');
     });
   }
 });
