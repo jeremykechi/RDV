@@ -1582,12 +1582,13 @@ function filt(){
       if(['feries','vacances','meteo','meteo-alerte'].includes(e.cat)){
         return vqPrefs.includes(e.cat);
       }
-      // Sport : vérifier si la compétition spécifique a le ✦
+      // Sport : compétition avec ✦, OU équipe/nation en favori
+      // (un favori apparaît dans Tout même si sa compétition n'a pas le ✦ → uniquement ce club/cette nation)
       if(e.cat==='sport'){
-        // Chercher une comp qui matche la source ET qui a le ✦
-        return Object.keys(COMP_MAP).some(comp=>
+        if(Object.keys(COMP_MAP).some(comp=>
           sportInAll.includes(comp) && srcMatchesComp(e.src,comp)
-        );
+        )) return true;
+        return eventHasFav(e);
       }
       // Business & Culture : même logique que sport via COMP_MAP
       if(e.cat==='business'||e.cat==='culture'){
