@@ -273,6 +273,9 @@ Avec Capacitor, **pas de réécriture** : l'app web actuelle devient telle quell
 - Communication directe (e-mails de bienvenue, nouveautés) — lien sujet 9.
 - Lien avec les créateurs d'événements (cible pro / monétisation) — lien sujet 7.
 
+**Fait :**
+- ✅ **Tableau de bord d'audience** (2026-06-13) : table `analytics_events` (privée, service_role) ; app instrumentée (inscriptions, connexions, durée de session) ; **suppression de compte** via Edge Function sécurisée `delete-account` + bouton dans le profil (loggue la désinscription) ; tableau de bord **Cowork live** « kalendi-dashboard-audience » (KPIs + graphes, données Supabase en direct). Se remplit avec l'usage. ⚠️ Tracking usage + suppression compte → cadrer la politique de confidentialité/consentement (RGPD, sujet 6).
+
 **À faire :**
 - [ ] Choisir le(s) canal(aux) de contact et support.
 - [ ] Mettre en place une boucle de feedback (collecte → tri → suivi).
