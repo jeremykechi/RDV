@@ -112,7 +112,7 @@ Tâches : ✅ Fait · [ ] À faire
 **Point connu :** l'app est bien adaptée au **mobile**, mais la **version desktop n'est pas responsive** (mise en page cassée / non optimisée sur grand écran). À corriger — d'autant que la PWA reste la porte d'entrée web/desktop.
 
 **À faire :**
-- ✅ **Desktop responsive** (2026-06-12) : layout large écran — catégories horizontales en haut, vue Mois en 2 colonnes (calendrier + panneau d'événements scrollable), vue « Jour » retirée. Mobile inchangé (bloc `@media ≥1024px`).
+- ✅ **Desktop responsive** (2026-06-12) : layout large écran — catégories horizontales en haut, vue Mois en 2 colonnes (calendrier + panneau d'événements scrollable), onglet « Jour » masqué sur desktop (conservé sur mobile). Mobile inchangé (bloc `@media ≥1024px`).
 - [ ] Audit UX/UI de l'app actuelle.
 - [ ] Définir une direction artistique cohérente avec la marque KALENDI.
 - [ ] Itérer sur les écrans clés (accueil/calendrier, détail événement, filtres, onboarding).
