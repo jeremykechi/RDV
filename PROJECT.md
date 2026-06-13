@@ -197,7 +197,7 @@ Avec Capacitor, **pas de réécriture** : l'app web actuelle devient telle quell
 **Objectif :** produire toutes les pages/dispositifs indispensables au passage en store.
 
 **À faire :**
-- [ ] Création de compte (parcours + politique).
+- 🟡 Création de compte : flux Supabase Auth (e-mail + mot de passe) construit dans l'app — inscription/connexion/déconnexion, session persistante, synchro favoris+réglages dans `profiles.preferences` (2026-06-13). ⚠️ Confirmation e-mail désactivée pour les tests → à réactiver avant prod (+ politique de confidentialité/CGU). Parcours UX/branding à finaliser.
 - [ ] Mentions légales.
 - [ ] CGV (lié au sujet 7 — Monétisation).
 - [ ] Politique de confidentialité (RGPD).
