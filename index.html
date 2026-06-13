@@ -920,23 +920,45 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
           <div class="sw-pref-row"><button class="sport-comp" data-comp="laliga" onclick="toggleSportComp(this)">🇪🇸 La Liga</button><button class="sport-inall" data-sport="laliga" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
           <div class="sw-pref-row"><button class="sport-comp on" data-comp="cdm" onclick="toggleSportComp(this)">🌍 Coupe du Monde</button><button class="sport-inall on" data-sport="cdm" onclick="toggleSportInAll(this)" title="Dans Tout">✦</button></div>
           <!-- Équipes & nations favorites -->
-          <div style="font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px;padding:8px 8px 4px">Mes équipes ⭐ (marquées sur les events)</div>
-          <div class="sw-fav-chips" id="fav-foot">
+          <div style="font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px;padding:8px 8px 4px">⭐ Mes clubs & nations favoris (par compétition)</div>
+          <div style="font-size:11px;font-weight:700;color:var(--accent);padding:6px 8px 2px">🇫🇷 Ligue 1</div>
+          <div class="sw-fav-chips" id="fav-l1">
             <button class="sw-fav-chip on" data-fav="psg" onclick="toggleFav(this,'foot')">🔵 PSG</button>
             <button class="sw-fav-chip" data-fav="om" onclick="toggleFav(this,'foot')">🔵 OM</button>
             <button class="sw-fav-chip" data-fav="ol" onclick="toggleFav(this,'foot')">🔴 OL</button>
-            <button class="sw-fav-chip" data-fav="monaco" onclick="toggleFav(this,'foot')">⚽ Monaco</button>
-            <button class="sw-fav-chip" data-fav="rennes" onclick="toggleFav(this,'foot')">⚽ Rennes</button>
+            <button class="sw-fav-chip" data-fav="monaco" onclick="toggleFav(this,'foot')">🔴 Monaco</button>
+            <button class="sw-fav-chip" data-fav="rennes" onclick="toggleFav(this,'foot')">🔴 Rennes</button>
             <button class="sw-fav-chip" data-fav="lens" onclick="toggleFav(this,'foot')">🟡 Lens</button>
+            <button class="sw-fav-chip" data-fav="lille" onclick="toggleFav(this,'foot')">🔴 Lille</button>
+            <button class="sw-fav-chip" data-fav="nice" onclick="toggleFav(this,'foot')">🔴 Nice</button>
+            <button class="sw-fav-chip" data-fav="lorient" onclick="toggleFav(this,'foot')">🟠 Lorient</button>
+            <button class="sw-fav-chip" data-fav="parisfc" onclick="toggleFav(this,'foot')">🔵 Paris FC</button>
+            <button class="sw-fav-chip" data-fav="metz" onclick="toggleFav(this,'foot')">🔴 Metz</button>
+            <button class="sw-fav-chip" data-fav="auxerre" onclick="toggleFav(this,'foot')">⚪ Auxerre</button>
+            <button class="sw-fav-chip" data-fav="toulouse-foot" onclick="toggleFav(this,'foot')">🟣 Toulouse</button>
+            <button class="sw-fav-chip" data-fav="strasbourg" onclick="toggleFav(this,'foot')">🔵 Strasbourg</button>
+            <button class="sw-fav-chip" data-fav="angers" onclick="toggleFav(this,'foot')">⚪ Angers</button>
+            <button class="sw-fav-chip" data-fav="brest" onclick="toggleFav(this,'foot')">🔴 Brest</button>
+            <button class="sw-fav-chip" data-fav="nantes" onclick="toggleFav(this,'foot')">🟡 Nantes</button>
+            <button class="sw-fav-chip" data-fav="lehavre" onclick="toggleFav(this,'foot')">🔵 Le Havre</button>
+          </div>
+          <div style="font-size:11px;font-weight:700;color:var(--accent);padding:6px 8px 2px">🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier League</div>
+          <div class="sw-fav-chips" id="fav-pl">
             <button class="sw-fav-chip" data-fav="arsenal" onclick="toggleFav(this,'foot')">🔴 Arsenal</button>
-            <button class="sw-fav-chip on" data-fav="juventus" onclick="toggleFav(this,'foot')">⚫ Juventus</button>
+          </div>
+          <div style="font-size:11px;font-weight:700;color:var(--accent);padding:6px 8px 2px">🇪🇸 Liga</div>
+          <div class="sw-fav-chips" id="fav-liga">
             <button class="sw-fav-chip" data-fav="barca" onclick="toggleFav(this,'foot')">🔵 Barça</button>
             <button class="sw-fav-chip" data-fav="real" onclick="toggleFav(this,'foot')">⚪ Real Madrid</button>
+          </div>
+          <div style="font-size:11px;font-weight:700;color:var(--accent);padding:6px 8px 2px">🇮🇹 Serie A</div>
+          <div class="sw-fav-chips" id="fav-seriea">
+            <button class="sw-fav-chip on" data-fav="juventus" onclick="toggleFav(this,'foot')">⚫ Juventus</button>
+          </div>
+          <div style="font-size:11px;font-weight:700;color:var(--accent);padding:6px 8px 2px">🌍 Coupe du Monde 2026 — Nations</div>
+          <div class="sw-fav-chips" id="fav-cdm">
             <button class="sw-fav-chip on" data-fav="france-foot" onclick="toggleFav(this,'foot')">🇫🇷 France</button>
             <button class="sw-fav-chip on" data-fav="italie-foot" onclick="toggleFav(this,'foot')">🇮🇹 Italie</button>
-          </div>
-          <div style="font-size:10px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px;padding:8px 8px 4px">🌍 Nations — Coupe du Monde 2026</div>
-          <div class="sw-fav-chips" id="fav-cdm">
             <button class="sw-fav-chip" data-fav="cdm-afrsud" onclick="toggleFav(this,'foot')">🇿🇦 Afrique du Sud</button>
             <button class="sw-fav-chip" data-fav="cdm-algerie" onclick="toggleFav(this,'foot')">🇩🇿 Algérie</button>
             <button class="sw-fav-chip" data-fav="cdm-allemagne" onclick="toggleFav(this,'foot')">🇩🇪 Allemagne</button>
@@ -1714,6 +1736,18 @@ const FAV_KEYWORDS={
   'juventus':['juventus','juve'],
   'barca':['barcelone','barcelona','barça','barca'],
   'real':['real madrid'],
+  'lille':['lille','losc'],
+  'nice':['ogc nice'],
+  'lorient':['lorient'],
+  'parisfc':['paris fc'],
+  'metz':['fc metz'],
+  'auxerre':['auxerre'],
+  'toulouse-foot':['toulouse fc'],
+  'strasbourg':['strasbourg'],
+  'angers':['angers'],
+  'brest':['brest','brestois'],
+  'nantes':['fc nantes'],
+  'lehavre':['le havre'],
   // Équipes nationales foot
   'france-foot':['france','français','bleus'],
   'italie-foot':['italie','italy','italia','azzurri'],
