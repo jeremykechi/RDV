@@ -198,9 +198,12 @@ Avec Capacitor, **pas de réécriture** : l'app web actuelle devient telle quell
 
 **À faire :**
 - 🟡 Création de compte : flux Supabase Auth (e-mail + mot de passe) construit dans l'app — inscription/connexion/déconnexion, session persistante, synchro favoris+réglages dans `profiles.preferences` (2026-06-13). ⚠️ Confirmation e-mail désactivée pour les tests → à réactiver avant prod (+ politique de confidentialité/CGU). Parcours UX/branding à finaliser.
-- [ ] Mentions légales.
-- [ ] CGV (lié au sujet 7 — Monétisation).
-- [ ] Politique de confidentialité (RGPD).
+- 🟡 Mentions légales : brouillon (`MENTIONS-LEGALES.md`, 2026-06-13) — éditeur particulier, directeur de publication, hébergeurs (Vercel + Supabase UE), PI. À compléter (adresse ?) + relecture juridique + intégrer dans l'app.
+- 🟡 CGU : brouillon (`CGU.md`, 2026-06-13) — objet, compte, exactitude des infos, contenus utilisateurs (futur), PI, responsabilité, droit français/médiation. Relecture juridique + intégrer dans l'app.
+- ✅ **Pages légales intégrées dans l'app** (2026-06-13) : fenêtre de lecture (Politique de confidentialité, Mentions légales, CGU) accessible depuis Réglages → « Informations légales » ET liens dans l'inscription. **Consentement obligatoire** (case « J'accepte les CGU et la Politique de confidentialité ») requis pour créer un compte.
+- [ ] CGV (conditions de vente) — à faire avec la monétisation (sujet 7).
+- [ ] Consentements natifs (notifications, agenda, accès apps) — à faire avec le build natif/stores (sujet 5).
+- 🟡 Politique de confidentialité (RGPD) : brouillon rédigé (`POLITIQUE-CONFIDENTIALITE.md`, 2026-06-13) — éditeur particulier, données/finalités/durées/droits/sous-traitants (Supabase UE, Vercel). À compléter (adresse postale ?) + relecture juridique + intégrer comme page dans l'app.
 - [ ] Consentement à l'accès aux infos d'autres apps du téléphone.
 - [ ] Consentement aux notifications.
 - [ ] Consentement à la synchronisation avec l'agenda du téléphone.
@@ -275,6 +278,8 @@ Avec Capacitor, **pas de réécriture** : l'app web actuelle devient telle quell
 
 **Fait :**
 - ✅ **Tableau de bord d'audience** (2026-06-13) : table `analytics_events` (privée, service_role) ; app instrumentée (inscriptions, connexions, durée de session) ; **suppression de compte** via Edge Function sécurisée `delete-account` + bouton dans le profil (loggue la désinscription) ; tableau de bord **Cowork live** « kalendi-dashboard-audience » (KPIs + graphes, données Supabase en direct). Se remplit avec l'usage. ⚠️ Tracking usage + suppression compte → cadrer la politique de confidentialité/consentement (RGPD, sujet 6).
+
+- ✅ **Trafic site (Vercel Web Analytics)** (2026-06-13) : script ajouté dans `index.html` → suit TOUS les visiteurs de kalendi.fr (même sans compte) : visiteurs uniques, pages vues, sources, pays. Gratuit (Hobby), cookieless/RGPD-friendly. Stats dans le dashboard Vercel (à activer : projet → onglet Analytics → Enable). Complémentaire du dashboard Cowork (comptes).
 
 **À faire :**
 - [ ] Choisir le(s) canal(aux) de contact et support.
