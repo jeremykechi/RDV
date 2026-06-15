@@ -1526,6 +1526,7 @@ const SRC_MAP=[
   {k:'boxe',s:'boxe'},{k:'kickboxing',s:'kickboxing'},
   {k:'judo',s:'judo'},{k:'muay',s:'muay-thai'},{k:'sumo',s:'sumo'},
   {k:'endurance',s:'endurance'},{k:'classique auto',s:'classique'},
+  {k:'euroligue',s:'euroligue'},{k:'euroleague',s:'euroligue'},{k:'betclic',s:'betclic'},
 ];
 
 // Retourne le sport d'un event (ex: 'foot','tennis','rugby'...)
@@ -1648,6 +1649,9 @@ function filt(){
       if(sp==='auto-moto'){
         // Groupe Auto-moto : F1 + MotoGP + Endurance + Classique
         evts=evts.filter(e=>['f1','motogp','endurance','classique'].includes(getSportOfSrc(e.src)));
+      } else if(sp==='basket'){
+        // Groupe Basket : NBA + Euroligue + Betclic Élite
+        evts=evts.filter(e=>['nba','euroligue','betclic'].includes(getSportOfSrc(e.src)));
       } else {
         evts=evts.filter(e=>getSportOfSrc(e.src)===sp);
       }
@@ -1734,12 +1738,8 @@ const L2_DEFS={
     {id:'foot',label:'⚽ Football',color:'#1D4ED8'},
     {id:'tennis',label:'🎾 Tennis',color:'#C84B00'},
     {id:'rugby',label:'🏉 Rugby',color:'#001E62'},
-    {id:'nba',label:'🏀 NBA',color:'#C8102E'},
+    {id:'basket',label:'🏀 Basket',color:'#C8102E'},
     {id:'auto-moto',label:'🏁 Auto-moto',color:'#0EA5E9'},
-    {id:'f1',label:'🏎️ F1',color:'#E8334A'},
-    {id:'motogp',label:'🏍️ MotoGP',color:'#CC0000'},
-    {id:'endurance',label:'🏁 Endurance',color:'#0EA5E9'},
-    {id:'classique',label:'🏎️ Classique',color:'#D97706'},
     {id:'cyclisme',label:'🚴 Cyclisme',color:'#F97316'},
     {id:'golf',label:'⛳ Golf',color:'#006747'},
     {id:'ufc',label:'🥊 Combat',color:'#E8334A'},
