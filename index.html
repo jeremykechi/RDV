@@ -1526,6 +1526,7 @@ const SRC_MAP=[
   {k:'judo',s:'judo'},{k:'muay',s:'muay-thai'},{k:'sumo',s:'sumo'},
   {k:'endurance',s:'endurance'},{k:'classique auto',s:'classique'},
   {k:'euroligue',s:'euroligue'},{k:'euroleague',s:'euroligue'},{k:'betclic',s:'betclic'},
+  {k:'running',s:'running'},
 ];
 
 // Retourne le sport d'un event (ex: 'foot','tennis','rugby'...)
@@ -1637,7 +1638,7 @@ function filt(){
       return true;
     });
   } else if(cat==='quotidien'){
-    evts=evts.filter(e=>['feries','vacances','meteo','meteo-alerte','scolaire'].includes(e.cat));
+    evts=evts.filter(e=>['feries','vacances','meteo','meteo-alerte','scolaire','fetes'].includes(e.cat));
     // Filtre L2
     if(catL2) evts=evts.filter(e=>e.cat===catL2);
   } else if(cat==='sport'){
@@ -1716,6 +1717,7 @@ const L2_DEFS={
     {id:'vacances',label:'🏖 Vacances',color:'#8B5CF6'},
     {id:'meteo',label:'🌤 Météo',color:'#0EA5E9'},
     {id:'scolaire',label:'🎓 Scolaire & étudiant',color:'#2563EB'},
+    {id:'fetes',label:'🎉 Fêtes & manifestations',color:'#DB2777'},
   ],
   business:[
     {id:'ipo',label:'🚀 IPO',color:'#059669'},
@@ -1740,6 +1742,7 @@ const L2_DEFS={
     {id:'basket',label:'🏀 Basket',color:'#C8102E'},
     {id:'auto-moto',label:'🏁 Auto-moto',color:'#0EA5E9'},
     {id:'cyclisme',label:'🚴 Cyclisme',color:'#F97316'},
+    {id:'running',label:'🏃 Running',color:'#16A34A'},
     {id:'golf',label:'⛳ Golf',color:'#006747'},
     {id:'ufc',label:'🥊 Combat',color:'#E8334A'},
   ],
