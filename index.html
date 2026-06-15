@@ -779,15 +779,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   </div>
   <div class="cats" id="cats-l1">
     <div class="pill on" style="background:#fff;color:#7C6FE0;border-color:#fff" onclick="sCat(this,'all')" id="pill-all">✦ Tout</div>
-    <div class="pill off" onclick="sCat(this,'quotidien')">🏠 Vie quotidienne</div>
-    <div class="pill off" onclick="sCat(this,'sport')">⚽ Sport</div>
-    <div class="pill off" onclick="sCat(this,'culture')">🎭 Culture</div>
-    <div class="pill off" onclick="sCat(this,'business')">📈 Business</div>
-    <div class="pill off" onclick="sCat(this,'tourisme')">🗺 Sorties</div>
-    <div class="pill off" onclick="sCat(this,'mode')">👗 Mode</div>
-    <div class="pill off" onclick="sCat(this,'shopping')">🛍 Shopping</div>
-    <div class="pill off" onclick="sCat(this,'enfants')">👶 Enfants</div>
-    <div class="pill off" onclick="sCat(this,'autour')">📍 Autour de moi</div>
+    <!-- Les pastilles de catégories sont injectées dynamiquement par renderCats() (ordre + visibilité personnalisables) -->
   </div>
   <!-- Pills niveau 2 (sous-catégories) -->
   <div class="cats" id="cats-l2" style="display:none;padding-top:0;padding-bottom:10px"></div>
@@ -930,6 +922,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="legal-box">
         <div class="legal-head"><h3 id="legal-title">Document</h3><button class="auth-close" style="position:static" onclick="closeLegal()">&#10005;</button></div>
         <div class="legal-scroll"><div id="legal-body"></div></div>
+      </div>
+    </div>
+
+    <!-- ══ PERSONNALISER LES CATÉGORIES ══ -->
+    <div class="sw-section">
+      <div class="sw-section-title">🧩 Mes catégories</div>
+      <div class="sw-card" style="padding:6px 10px">
+        <p style="font-size:11px;color:var(--tx2);margin:4px 4px 6px">Réorganise avec ▲▼ et masque les catégories de la barre du haut. « Tout » reste toujours affiché.</p>
+        <div id="cat-perso"></div>
       </div>
     </div>
 
@@ -1761,6 +1762,94 @@ const CAT_COLORS={
   autour:'#06B6D4',
 };
 
+// ── Catégories personnalisables (ordre + visibilité) ──────────────────────────
+// Source de vérité des pastilles L1 (hors « Tout », toujours affichée en premier).
+const CATS=[
+  {id:'quotidien',label:'🏠 Vie quotidienne'},
+  {id:'sport',label:'⚽ Sport'},
+  {id:'culture',label:'🎭 Culture'},
+  {id:'business',label:'📈 Business'},
+  {id:'tourisme',label:'🗺 Sorties'},
+  {id:'mode',label:'👗 Mode'},
+  {id:'shopping',label:'🛍 Shopping'},
+  {id:'enfants',label:'👶 Enfants'},
+  {id:'autour',label:'📍 Autour de moi'},
+];
+let CAT_ORDER=CATS.map(c=>c.id);
+let CAT_HIDDEN=[];
+
+function loadCatPrefs(){
+  try{
+    const s=JSON.parse(localStorage.getItem('kalendi-settings')||'{}');
+    if(Array.isArray(s.catOrder)){
+      const valid=s.catOrder.filter(id=>CATS.some(c=>c.id===id));
+      CATS.forEach(c=>{ if(!valid.includes(c.id)) valid.push(c.id); }); // intègre les nouvelles catégories
+      CAT_ORDER=valid;
+    }
+    if(Array.isArray(s.catHidden)) CAT_HIDDEN=s.catHidden.filter(id=>CATS.some(c=>c.id===id));
+  }catch(e){}
+}
+
+// Affiche les pastilles de catégories selon l'ordre/visibilité de l'utilisateur
+function renderCats(){
+  const bar=document.getElementById('cats-l1'); if(!bar)return;
+  bar.querySelectorAll('.pill').forEach(p=>{ if(p.id!=='pill-all') p.remove(); });
+  CAT_ORDER.forEach(id=>{
+    if(CAT_HIDDEN.includes(id))return;
+    const def=CATS.find(c=>c.id===id); if(!def)return;
+    const d=document.createElement('div');
+    const active=(typeof cat!=='undefined' && cat===id);
+    d.className='pill pill-dyn '+(active?'on':'off');
+    if(active){ const col=CAT_COLORS[id]||'#555'; d.style.background=col; d.style.borderColor=col; }
+    d.textContent=def.label;
+    d.addEventListener('click',function(){ sCat(this,id); });
+    bar.appendChild(d);
+  });
+}
+
+// Liste de réorganisation dans les Réglages
+function renderCatPerso(){
+  const box=document.getElementById('cat-perso'); if(!box)return;
+  box.innerHTML='';
+  CAT_ORDER.forEach((id,idx)=>{
+    const def=CATS.find(c=>c.id===id); if(!def)return;
+    const visible=!CAT_HIDDEN.includes(id);
+    const row=document.createElement('div');
+    row.style.cssText='display:flex;align-items:center;gap:6px;padding:8px 4px;border-bottom:1px solid var(--line,rgba(128,128,128,.15))';
+    const first=idx===0, last=idx===CAT_ORDER.length-1;
+    row.innerHTML=
+      '<span style="flex:1;font-size:13px;'+(visible?'':'opacity:.4')+'">'+def.label+'</span>'+
+      '<button onclick="moveCat(\''+id+'\',-1)" style="background:none;border:none;font-size:15px;cursor:pointer;color:var(--tx2);'+(first?'opacity:.25;pointer-events:none':'')+'">▲</button>'+
+      '<button onclick="moveCat(\''+id+'\',1)" style="background:none;border:none;font-size:15px;cursor:pointer;color:var(--tx2);'+(last?'opacity:.25;pointer-events:none':'')+'">▼</button>'+
+      '<label style="display:inline-flex;align-items:center;cursor:pointer;margin-left:4px"><input type="checkbox" '+(visible?'checked':'')+' onchange="toggleCatVisible(\''+id+'\')"></label>';
+    box.appendChild(row);
+  });
+}
+
+function moveCat(id,dir){
+  const i=CAT_ORDER.indexOf(id); if(i<0)return;
+  const j=i+dir; if(j<0||j>=CAT_ORDER.length)return;
+  [CAT_ORDER[i],CAT_ORDER[j]]=[CAT_ORDER[j],CAT_ORDER[i]];
+  persistCatPrefs(); renderCatPerso(); renderCats();
+}
+
+function toggleCatVisible(id){
+  const i=CAT_HIDDEN.indexOf(id);
+  if(i<0) CAT_HIDDEN.push(id); else CAT_HIDDEN.splice(i,1);
+  // Si on masque la catégorie active, revenir à « Tout »
+  if(typeof cat!=='undefined' && cat===id && CAT_HIDDEN.includes(id)){
+    const pa=document.getElementById('pill-all'); if(pa) sCat(pa,'all');
+  }
+  persistCatPrefs(); renderCatPerso(); renderCats();
+}
+
+function persistCatPrefs(){
+  let s={}; try{ s=JSON.parse(localStorage.getItem('kalendi-settings')||'{}'); }catch(e){ s={}; }
+  s.v=2; s.catOrder=[...CAT_ORDER]; s.catHidden=[...CAT_HIDDEN];
+  localStorage.setItem('kalendi-settings',JSON.stringify(s));
+  if(typeof syncSettingsToProfile==='function') syncSettingsToProfile();
+}
+
 function sCat(el,c){
   cat=c; catL2='';
   // Reset toutes les pills L1
@@ -2522,6 +2611,7 @@ function openSettings(){
     }catch(e){ localStorage.removeItem('kalendi-settings'); }
   }
   loadSettings();
+  renderCatPerso();
   // Toujours rouvrir les réglages tout en haut
   const sc=document.querySelector('#sw .sw-scr');
   if(sc) sc.scrollTop=0;
@@ -2635,6 +2725,7 @@ function saveSettings(){
     ville:document.querySelector('#sw-villes .sw-chip.on')?.dataset?.pref||'paris',
     // Zone scolaire
     zone:localStorage.getItem('kalendi-zone')||'B',
+    catOrder:[...CAT_ORDER], catHidden:[...CAT_HIDDEN],
     v:2 // version du format
   };
   localStorage.setItem('kalendi-settings', JSON.stringify(state));
@@ -2655,11 +2746,13 @@ function autoSave(){
     favs:[...document.querySelectorAll('.sw-fav-chip.on')].map(b=>b.dataset.fav),
     ville:document.querySelector('#sw-villes .sw-chip.on')?.dataset?.pref||'paris',
     zone:localStorage.getItem('kalendi-zone')||'B',
+    catOrder:[...CAT_ORDER], catHidden:[...CAT_HIDDEN],
     v:2
   };
   localStorage.setItem('kalendi-settings', JSON.stringify(state));
 }
 function loadSettings(){
+  loadCatPrefs(); renderCats();
   const raw=localStorage.getItem('kalendi-settings');
   if(!raw)return;
   const s=JSON.parse(raw);
@@ -3415,6 +3508,7 @@ function buildSettingsState(){
     sportInAll:[...document.querySelectorAll('.sport-inall.on')].map(b=>b.dataset.sport),
     favs:[...document.querySelectorAll('.sw-fav-chip.on')].map(b=>b.dataset.fav),
     ville:document.querySelector('#sw-villes .sw-chip.on')?.dataset?.pref||'paris',
+    catOrder:[...CAT_ORDER], catHidden:[...CAT_HIDDEN],
     zone:localStorage.getItem('kalendi-zone')||'B', v:2
   };
 }
