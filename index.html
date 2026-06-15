@@ -787,7 +787,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="pill off" onclick="sCat(this,'mode')">👗 Mode</div>
     <div class="pill off" onclick="sCat(this,'shopping')">🛍 Shopping</div>
     <div class="pill off" onclick="sCat(this,'enfants')">👶 Enfants</div>
-    <div class="pill off" onclick="sCat(this,'scolaire')">🎓 Scolaire</div>
     <div class="pill off" onclick="sCat(this,'autour')">📍 Autour de moi</div>
   </div>
   <!-- Pills niveau 2 (sous-catégories) -->
@@ -1638,7 +1637,7 @@ function filt(){
       return true;
     });
   } else if(cat==='quotidien'){
-    evts=evts.filter(e=>['feries','vacances','meteo','meteo-alerte','etudiants'].includes(e.cat));
+    evts=evts.filter(e=>['feries','vacances','meteo','meteo-alerte','scolaire'].includes(e.cat));
     // Filtre L2
     if(catL2) evts=evts.filter(e=>e.cat===catL2);
   } else if(cat==='sport'){
@@ -1716,7 +1715,7 @@ const L2_DEFS={
     {id:'feries',label:'🏛 Jours fériés',color:'#6366F1'},
     {id:'vacances',label:'🏖 Vacances',color:'#8B5CF6'},
     {id:'meteo',label:'🌤 Météo',color:'#0EA5E9'},
-    {id:'etudiants',label:'🎓 Étudiants',color:'#8B5CF6'},
+    {id:'scolaire',label:'🎓 Scolaire & étudiant',color:'#2563EB'},
   ],
   business:[
     {id:'ipo',label:'🚀 IPO',color:'#059669'},
@@ -1756,7 +1755,6 @@ const CAT_COLORS={
   mode:'#DB2777',
   shopping:'#E11D48',
   enfants:'#F97316',
-  scolaire:'#2563EB',
   autour:'#06B6D4',
 };
 
