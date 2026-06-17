@@ -791,6 +791,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   </div>
   <!-- Pills niveau 2 (sous-catégories) -->
   <div class="cats" id="cats-l2" style="display:none;padding-top:0;padding-bottom:10px"></div>
+  <div class="cats" id="cats-l3" style="display:none;padding-top:0;padding-bottom:10px"></div>
   <div class="ptr-indicator" id="ptr">🔄</div>
   <div class="scr" id="main-scr">
     <div class="ch">
@@ -1511,6 +1512,7 @@ function getFavs(){
 
 // Sous-catégorie L2 active (ex: 'foot','tennis','rugby'...)
 let catL2='';
+let catL3='';
 // ── Mapping src → sport ─────────────────────────────────────────────────────
 const SRC_MAP=[
   {k:'f1 ',s:'f1'},{k:'formula',s:'f1'},
@@ -1724,6 +1726,8 @@ function filt(){
   } else {
     evts=evts.filter(e=>e.cat===cat);
   }
+  // Filtre niveau 3 (compétition / sous-sous-catégorie)
+  if(catL3) evts=evts.filter(e=>srcMatchesComp(e.src,catL3));
   return evts;
 }
 
@@ -1804,6 +1808,7 @@ function loadCatPrefs(){
     }
     if(Array.isArray(s.catHidden)) CAT_HIDDEN=s.catHidden.filter(id=>CATS.some(c=>c.id===id));
     if(s.l2Order && typeof s.l2Order==='object' && !Array.isArray(s.l2Order)) L2_ORDER=s.l2Order;
+    if(s.l3Order && typeof s.l3Order==='object' && !Array.isArray(s.l3Order)) L3_ORDER=s.l3Order;
   }catch(e){}
 }
 
@@ -1864,7 +1869,7 @@ function toggleCatChip(id){
 
 function persistCatPrefs(){
   let s={}; try{ s=JSON.parse(localStorage.getItem('kalendi-settings')||'{}'); }catch(e){ s={}; }
-  s.v=2; s.catOrder=[...CAT_ORDER]; s.catHidden=[...CAT_HIDDEN]; s.l2Order={...L2_ORDER};
+  s.v=2; s.catOrder=[...CAT_ORDER]; s.catHidden=[...CAT_HIDDEN]; s.l2Order={...L2_ORDER}; s.l3Order={...L3_ORDER};
   localStorage.setItem('kalendi-settings',JSON.stringify(s));
   if(typeof syncSettingsToProfile==='function') syncSettingsToProfile();
 }
@@ -1934,7 +1939,7 @@ function makeSortable(container, onReorder){
 
 function sCat(el,c){
   if(window.__sortSuppress)return; // clic ignoré juste après un glisser
-  cat=c; catL2='';
+  cat=c; catL2=''; catL3='';
   // Reset toutes les pills L1
   document.querySelectorAll('#cats-l1 .pill').forEach(p=>{
     p.className='pill off';p.style.background='';p.style.borderColor='';
@@ -1942,8 +1947,9 @@ function sCat(el,c){
   el.className='pill on';
   const col=CAT_COLORS[c]||'#555';
   el.style.background=col; el.style.borderColor=col;
-  // Mettre à jour pills L2
+  // Mettre à jour pills L2 + masquer L3
   updateL2Pills(c);
+  updateL3Pills('');
   rAll();
 }
 
@@ -1958,6 +1964,7 @@ function sCatL2(el,sp){
     el.style.background=el.dataset.color;
     el.style.borderColor=el.dataset.color;
   }
+  catL3=''; updateL3Pills(catL2);
   rAll();
 }
 
@@ -1969,6 +1976,68 @@ function updateL2Pills(c){
     `<div class="pill off" data-id="${d.id}" data-color="${d.color}" onclick="sCatL2(this,'${d.id}')">${d.label}</div>`
   ).join('');
   l2.style.display='flex';
+}
+
+// ── Niveau 3 : sous-sous-catégories (compétitions), par sous-catégorie ────────
+const L3_DEFS={
+  foot:[
+    {id:'ldc',label:'🏆 Ligue des Champions',color:'#1D4ED8'},
+    {id:'ligue1',label:'🇫🇷 Ligue 1',color:'#1D4ED8'},
+    {id:'pl',label:'🏴 Premier League',color:'#1D4ED8'},
+    {id:'seriea',label:'🇮🇹 Serie A',color:'#1D4ED8'},
+    {id:'bundesliga',label:'🇩🇪 Bundesliga',color:'#1D4ED8'},
+    {id:'laliga',label:'🇪🇸 La Liga',color:'#1D4ED8'},
+    {id:'cdm',label:'🌍 Coupe du Monde',color:'#1D4ED8'},
+  ],
+  tennis:[
+    {id:'tennis-gs',label:'🏆 Grand Chelems',color:'#C84B00'},
+    {id:'tennis-m1000',label:'⭐ Masters 1000',color:'#C84B00'},
+  ],
+  rugby:[
+    {id:'rugby-6n',label:'🏆 6 Nations',color:'#001E62'},
+    {id:'rugby-cc',label:'🏆 Champions Cup',color:'#001E62'},
+    {id:'rugby-t14',label:'🇫🇷 Top 14',color:'#001E62'},
+    {id:'rugby-nc',label:'🌍 Nations Championship',color:'#001E62'},
+  ],
+  cyclisme:[
+    {id:'cyclisme-tdf',label:'🇫🇷 Tour de France',color:'#F97316'},
+    {id:'cyclisme-giro',label:'🇮🇹 Giro',color:'#F97316'},
+    {id:'cyclisme-vuelta',label:'🇪🇸 Vuelta',color:'#F97316'},
+  ],
+  golf:[
+    {id:'golf-gs',label:'🏆 Grands Chelems',color:'#006747'},
+    {id:'golf-solheim',label:'👩 Solheim Cup',color:'#006747'},
+  ],
+};
+let L3_ORDER={}; // ordre personnalisé des compétitions, par sous-catégorie
+
+function orderedL3(l2id){
+  const defs=L3_DEFS[l2id]||[];
+  const ord=L3_ORDER[l2id];
+  if(!Array.isArray(ord)||!ord.length) return defs;
+  const map={}; defs.forEach(d=>map[d.id]=d);
+  const out=[];
+  ord.forEach(id=>{ if(map[id]){ out.push(map[id]); delete map[id]; } });
+  defs.forEach(d=>{ if(map[d.id]) out.push(d); });
+  return out;
+}
+
+function updateL3Pills(l2id){
+  const l3=document.getElementById('cats-l3'); if(!l3)return;
+  const defs=l2id?orderedL3(l2id):[];
+  if(!defs.length){ l3.style.display='none'; l3.innerHTML=''; return; }
+  l3.innerHTML=defs.map(d=>
+    `<div class="pill off" data-id="${d.id}" data-color="${d.color}" onclick="sCatL3(this,'${d.id}')">${d.label}</div>`
+  ).join('');
+  l3.style.display='flex';
+}
+
+function sCatL3(el,comp){
+  if(window.__sortSuppress)return; // clic ignoré juste après un glisser
+  catL3=(catL3===comp)?'':comp; // toggle
+  document.querySelectorAll('#cats-l3 .pill').forEach(p=>{ p.className='pill off'; p.style.background=''; p.style.borderColor=''; });
+  if(catL3){ el.className='pill on'; el.style.background=el.dataset.color; el.style.borderColor=el.dataset.color; }
+  rAll();
 }
 
 
@@ -2809,7 +2878,7 @@ function saveSettings(){
     ville:document.querySelector('#sw-villes .sw-chip.on')?.dataset?.pref||'paris',
     // Zone scolaire
     zone:localStorage.getItem('kalendi-zone')||'B',
-    catOrder:[...CAT_ORDER], catHidden:[...CAT_HIDDEN], l2Order:{...L2_ORDER},
+    catOrder:[...CAT_ORDER], catHidden:[...CAT_HIDDEN], l2Order:{...L2_ORDER}, l3Order:{...L3_ORDER},
     v:2 // version du format
   };
   localStorage.setItem('kalendi-settings', JSON.stringify(state));
@@ -2830,7 +2899,7 @@ function autoSave(){
     favs:[...document.querySelectorAll('.sw-fav-chip.on')].map(b=>b.dataset.fav),
     ville:document.querySelector('#sw-villes .sw-chip.on')?.dataset?.pref||'paris',
     zone:localStorage.getItem('kalendi-zone')||'B',
-    catOrder:[...CAT_ORDER], catHidden:[...CAT_HIDDEN], l2Order:{...L2_ORDER},
+    catOrder:[...CAT_ORDER], catHidden:[...CAT_HIDDEN], l2Order:{...L2_ORDER}, l3Order:{...L3_ORDER},
     v:2
   };
   localStorage.setItem('kalendi-settings', JSON.stringify(state));
@@ -3593,7 +3662,7 @@ function buildSettingsState(){
     sportInAll:[...document.querySelectorAll('.sport-inall.on')].map(b=>b.dataset.sport),
     favs:[...document.querySelectorAll('.sw-fav-chip.on')].map(b=>b.dataset.fav),
     ville:document.querySelector('#sw-villes .sw-chip.on')?.dataset?.pref||'paris',
-    catOrder:[...CAT_ORDER], catHidden:[...CAT_HIDDEN], l2Order:{...L2_ORDER},
+    catOrder:[...CAT_ORDER], catHidden:[...CAT_HIDDEN], l2Order:{...L2_ORDER}, l3Order:{...L3_ORDER},
     zone:localStorage.getItem('kalendi-zone')||'B', v:2
   };
 }
@@ -3625,6 +3694,9 @@ window.addEventListener('load', () => {
   });
   makeSortable(document.getElementById('cats-l2'), ids=>{
     if(typeof cat!=='undefined' && cat && cat!=='all'){ L2_ORDER[cat]=ids; persistCatPrefs(); }
+  });
+  makeSortable(document.getElementById('cats-l3'), ids=>{
+    if(catL2){ L3_ORDER[catL2]=ids; persistCatPrefs(); }
   });
   rAll();
   // Connect to Supabase
