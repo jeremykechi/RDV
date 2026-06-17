@@ -911,7 +911,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="sw-avatar-info" style="flex:1"><h3 id="profile-name">Mon compte</h3><p id="profile-sub">Non connect&#233; &middot; r&#233;glages locaux</p></div>
       <button class="ab" id="auth-btn" onclick="openAuth()" style="flex:0 0 auto;width:auto;padding:8px 14px">Se connecter</button>
     </div>
-    <div id="delete-account-row" style="display:none;padding:2px 20px 0;text-align:right">
+    <div id="delete-account-row" style="display:none;padding:2px 20px 0;justify-content:space-between;align-items:center;gap:10px">
+      <button onclick="editPseudo()" style="background:none;border:none;color:var(--accent);font-size:12px;cursor:pointer;text-decoration:underline;font-family:inherit">Modifier le pseudo</button>
       <button onclick="doDeleteAccount()" style="background:none;border:none;color:#ff6b6b;font-size:12px;cursor:pointer;text-decoration:underline;font-family:inherit">Supprimer mon compte</button>
     </div>
 
@@ -3799,6 +3800,22 @@ async function doAuth(){
 }
 async function doLogout(){ if(supa) await supa.auth.signOut(); }
 
+async function editPseudo(){
+  if(!currentUser||!supa){ if(typeof openAuth==='function') openAuth(); return; }
+  const cur=(currentUser.user_metadata&&currentUser.user_metadata.display_name)||'';
+  const v=prompt('Ton pseudo (affiché publiquement à côté de tes commentaires) :', cur);
+  if(v===null) return;
+  const p=v.trim();
+  if(p.length<2){ alert('Pseudo trop court (2 caractères minimum).'); return; }
+  try{
+    const {data,error}=await supa.auth.updateUser({data:{display_name:p}});
+    if(error) throw error;
+    currentUser=data.user;
+    refreshAuthUI(currentUser);
+    alert('Pseudo mis à jour : '+p);
+  }catch(e){ alert('Erreur : '+(e.message||'mise à jour impossible')); }
+}
+
 // ── Documents légaux (affichés dans l'app) ──
 const LEGAL_DOCS={
  confidentialite:{t:'Politique de confidentialité',h:`<p class="maj">Dernière mise à jour : 13 juin 2026</p>
@@ -3879,7 +3896,7 @@ function refreshAuthUI(user){
     n.textContent='Mon compte'; s.textContent='Non connecté · réglages locaux'; if(a)a.textContent='👤';
     b.textContent='Se connecter'; b.setAttribute('onclick','openAuth()');
   }
-  const dr=document.getElementById('delete-account-row'); if(dr) dr.style.display=user?'block':'none';
+  const dr=document.getElementById('delete-account-row'); if(dr) dr.style.display=user?'flex':'none';
   const ph=document.getElementById('profile-header'); if(ph) ph.classList.toggle('logged', !!user);
 }
 function buildSettingsState(){
