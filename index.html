@@ -919,6 +919,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="auth-box">
         <button class="auth-close" onclick="closeAuth()">&#10005;</button>
         <div class="auth-title" id="auth-title">Connexion</div>
+        <input type="text" id="auth-pseudo" placeholder="Pseudo (affiché publiquement)" maxlength="30" autocomplete="nickname" style="display:none">
         <input type="email" id="auth-email" placeholder="E-mail" autocomplete="email">
         <input type="password" id="auth-pwd" placeholder="Mot de passe" autocomplete="current-password">
         <div class="auth-err" id="auth-err"></div>
@@ -2621,12 +2622,15 @@ async function renderComments(id){
   }
 }
 
+function _displayName(){
+  const u=currentUser;
+  return (u&&u.user_metadata&&u.user_metadata.display_name) || (u&&u.email?u.email.split('@')[0]:'Utilisateur');
+}
 async function postComment(id){
   if(!currentUser||!supa) return;
   const ta=document.getElementById('ev-ctext'); if(!ta)return;
   const body=ta.value.trim(); if(!body)return;
-  const author=(currentUser.email||'').split('@')[0];
-  try{ await supa.from('event_comments').insert({event_id:id,user_id:currentUser.id,author_name:author,body}); }catch(e){ console.log('comment err',e.message); }
+  try{ await supa.from('event_comments').insert({event_id:id,user_id:currentUser.id,author_name:_displayName(),body}); }catch(e){ console.log('comment err',e.message); }
   renderComments(id);
 }
 
@@ -3755,6 +3759,7 @@ function setAuthMode(m){
   document.getElementById('auth-switch-link').textContent=m==='login'?'Créer un compte':'Se connecter';
   const cr=document.getElementById('auth-consent-row'); if(cr) cr.style.display=m==='signup'?'flex':'none';
   const cc=document.getElementById('auth-consent'); if(cc) cc.checked=false;
+  const ps=document.getElementById('auth-pseudo'); if(ps){ ps.style.display=m==='signup'?'':'none'; ps.value=''; }
   _authErr('');
 }
 function _authErr(msg,ok){const e=document.getElementById('auth-err');if(!e)return;e.style.color=ok?'var(--accent)':'#ff6b6b';e.textContent=msg;}
@@ -3770,11 +3775,17 @@ async function doAuth(){
   const email=document.getElementById('auth-email').value.trim();
   const pwd=document.getElementById('auth-pwd').value;
   if(!email||!pwd){_authErr('E-mail et mot de passe requis.');return;}
-  if(authMode==='signup' && !document.getElementById('auth-consent').checked){_authErr('Merci d\'accepter les CGU et la politique de confidentialité.');return;}
+  let pseudo='';
+  if(authMode==='signup'){
+    pseudo=document.getElementById('auth-pseudo').value.trim();
+    if(!pseudo){_authErr('Choisis un pseudo (affiché à côté de tes commentaires).');return;}
+    if(pseudo.length<2){_authErr('Pseudo trop court.');return;}
+    if(!document.getElementById('auth-consent').checked){_authErr('Merci d\'accepter les CGU et la politique de confidentialité.');return;}
+  }
   const btn=document.getElementById('auth-submit');btn.disabled=true;_authErr('');
   try{
     const res=authMode==='signup'
-      ? await supa.auth.signUp({email,password:pwd})
+      ? await supa.auth.signUp({email,password:pwd,options:{data:{display_name:pseudo}}})
       : await supa.auth.signInWithPassword({email,password:pwd});
     if(res.error){_authErr(_tradAuth(res.error.message));btn.disabled=false;return;}
     if(authMode==='signup'&&res.data.user){ logAnalytics('signup',null,res.data.user.id); }
@@ -3862,7 +3873,7 @@ function refreshAuthUI(user){
         b=document.getElementById('auth-btn'),a=document.getElementById('profile-avatar');
   if(!n||!b)return;
   if(user){
-    n.textContent=user.email; s.textContent='Connecté · synchronisé ✓'; if(a)a.textContent='✅';
+    n.textContent=(user.user_metadata&&user.user_metadata.display_name)||user.email; s.textContent='Connecté · synchronisé ✓'; if(a)a.textContent='✅';
     b.textContent='Se déconnecter'; b.setAttribute('onclick','doLogout()');
   }else{
     n.textContent='Mon compte'; s.textContent='Non connecté · réglages locaux'; if(a)a.textContent='👤';
