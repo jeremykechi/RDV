@@ -1877,7 +1877,6 @@ function makeSortable(container, onReorder){
       active=true; item.classList.add('dragging');
       item.style.opacity='.55'; item.style.transform='scale(1.06)';
       try{ container.setPointerCapture(pid); }catch(_){}
-      try{ const sel=window.getSelection&&window.getSelection(); if(sel) sel.removeAllRanges(); }catch(_){}
       if(navigator.vibrate) navigator.vibrate(12);
     }, LONG);
   });
