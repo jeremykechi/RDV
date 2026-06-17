@@ -774,7 +774,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 <div class="mw" id="mw">
   <div class="ah">
-    <div class="logo"><span style="color:#fff">Kalen</span><em style="color:var(--logo-em);font-style:normal">di</em></div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="logo"><span style="color:#fff">Kalen</span><em style="color:var(--logo-em);font-style:normal">di</em></div>
+      <button onclick="openCreate()" title="Créer un événement" style="background:var(--accent);color:#fff;border:none;border-radius:16px;height:30px;padding:0 13px;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:4px;line-height:1;white-space:nowrap">+ Créer</button>
+    </div>
     <div class="hico">
       <button onclick="openThemePanel()" id="theme-btn" style="background:none;border:none;padding:0;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:21px;flex-shrink:0;line-height:1" title="Thème">🎨</button>
       <i class="ti ti-bell" onclick="openNotifs()" style="cursor:pointer"></i>
@@ -828,7 +831,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       </div>
     </div>
   </div>
-  <button id="fab-create" onclick="openCreate()" title="Créer un événement" style="position:absolute;right:18px;bottom:84px;width:52px;height:52px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:30px;line-height:1;box-shadow:0 6px 18px rgba(0,0,0,.28);cursor:pointer;z-index:60;display:flex;align-items:center;justify-content:center">+</button>
   <div class="bnav">
     <div class="bni on"><i class="ti ti-calendar"></i><span>Agenda</span></div>
     <div class="bni" onclick="openMap()"><i class="ti ti-map-pin"></i><span>Carte</span></div>
