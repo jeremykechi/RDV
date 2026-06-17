@@ -948,6 +948,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="sw-card" style="padding:10px">
         <p style="font-size:11px;color:var(--tx2);margin:0 2px 8px">Active ou masque les catégories de la barre du haut. « Tout » reste toujours affichée. (L'ordre se règle directement sur la page d'accueil.)</p>
         <div id="cat-toggles" style="display:flex;flex-wrap:wrap;gap:6px"></div>
+        <button onclick="openSuggest()" class="ab" style="margin-top:12px;width:auto;padding:8px 14px">💡 Suggérer une catégorie</button>
       </div>
     </div>
 
@@ -1473,6 +1474,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="auth-err" id="ce-err"></div>
     <div id="ce-share" style="display:none;font-size:12px;color:var(--tx2);margin-top:10px;word-break:break-all"></div>
     <button class="auth-submit" id="ce-submit" onclick="submitCreate()">Publier</button>
+  </div>
+</div>
+
+<div id="suggest-modal" class="auth-modal-bg" style="display:none">
+  <div class="auth-box" style="max-width:380px">
+    <button class="auth-close" onclick="closeSuggest()">&#10005;</button>
+    <div class="auth-title">Suggérer une catégorie</div>
+    <div style="font-size:12px;color:var(--tx2);margin:4px 0 8px">Propose une catégorie, une sous-catégorie ou une compétition à ajouter à Kalendi.</div>
+    <select id="sg-level" style="width:100%;box-sizing:border-box;padding:10px;border:1px solid var(--bd2,#ccc);border-radius:10px;font-family:inherit;font-size:14px;background:transparent;color:inherit">
+      <option value="categorie">Catégorie (barre du haut)</option>
+      <option value="sous-categorie">Sous-catégorie (2e ligne)</option>
+      <option value="sous-sous-categorie">Sous-sous-catégorie (compétition)</option>
+    </select>
+    <input id="sg-parent" placeholder="Rattachée à… (ex. Sport) — facultatif" maxlength="60" style="width:100%;box-sizing:border-box;margin-top:8px;padding:10px;border:1px solid var(--bd2,#ccc);border-radius:10px;font-family:inherit;font-size:14px;background:transparent;color:inherit">
+    <input id="sg-label" placeholder="Nom proposé *" maxlength="80" style="width:100%;box-sizing:border-box;margin-top:8px;padding:10px;border:1px solid var(--bd2,#ccc);border-radius:10px;font-family:inherit;font-size:14px;background:transparent;color:inherit">
+    <textarea id="sg-note" placeholder="Pourquoi ? (facultatif)" maxlength="1000" style="width:100%;box-sizing:border-box;margin-top:8px;padding:10px;border:1px solid var(--bd2,#ccc);border-radius:10px;font-family:inherit;font-size:14px;background:transparent;color:inherit;min-height:56px;resize:vertical"></textarea>
+    <div class="auth-err" id="sg-err"></div>
+    <button class="auth-submit" id="sg-submit" onclick="submitSuggest()">Envoyer</button>
   </div>
 </div>
 
@@ -2720,6 +2739,28 @@ async function openSharedFromUrl(){
     else { const r=await fetch(`${SUPA_URL}/rest/v1/community_events?select=*&id=eq.${id}`,{headers:{'apikey':SUPA_KEY,'Authorization':`Bearer ${SUPA_KEY}`}}); const d=await r.json(); row=(Array.isArray(d)&&d[0])||null; }
   }catch(e){}
   if(row){ const ev=ceToEvt(row); if(!EVT.find(x=>x.id===ev.id)) EVT.push(ev); openD(ev.id); }
+}
+
+// ── Suggestions de catégories ─────────────────────────────────────────────────
+function openSuggest(){
+  if(!currentUser){ if(typeof openAuth==='function') openAuth(); return; }
+  ['sg-parent','sg-label','sg-note'].forEach(id=>{const el=document.getElementById(id); if(el)el.value='';});
+  const lv=document.getElementById('sg-level'); if(lv)lv.value='categorie';
+  const er=document.getElementById('sg-err'); if(er)er.textContent='';
+  document.getElementById('suggest-modal').style.display='flex';
+}
+function closeSuggest(){ const m=document.getElementById('suggest-modal'); if(m)m.style.display='none'; }
+async function submitSuggest(){
+  const err=document.getElementById('sg-err'); err.textContent='';
+  if(!currentUser||!supa){ err.textContent='Connecte-toi pour suggérer.'; return; }
+  const label=_val('sg-label').trim();
+  if(!label){ err.textContent='Indique le nom proposé.'; return; }
+  const row={ user_id:currentUser.id, level:_val('sg-level')||'categorie', parent:_val('sg-parent').trim()||null, label, note:_val('sg-note').trim()||null };
+  const btn=document.getElementById('sg-submit'); if(btn)btn.disabled=true;
+  try{ const {error}=await supa.from('category_suggestions').insert(row); if(error)throw error; }
+  catch(e){ err.textContent='Erreur : '+(e.message||'envoi impossible'); if(btn)btn.disabled=false; return; }
+  if(btn)btn.disabled=false;
+  closeSuggest(); alert('Merci ! Ta suggestion a bien été envoyée. 🙏');
 }
 
 
