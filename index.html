@@ -950,17 +950,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
           <button class="sw-chip on" style="background:#6366F1;color:#fff" data-cat="feries" onclick="toggleCat(this)">🏛 Jours fériés</button>
           <button class="vq-inall on" data-sub="feries" onclick="toggleVQ(this)" title="Dans Tout">✦</button>
         </div>
-        <div class="sw-cat-row" data-cat="vacances" style="--cc:#8B5CF6">
-          <button class="sw-chip on" style="background:#8B5CF6;color:#fff" data-cat="vacances" onclick="toggleCat(this)">🏫 Vacances scolaires</button>
-          <button class="vq-inall on" data-sub="vacances" onclick="toggleVQ(this)" title="Dans Tout">✦</button>
+        <div class="sw-cat-row" data-cat="education" style="--cc:#2563EB">
+          <button class="sw-chip on" style="background:#2563EB;color:#fff" data-cat="education" onclick="toggleCat(this)">🎓 Éducation</button>
+          <button class="vq-inall on" data-sub="education" onclick="toggleVQ(this)" title="Dans Tout">✦</button>
         </div>
         <div class="sw-cat-row" data-cat="meteo" style="--cc:#0EA5E9">
           <button class="sw-chip on" style="background:#0EA5E9;color:#fff" data-cat="meteo" onclick="toggleCat(this)">🌤 Météo</button>
           <button class="vq-inall on" data-sub="meteo" onclick="toggleVQ(this)" title="Dans Tout">✦</button>
-        </div>
-        <div class="sw-cat-row" data-cat="scolaire" style="--cc:#2563EB">
-          <button class="sw-chip on" style="background:#2563EB;color:#fff" data-cat="scolaire" onclick="toggleCat(this)">🎓 Scolaire & étudiant</button>
-          <button class="vq-inall on" data-sub="scolaire" onclick="toggleVQ(this)" title="Dans Tout">✦</button>
         </div>
         <div class="sw-cat-row" data-cat="fetes" style="--cc:#DB2777">
           <button class="sw-chip on" style="background:#DB2777;color:#fff" data-cat="fetes" onclick="toggleCat(this)">🎉 Fêtes & manifestations</button>
@@ -1635,7 +1631,8 @@ function filt(){
     evts=evts.filter(e=>{
       // Vie quotidienne
       if(['feries','vacances','meteo','meteo-alerte','scolaire','fetes'].includes(e.cat)){
-        return vqPrefs.includes(e.cat);
+        const key=(e.cat==='vacances'||e.cat==='scolaire')?'education':(e.cat==='meteo-alerte'?'meteo':e.cat);
+        return vqPrefs.includes(key);
       }
       // Sport : compétition avec ✦, OU équipe/nation en favori
       // (un favori apparaît dans Tout même si sa compétition n'a pas le ✦ → uniquement ce club/cette nation)
@@ -1656,8 +1653,11 @@ function filt(){
     });
   } else if(cat==='quotidien'){
     evts=evts.filter(e=>['feries','vacances','meteo','meteo-alerte','scolaire','fetes'].includes(e.cat));
-    // Filtre L2
-    if(catL2) evts=evts.filter(e=>e.cat===catL2);
+    // Filtre L2 (Éducation = vacances + scolaire/étudiant regroupés)
+    if(catL2){
+      if(catL2==='education') evts=evts.filter(e=>['vacances','scolaire'].includes(e.cat));
+      else evts=evts.filter(e=>e.cat===catL2);
+    }
   } else if(cat==='sport'){
     evts=evts.filter(e=>e.cat==='sport');
     // Filtre L2 (sous-sport)
@@ -1731,9 +1731,8 @@ function filt(){
 const L2_DEFS={
   quotidien:[
     {id:'feries',label:'🏛 Jours fériés',color:'#6366F1'},
-    {id:'vacances',label:'🏖 Vacances',color:'#8B5CF6'},
+    {id:'education',label:'🎓 Éducation',color:'#2563EB'},
     {id:'meteo',label:'🌤 Météo',color:'#0EA5E9'},
-    {id:'scolaire',label:'🎓 Scolaire & étudiant',color:'#2563EB'},
     {id:'fetes',label:'🎉 Fêtes & manifestations',color:'#DB2777'},
   ],
   business:[
@@ -2715,7 +2714,7 @@ function toggleCat(el){
     if(inall){inall.classList.remove('on');}
   } else {
     el.classList.add('on');
-    const colors={feries:'#6366F1',vacances:'#8B5CF6',meteo:'#0EA5E9',sport:'#1D4ED8',culture:'#7C3AED',business:'#059669',tourisme:'#10B981',mode:'#DB2777',enfants:'#F97316'};
+    const colors={feries:'#6366F1',education:'#2563EB',vacances:'#8B5CF6',meteo:'#0EA5E9',sport:'#1D4ED8',culture:'#7C3AED',business:'#059669',tourisme:'#10B981',mode:'#DB2777',enfants:'#F97316'};
     const cat=el.dataset.cat;
     el.style.background=colors[cat]||'#E8334A';el.style.color='#fff';
   }
