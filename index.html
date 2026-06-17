@@ -925,12 +925,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       </div>
     </div>
 
-    <!-- ══ PERSONNALISER LES CATÉGORIES ══ -->
+    <!-- ══ MES CATÉGORIES (afficher / masquer) ══ -->
     <div class="sw-section">
       <div class="sw-section-title">🧩 Mes catégories</div>
-      <div class="sw-card" style="padding:6px 10px">
-        <p style="font-size:11px;color:var(--tx2);margin:4px 4px 6px">Réorganise avec ▲▼ et masque les catégories de la barre du haut. « Tout » reste toujours affiché.</p>
-        <div id="cat-perso"></div>
+      <div class="sw-card" style="padding:10px">
+        <p style="font-size:11px;color:var(--tx2);margin:0 2px 8px">Active ou masque les catégories de la barre du haut. « Tout » reste toujours affichée. (L'ordre se règle directement sur la page d'accueil.)</p>
+        <div id="cat-toggles" style="display:flex;flex-wrap:wrap;gap:6px"></div>
       </div>
     </div>
 
@@ -949,6 +949,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
         <div class="sw-cat-row" data-cat="meteo" style="--cc:#0EA5E9">
           <button class="sw-chip on" style="background:#0EA5E9;color:#fff" data-cat="meteo" onclick="toggleCat(this)">🌤 Météo</button>
           <button class="vq-inall on" data-sub="meteo" onclick="toggleVQ(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-cat-row" data-cat="scolaire" style="--cc:#2563EB">
+          <button class="sw-chip on" style="background:#2563EB;color:#fff" data-cat="scolaire" onclick="toggleCat(this)">🎓 Scolaire & étudiant</button>
+          <button class="vq-inall on" data-sub="scolaire" onclick="toggleVQ(this)" title="Dans Tout">✦</button>
+        </div>
+        <div class="sw-cat-row" data-cat="fetes" style="--cc:#DB2777">
+          <button class="sw-chip on" style="background:#DB2777;color:#fff" data-cat="fetes" onclick="toggleCat(this)">🎉 Fêtes & manifestations</button>
+          <button class="vq-inall on" data-sub="fetes" onclick="toggleVQ(this)" title="Dans Tout">✦</button>
         </div>
       </div>
     </div>
@@ -1618,7 +1626,7 @@ function filt(){
   if(cat==='all'){
     evts=evts.filter(e=>{
       // Vie quotidienne
-      if(['feries','vacances','meteo','meteo-alerte'].includes(e.cat)){
+      if(['feries','vacances','meteo','meteo-alerte','scolaire','fetes'].includes(e.cat)){
         return vqPrefs.includes(e.cat);
       }
       // Sport : compétition avec ✦, OU équipe/nation en favori
@@ -1777,6 +1785,7 @@ const CATS=[
 ];
 let CAT_ORDER=CATS.map(c=>c.id);
 let CAT_HIDDEN=[];
+let L2_ORDER={}; // ordre personnalisé des sous-catégories, par catégorie
 
 function loadCatPrefs(){
   try{
@@ -1787,7 +1796,20 @@ function loadCatPrefs(){
       CAT_ORDER=valid;
     }
     if(Array.isArray(s.catHidden)) CAT_HIDDEN=s.catHidden.filter(id=>CATS.some(c=>c.id===id));
+    if(s.l2Order && typeof s.l2Order==='object' && !Array.isArray(s.l2Order)) L2_ORDER=s.l2Order;
   }catch(e){}
+}
+
+// Renvoie les sous-catégories d'une catégorie dans l'ordre choisi par l'utilisateur
+function orderedL2(c){
+  const defs=L2_DEFS[c]||[];
+  const ord=L2_ORDER[c];
+  if(!Array.isArray(ord)||!ord.length) return defs;
+  const map={}; defs.forEach(d=>map[d.id]=d);
+  const out=[];
+  ord.forEach(id=>{ if(map[id]){ out.push(map[id]); delete map[id]; } });
+  defs.forEach(d=>{ if(map[d.id]) out.push(d); }); // sous-catégories nouvelles, non encore ordonnées
+  return out;
 }
 
 // Affiche les pastilles de catégories selon l'ordre/visibilité de l'utilisateur
@@ -1800,6 +1822,7 @@ function renderCats(){
     const d=document.createElement('div');
     const active=(typeof cat!=='undefined' && cat===id);
     d.className='pill pill-dyn '+(active?'on':'off');
+    d.dataset.id=id;
     if(active){ const col=CAT_COLORS[id]||'#555'; d.style.background=col; d.style.borderColor=col; }
     d.textContent=def.label;
     d.addEventListener('click',function(){ sCat(this,id); });
@@ -1807,50 +1830,89 @@ function renderCats(){
   });
 }
 
-// Liste de réorganisation dans les Réglages
-function renderCatPerso(){
-  const box=document.getElementById('cat-perso'); if(!box)return;
+// Bascules « afficher / masquer » des catégories dans les Réglages (façon sous-catégories)
+function renderCatToggles(){
+  const box=document.getElementById('cat-toggles'); if(!box)return;
   box.innerHTML='';
-  CAT_ORDER.forEach((id,idx)=>{
-    const def=CATS.find(c=>c.id===id); if(!def)return;
-    const visible=!CAT_HIDDEN.includes(id);
-    const row=document.createElement('div');
-    row.style.cssText='display:flex;align-items:center;gap:6px;padding:8px 4px;border-bottom:1px solid var(--line,rgba(128,128,128,.15))';
-    const first=idx===0, last=idx===CAT_ORDER.length-1;
-    row.innerHTML=
-      '<span style="flex:1;font-size:13px;'+(visible?'':'opacity:.4')+'">'+def.label+'</span>'+
-      '<button onclick="moveCat(\''+id+'\',-1)" style="background:none;border:none;font-size:15px;cursor:pointer;color:var(--tx2);'+(first?'opacity:.25;pointer-events:none':'')+'">▲</button>'+
-      '<button onclick="moveCat(\''+id+'\',1)" style="background:none;border:none;font-size:15px;cursor:pointer;color:var(--tx2);'+(last?'opacity:.25;pointer-events:none':'')+'">▼</button>'+
-      '<label style="display:inline-flex;align-items:center;cursor:pointer;margin-left:4px"><input type="checkbox" '+(visible?'checked':'')+' onchange="toggleCatVisible(\''+id+'\')"></label>';
-    box.appendChild(row);
+  CATS.forEach(def=>{
+    const on=!CAT_HIDDEN.includes(def.id);
+    const b=document.createElement('button');
+    b.className='sw-chip'+(on?' on':'');
+    if(on){ const col=CAT_COLORS[def.id]||'#E8334A'; b.style.background=col; b.style.color='#fff'; }
+    b.textContent=def.label;
+    b.onclick=function(){ toggleCatChip(def.id); };
+    box.appendChild(b);
   });
 }
 
-function moveCat(id,dir){
-  const i=CAT_ORDER.indexOf(id); if(i<0)return;
-  const j=i+dir; if(j<0||j>=CAT_ORDER.length)return;
-  [CAT_ORDER[i],CAT_ORDER[j]]=[CAT_ORDER[j],CAT_ORDER[i]];
-  persistCatPrefs(); renderCatPerso(); renderCats();
-}
-
-function toggleCatVisible(id){
+function toggleCatChip(id){
   const i=CAT_HIDDEN.indexOf(id);
   if(i<0) CAT_HIDDEN.push(id); else CAT_HIDDEN.splice(i,1);
   // Si on masque la catégorie active, revenir à « Tout »
   if(typeof cat!=='undefined' && cat===id && CAT_HIDDEN.includes(id)){
     const pa=document.getElementById('pill-all'); if(pa) sCat(pa,'all');
   }
-  persistCatPrefs(); renderCatPerso(); renderCats();
+  persistCatPrefs(); renderCatToggles(); renderCats();
 }
 
 function persistCatPrefs(){
   let s={}; try{ s=JSON.parse(localStorage.getItem('kalendi-settings')||'{}'); }catch(e){ s={}; }
-  s.v=2; s.catOrder=[...CAT_ORDER]; s.catHidden=[...CAT_HIDDEN];
+  s.v=2; s.catOrder=[...CAT_ORDER]; s.catHidden=[...CAT_HIDDEN]; s.l2Order={...L2_ORDER};
   localStorage.setItem('kalendi-settings',JSON.stringify(s));
   if(typeof syncSettingsToProfile==='function') syncSettingsToProfile();
 }
 
+// ── Réorganisation par appui long + glisser (catégories & sous-catégories) ────
+function makeSortable(container, onReorder){
+  if(!container) return;
+  const LONG=400, CANCEL=8;
+  let timer=null, drag=null, active=false, didMove=false, sx=0, sy=0, pid=null;
+  const items=()=>[...container.children].filter(el=>el.classList&&el.classList.contains('pill')&&el.id!=='pill-all');
+  container.addEventListener('pointerdown', e=>{
+    const item=e.target.closest('.pill');
+    if(!item||item.id==='pill-all'||!container.contains(item))return;
+    drag=item; active=false; didMove=false; sx=e.clientX; sy=e.clientY; pid=e.pointerId;
+    clearTimeout(timer);
+    timer=setTimeout(()=>{
+      active=true; item.classList.add('dragging');
+      item.style.opacity='.55'; item.style.transform='scale(1.06)';
+      try{ container.setPointerCapture(pid); }catch(_){}
+      if(navigator.vibrate) navigator.vibrate(12);
+    }, LONG);
+  });
+  container.addEventListener('pointermove', e=>{
+    if(!drag)return;
+    if(!active){
+      if(Math.abs(e.clientX-sx)>CANCEL||Math.abs(e.clientY-sy)>CANCEL){ clearTimeout(timer); drag=null; }
+      return;
+    }
+    e.preventDefault(); didMove=true;
+    const others=items().filter(el=>el!==drag);
+    let placed=false;
+    for(const el of others){
+      const r=el.getBoundingClientRect();
+      if(e.clientX < r.left + r.width/2){ container.insertBefore(drag, el); placed=true; break; }
+    }
+    if(!placed) container.appendChild(drag);
+  }, {passive:false});
+  const end=()=>{
+    clearTimeout(timer);
+    if(active && drag){
+      drag.style.opacity=''; drag.style.transform=''; drag.classList.remove('dragging');
+      if(didMove){
+        window.__sortSuppress=true; setTimeout(()=>{ window.__sortSuppress=false; }, 350);
+        const ids=items().map(el=>el.dataset.id).filter(Boolean);
+        if(onReorder) onReorder(ids);
+      }
+    }
+    drag=null; active=false; didMove=false;
+  };
+  container.addEventListener('pointerup', end);
+  container.addEventListener('pointercancel', end);
+}
+
 function sCat(el,c){
+  if(window.__sortSuppress)return; // clic ignoré juste après un glisser
   cat=c; catL2='';
   // Reset toutes les pills L1
   document.querySelectorAll('#cats-l1 .pill').forEach(p=>{
@@ -1865,6 +1927,7 @@ function sCat(el,c){
 }
 
 function sCatL2(el,sp){
+  if(window.__sortSuppress)return; // clic ignoré juste après un glisser
   catL2=(catL2===sp)?'':sp; // toggle
   document.querySelectorAll('#cats-l2 .pill').forEach(p=>{
     p.className='pill off';p.style.background='';p.style.borderColor='';
@@ -1879,10 +1942,10 @@ function sCatL2(el,sp){
 
 function updateL2Pills(c){
   const l2=document.getElementById('cats-l2');
-  const defs=L2_DEFS[c]||[];
+  const defs=orderedL2(c);
   if(!defs.length){l2.style.display='none';l2.innerHTML='';return;}
   l2.innerHTML=defs.map(d=>
-    `<div class="pill off" data-color="${d.color}" onclick="sCatL2(this,'${d.id}')">${d.label}</div>`
+    `<div class="pill off" data-id="${d.id}" data-color="${d.color}" onclick="sCatL2(this,'${d.id}')">${d.label}</div>`
   ).join('');
   l2.style.display='flex';
 }
@@ -2611,7 +2674,7 @@ function openSettings(){
     }catch(e){ localStorage.removeItem('kalendi-settings'); }
   }
   loadSettings();
-  renderCatPerso();
+  renderCatToggles();
   // Toujours rouvrir les réglages tout en haut
   const sc=document.querySelector('#sw .sw-scr');
   if(sc) sc.scrollTop=0;
@@ -2725,7 +2788,7 @@ function saveSettings(){
     ville:document.querySelector('#sw-villes .sw-chip.on')?.dataset?.pref||'paris',
     // Zone scolaire
     zone:localStorage.getItem('kalendi-zone')||'B',
-    catOrder:[...CAT_ORDER], catHidden:[...CAT_HIDDEN],
+    catOrder:[...CAT_ORDER], catHidden:[...CAT_HIDDEN], l2Order:{...L2_ORDER},
     v:2 // version du format
   };
   localStorage.setItem('kalendi-settings', JSON.stringify(state));
@@ -2746,7 +2809,7 @@ function autoSave(){
     favs:[...document.querySelectorAll('.sw-fav-chip.on')].map(b=>b.dataset.fav),
     ville:document.querySelector('#sw-villes .sw-chip.on')?.dataset?.pref||'paris',
     zone:localStorage.getItem('kalendi-zone')||'B',
-    catOrder:[...CAT_ORDER], catHidden:[...CAT_HIDDEN],
+    catOrder:[...CAT_ORDER], catHidden:[...CAT_HIDDEN], l2Order:{...L2_ORDER},
     v:2
   };
   localStorage.setItem('kalendi-settings', JSON.stringify(state));
@@ -3508,7 +3571,7 @@ function buildSettingsState(){
     sportInAll:[...document.querySelectorAll('.sport-inall.on')].map(b=>b.dataset.sport),
     favs:[...document.querySelectorAll('.sw-fav-chip.on')].map(b=>b.dataset.fav),
     ville:document.querySelector('#sw-villes .sw-chip.on')?.dataset?.pref||'paris',
-    catOrder:[...CAT_ORDER], catHidden:[...CAT_HIDDEN],
+    catOrder:[...CAT_ORDER], catHidden:[...CAT_HIDDEN], l2Order:{...L2_ORDER},
     zone:localStorage.getItem('kalendi-zone')||'B', v:2
   };
 }
