@@ -1895,6 +1895,8 @@ function makeSortable(container, onReorder){
     }
     if(!placed) container.appendChild(drag);
   }, {passive:false});
+  // Sur mobile : empêcher le défilement de la barre uniquement pendant le glisser
+  container.addEventListener('touchmove', e=>{ if(active) e.preventDefault(); }, {passive:false});
   const end=()=>{
     clearTimeout(timer);
     if(active && drag){
