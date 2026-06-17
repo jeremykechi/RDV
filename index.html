@@ -701,6 +701,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 #cats-l2,#cats-l3{background:var(--cats-bg);padding-top:0}
 #cats-l2 .pill{font-size:11px;padding:5px 11px}
 #cats-l3 .pill{font-size:10px;padding:4px 9px}
+.ce-vis-btn{flex:1;padding:9px 6px;border:1px solid var(--bd2,#ccc);border-radius:10px;background:transparent;color:inherit;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer}
+.ce-vis-btn.on{background:var(--accent);color:#fff;border-color:var(--accent)}
 [data-theme="bloom"] #cats-l2,[data-theme="bloom"] #cats-l3{background:linear-gradient(to right,#7C6FE0,#9B8FF5)}
 
 /* ── Marqueur favori ── */
@@ -826,6 +828,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       </div>
     </div>
   </div>
+  <button id="fab-create" onclick="openCreate()" title="Créer un événement" style="position:absolute;right:18px;bottom:84px;width:52px;height:52px;border-radius:50%;border:none;background:var(--accent);color:#fff;font-size:30px;line-height:1;box-shadow:0 6px 18px rgba(0,0,0,.28);cursor:pointer;z-index:60;display:flex;align-items:center;justify-content:center">+</button>
   <div class="bnav">
     <div class="bni on"><i class="ti ti-calendar"></i><span>Agenda</span></div>
     <div class="bni" onclick="openMap()"><i class="ti ti-map-pin"></i><span>Carte</span></div>
@@ -1444,6 +1447,31 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </div>
 <div class="saved-toast" id="savedToast">&#10003; Pr&#233;f&#233;rences sauvegard&#233;es !</div>
 
+<div id="create-modal" class="auth-modal-bg" style="display:none">
+  <div class="auth-box" style="max-width:400px;max-height:88vh;overflow-y:auto">
+    <button class="auth-close" onclick="closeCreate()">&#10005;</button>
+    <div class="auth-title">Créer un événement</div>
+    <input id="ce-title" placeholder="Titre *" maxlength="140" style="width:100%;box-sizing:border-box;margin-top:8px;padding:10px;border:1px solid var(--bd2,#ccc);border-radius:10px;font-family:inherit;font-size:14px;background:transparent;color:inherit">
+    <textarea id="ce-desc" placeholder="Description" maxlength="4000" style="width:100%;box-sizing:border-box;margin-top:8px;padding:10px;border:1px solid var(--bd2,#ccc);border-radius:10px;font-family:inherit;font-size:14px;background:transparent;color:inherit;min-height:64px;resize:vertical"></textarea>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <input id="ce-date" type="date" style="flex:1;box-sizing:border-box;padding:10px;border:1px solid var(--bd2,#ccc);border-radius:10px;font-family:inherit;font-size:14px;background:transparent;color:inherit">
+      <input id="ce-hour" type="time" style="flex:0 0 116px;box-sizing:border-box;padding:10px;border:1px solid var(--bd2,#ccc);border-radius:10px;font-family:inherit;font-size:14px;background:transparent;color:inherit">
+    </div>
+    <input id="ce-lieu" placeholder="Lieu" style="width:100%;box-sizing:border-box;margin-top:8px;padding:10px;border:1px solid var(--bd2,#ccc);border-radius:10px;font-family:inherit;font-size:14px;background:transparent;color:inherit">
+    <input id="ce-ville" placeholder="Ville" style="width:100%;box-sizing:border-box;margin-top:8px;padding:10px;border:1px solid var(--bd2,#ccc);border-radius:10px;font-family:inherit;font-size:14px;background:transparent;color:inherit">
+    <input id="ce-icon" placeholder="Emoji" maxlength="4" value="📅" style="width:90px;box-sizing:border-box;margin-top:8px;padding:10px;border:1px solid var(--bd2,#ccc);border-radius:10px;font-family:inherit;font-size:14px;background:transparent;color:inherit;text-align:center">
+    <div style="font-size:12px;color:var(--tx2);margin:12px 0 4px">Qui peut voir cet événement ?</div>
+    <div style="display:flex;gap:6px">
+      <button type="button" class="ce-vis-btn on" data-vis="public" onclick="setVis(this)">🌍 Public</button>
+      <button type="button" class="ce-vis-btn" data-vis="semi" onclick="setVis(this)">🔗 Sur lien</button>
+      <button type="button" class="ce-vis-btn" data-vis="private" onclick="setVis(this)">🔒 Privé</button>
+    </div>
+    <div class="auth-err" id="ce-err"></div>
+    <div id="ce-share" style="display:none;font-size:12px;color:var(--tx2);margin-top:10px;word-break:break-all"></div>
+    <button class="auth-submit" id="ce-submit" onclick="submitCreate()">Publier</button>
+  </div>
+</div>
+
 
 <div class="dw" id="dw">
   <div class="sb"><span id="clk2">9:41</span><span><i class="ti ti-wifi" style="font-size:14px;color:#fff"></i></span></div>
@@ -1470,6 +1498,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <button class="ab"><i class="ti ti-bell"></i> Rappel</button>
       <button class="ab pri"><i class="ti ti-external-link"></i> En savoir +</button>
     </div>
+    <div id="ev-actions" style="padding:0 20px;display:flex;flex-direction:column;gap:8px"></div>
     <div class="rel"><div class="relt">Voir aussi</div><div id="rl"></div></div>
     <div class="dsocial" style="padding:4px 20px 28px">
       <div class="relt">⭐ Notes &amp; avis</div>
@@ -1785,6 +1814,7 @@ const CAT_COLORS={
   mode:'#DB2777',
   shopping:'#E11D48',
   enfants:'#F97316',
+  communaute:'#06B6D4',
   autour:'#06B6D4',
 };
 
@@ -1799,6 +1829,7 @@ const CATS=[
   {id:'mode',label:'👗 Mode'},
   {id:'shopping',label:'🛍 Shopping'},
   {id:'enfants',label:'👶 Enfants'},
+  {id:'communaute',label:'👥 Communauté'},
   {id:'autour',label:'📍 Autour de moi'},
 ];
 let CAT_ORDER=CATS.map(c=>c.id);
@@ -2533,6 +2564,7 @@ function openD(id){
     </div>`).join('');
   dw.querySelector('.dscr').scrollTop=0;
   openSocial(id);
+  evActions(e);
 }
 
 // ── Notes & commentaires ──────────────────────────────────────────────────────
@@ -2602,6 +2634,84 @@ async function deleteComment(cid,id){
   if(!supa)return;
   try{ await supa.from('event_comments').delete().eq('id',cid); }catch(e){}
   renderComments(id);
+}
+
+// ── Création & gestion d'événements communautaires (UGC) ──────────────────────
+let _ceVis='public';
+const _BADWORDS=['connard','enculé','enculer','nique ta','sale pute',' pute ','salope','négro','negro','youpin','pédé',' pd ','sale juif','sale arabe','sale noir','heil hitler','sieg heil'];
+function _val(id){ const el=document.getElementById(id); return el?el.value:''; }
+function _looksBad(t){ const s=' '+(t||'').toLowerCase()+' '; return _BADWORDS.some(w=>s.includes(w)); }
+function _copy(t){ try{ navigator.clipboard&&navigator.clipboard.writeText(t); }catch(e){} }
+
+function openCreate(){
+  if(!currentUser){ if(typeof openAuth==='function') openAuth(); return; }
+  _ceVis='public';
+  document.querySelectorAll('.ce-vis-btn').forEach(x=>x.classList.toggle('on', x.dataset.vis==='public'));
+  ['ce-title','ce-desc','ce-date','ce-hour','ce-lieu','ce-ville'].forEach(id=>{const el=document.getElementById(id); if(el)el.value='';});
+  const ic=document.getElementById('ce-icon'); if(ic)ic.value='📅';
+  const er=document.getElementById('ce-err'); if(er)er.textContent='';
+  const sh=document.getElementById('ce-share'); if(sh){sh.style.display='none';sh.innerHTML='';}
+  document.getElementById('create-modal').style.display='flex';
+}
+function closeCreate(){ const m=document.getElementById('create-modal'); if(m)m.style.display='none'; }
+function setVis(b){ _ceVis=b.dataset.vis; document.querySelectorAll('.ce-vis-btn').forEach(x=>x.classList.remove('on')); b.classList.add('on'); }
+
+async function submitCreate(){
+  const err=document.getElementById('ce-err'); err.textContent='';
+  if(!currentUser||!supa){ err.textContent='Connecte-toi pour créer un événement.'; return; }
+  const title=_val('ce-title').trim(), date=_val('ce-date'), desc=_val('ce-desc').trim();
+  if(!title){ err.textContent='Le titre est obligatoire.'; return; }
+  if(!date){ err.textContent='La date est obligatoire.'; return; }
+  if(_looksBad(title+' '+desc)){ err.textContent='Ton texte contient des termes non autorisés.'; return; }
+  const row={ creator_id:currentUser.id, title, description:desc||null, date,
+    hour:_val('ce-hour')||null, lieu:_val('ce-lieu').trim()||null, ville:_val('ce-ville').trim()||null,
+    icon:(_val('ce-icon').trim()||'📅'), visibility:_ceVis, status:'visible' };
+  const btn=document.getElementById('ce-submit'); if(btn)btn.disabled=true;
+  let inserted=null;
+  try{ const {data,error}=await supa.from('community_events').insert(row).select().single(); if(error)throw error; inserted=data; }
+  catch(e){ err.textContent='Erreur : '+(e.message||'création impossible'); if(btn)btn.disabled=false; return; }
+  if(btn)btn.disabled=false;
+  if(_ceVis==='public'){ await loadCommunityFromDB(); rAll(); closeCreate(); alert('Publié ! Ton événement est visible dans Communauté.'); return; }
+  const link=location.origin+location.pathname+'?ev='+inserted.id;
+  const sh=document.getElementById('ce-share'); sh.style.display='block';
+  sh.innerHTML=(_ceVis==='semi'?'🔗 Partage ce lien avec les personnes invitées :':'🔒 Événement privé créé. Ton lien personnel :')+
+    '<div style="margin-top:6px;display:flex;gap:6px"><input readonly value="'+link+'" onclick="this.select()" style="flex:1;min-width:0;padding:8px;border:1px solid var(--bd2,#ccc);border-radius:8px;background:transparent;color:inherit;font-size:11px"><button class="ab" style="width:auto;padding:6px 10px" onclick="_copy(\''+link+'\')">Copier</button></div>';
+}
+
+function evActions(e){
+  const box=document.getElementById('ev-actions'); if(!box)return; box.innerHTML='';
+  if(!e||!e._community) return;
+  let html='';
+  if(currentUser && e._creator===currentUser.id){
+    if(e._visibility!=='public'){ html+='<button class="ab" onclick="_copy(location.origin+location.pathname+\'?ev='+e.id+'\');alert(\'Lien copié.\')">🔗 Copier le lien de partage</button>'; }
+    html+='<button class="ab" style="color:#ff6b6b" onclick="deleteCommunity(\''+e.id+'\')">🗑️ Supprimer mon événement</button>';
+  } else {
+    html+='<button class="ab" onclick="reportEvent(\''+e.id+'\')">🚩 Signaler</button>';
+  }
+  box.innerHTML=html;
+}
+async function deleteCommunity(id){
+  if(!supa||!currentUser) return;
+  if(!confirm('Supprimer définitivement cet événement ?')) return;
+  try{ await supa.from('community_events').delete().eq('id',id); }catch(e){}
+  if(typeof closeD==='function') closeD();
+  await loadCommunityFromDB(); rAll();
+}
+async function reportEvent(id){
+  if(!currentUser){ if(typeof openAuth==='function') openAuth(); return; }
+  if(!supa) return;
+  const reason=prompt('Pourquoi signaler cet événement ? (facultatif)')||'';
+  try{ await supa.from('event_reports').insert({event_id:id,reporter_id:currentUser.id,reason}); alert('Merci, ton signalement a bien été envoyé.'); }
+  catch(e){ alert('Erreur lors du signalement.'); }
+}
+async function openSharedFromUrl(){
+  const m=location.search.match(/[?&]ev=([0-9a-fA-F-]{36})/); if(!m) return;
+  const id=m[1]; let row=null;
+  try{
+    if(supa){ const {data}=await supa.from('community_events').select('*').eq('id',id).maybeSingle(); row=data; }
+    else { const r=await fetch(`${SUPA_URL}/rest/v1/community_events?select=*&id=eq.${id}`,{headers:{'apikey':SUPA_KEY,'Authorization':`Bearer ${SUPA_KEY}`}}); const d=await r.json(); row=(Array.isArray(d)&&d[0])||null; }
+  }catch(e){}
+  if(row){ const ev=ceToEvt(row); if(!EVT.find(x=>x.id===ev.id)) EVT.push(ev); openD(ev.id); }
 }
 
 
@@ -3091,6 +3201,7 @@ async function loadEventsFromDB() {
     await loadCDMFromDB();
     await loadNBAFromDB();
     await loadCyclismeFromDB();
+    await loadCommunityFromDB();
     rAll();
   } catch(e) {
     console.log('❌ DB load error:', e.message);
@@ -3102,8 +3213,36 @@ async function loadEventsFromDB() {
     await loadCDMFromDB();
     await loadNBAFromDB();
     await loadCyclismeFromDB();
+    await loadCommunityFromDB();
     rAll();
   }
+}
+
+// ── Événements communautaires (UGC) ──────────────────────────────────────────
+function ceToEvt(ce){
+  const p=(ce.date||'').split('-');
+  return {
+    id:ce.id, date:ce.date,
+    d:parseInt(p[2],10), m:parseInt(p[1],10)-1, y:parseInt(p[0],10),
+    cat:'communaute', i:ce.icon||'📅', c:'#06B6D4', bg:'#063B4A',
+    t:ce.title, s:'👥 Communauté'+(ce.ville?' · '+ce.ville:''),
+    h:ce.hour||'',
+    dt:(p.length===3?(p[2]+' '+(MO[parseInt(p[1],10)-1]||'')+' '+p[0]):ce.date)+(ce.hour?' · '+ce.hour:''),
+    lieu:ce.lieu||'', v:ce.ville||'', px:ce.prix||'', desc:ce.description||'',
+    res:null, rel:[], src:'Communauté',
+    _community:true, _creator:ce.creator_id, _visibility:ce.visibility
+  };
+}
+async function loadCommunityFromDB(){
+  try{
+    const res=await fetch(`${SUPA_URL}/rest/v1/community_events?select=*&visibility=eq.public&status=eq.visible&order=date.asc`,{
+      headers:{'apikey':SUPA_KEY,'Authorization':`Bearer ${SUPA_KEY}`}});
+    const data=await res.json();
+    for(let i=EVT.length-1;i>=0;i--){ if(EVT[i]._community) EVT.splice(i,1); } // éviter les doublons au rechargement
+    if(!Array.isArray(data)||!data.length) return;
+    EVT.push(...data.map(ceToEvt));
+    console.log(`✅ ${data.length} événements communautaires chargés`);
+  }catch(e){ console.log('community load err', e.message); }
 }
 
 // Load meteo from Supabase
@@ -3791,6 +3930,7 @@ window.addEventListener('load', () => {
       if(evt==='SIGNED_IN' && u) logAnalytics('login');
     });
   }
+  setTimeout(openSharedFromUrl, 800); // ouvrir un événement partagé par lien (?ev=...)
 });
 
 
