@@ -3596,6 +3596,14 @@ async function loadProfilePrefs(user){
 window.addEventListener('load', () => {
   // Appliquer les préférences avant le premier rendu
   loadSettings();
+  // Réorganisation par appui long + glisser
+  makeSortable(document.getElementById('cats-l1'), ids=>{
+    const hidden=CAT_ORDER.filter(id=>!ids.includes(id));
+    CAT_ORDER=[...ids,...hidden]; persistCatPrefs();
+  });
+  makeSortable(document.getElementById('cats-l2'), ids=>{
+    if(typeof cat!=='undefined' && cat && cat!=='all'){ L2_ORDER[cat]=ids; persistCatPrefs(); }
+  });
   rAll();
   // Connect to Supabase
   if (initSupabase()) {
