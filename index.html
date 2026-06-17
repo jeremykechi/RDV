@@ -301,7 +301,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .hico i{color:var(--sb-tx);font-size:21px;cursor:pointer;transition:color .15s}
 .cats{background:var(--dark);padding:0 16px 13px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
 .cats::-webkit-scrollbar{display:none}
-.pill{padding:6px 13px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;cursor:pointer;border:1.5px solid transparent;transition:all .2s;display:flex;align-items:center;gap:5px}
+.pill{padding:6px 13px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;cursor:pointer;border:1.5px solid transparent;transition:all .2s;display:flex;align-items:center;gap:5px;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 .pill.on{color:#fff}
 .pill.off{background:var(--pill-off-bg);color:var(--pill-off-tx);border-color:transparent}
 .mw{display:flex;flex-direction:column;flex:1;overflow:hidden;min-height:0;position:relative}
@@ -1877,6 +1877,7 @@ function makeSortable(container, onReorder){
       active=true; item.classList.add('dragging');
       item.style.opacity='.55'; item.style.transform='scale(1.06)';
       try{ container.setPointerCapture(pid); }catch(_){}
+      try{ const sel=window.getSelection&&window.getSelection(); if(sel) sel.removeAllRanges(); }catch(_){}
       if(navigator.vibrate) navigator.vibrate(12);
     }, LONG);
   });
