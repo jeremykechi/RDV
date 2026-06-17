@@ -2678,7 +2678,8 @@ async function submitCreate(){
   try{ const {data,error}=await supa.from('community_events').insert(row).select().single(); if(error)throw error; inserted=data; }
   catch(e){ err.textContent='Erreur : '+(e.message||'création impossible'); if(btn)btn.disabled=false; return; }
   if(btn)btn.disabled=false;
-  if(_ceVis==='public'){ await loadCommunityFromDB(); rAll(); closeCreate(); alert('Publié ! Ton événement est visible dans Communauté.'); return; }
+  await loadCommunityFromDB(); rAll();
+  if(_ceVis==='public'){ closeCreate(); alert('Publié ! Ton événement est visible dans Communauté.'); return; }
   const link=location.origin+location.pathname+'?ev='+inserted.id;
   const sh=document.getElementById('ce-share'); sh.style.display='block';
   sh.innerHTML=(_ceVis==='semi'?'🔗 Partage ce lien avec les personnes invitées :':'🔒 Événement privé créé. Ton lien personnel :')+
@@ -3232,7 +3233,7 @@ function ceToEvt(ce){
     id:ce.id, date:ce.date,
     d:parseInt(p[2],10), m:parseInt(p[1],10)-1, y:parseInt(p[0],10),
     cat:'communaute', i:ce.icon||'📅', c:'#06B6D4', bg:'#063B4A',
-    t:ce.title, s:'👥 Communauté'+(ce.ville?' · '+ce.ville:''),
+    t:ce.title, s:(ce.visibility==='private'?'🔒 Mon événement privé':ce.visibility==='semi'?'🔗 Partagé sur lien':'👥 Communauté')+(ce.ville?' · '+ce.ville:''),
     h:ce.hour||'',
     dt:(p.length===3?(p[2]+' '+(MO[parseInt(p[1],10)-1]||'')+' '+p[0]):ce.date)+(ce.hour?' · '+ce.hour:''),
     lieu:ce.lieu||'', v:ce.ville||'', px:ce.prix||'', desc:ce.description||'',
@@ -3246,10 +3247,21 @@ async function loadCommunityFromDB(){
       headers:{'apikey':SUPA_KEY,'Authorization':`Bearer ${SUPA_KEY}`}});
     const data=await res.json();
     for(let i=EVT.length-1;i>=0;i--){ if(EVT[i]._community) EVT.splice(i,1); } // éviter les doublons au rechargement
-    if(!Array.isArray(data)||!data.length) return;
-    EVT.push(...data.map(ceToEvt));
-    console.log(`✅ ${data.length} événements communautaires chargés`);
+    if(Array.isArray(data)&&data.length){ EVT.push(...data.map(ceToEvt)); }
+    console.log(`✅ ${(data||[]).length} événements communautaires publics chargés`);
   }catch(e){ console.log('community load err', e.message); }
+  // Mes propres événements (privé/semi/public), visibles de moi seul grâce au RLS
+  if(currentUser) await loadMyEventsFromDB();
+}
+
+async function loadMyEventsFromDB(){
+  if(!supa||!currentUser) return;
+  try{
+    const {data}=await supa.from('community_events').select('*').eq('creator_id',currentUser.id);
+    if(Array.isArray(data)){
+      data.forEach(ce=>{ if(!EVT.find(x=>x.id===ce.id)) EVT.push(ceToEvt(ce)); });
+    }
+  }catch(e){ console.log('my events err', e.message); }
 }
 
 // Load meteo from Supabase
@@ -3952,12 +3964,14 @@ window.addEventListener('load', () => {
       const u=data.session?data.session.user:null;
       refreshAuthUI(u);
       if(u) loadProfilePrefs(u);
+      loadCommunityFromDB().then(()=>rAll());
     });
     supa.auth.onAuthStateChange((evt,session)=>{
       const u=session?session.user:null;
       refreshAuthUI(u);
       if(u) loadProfilePrefs(u);
       if(evt==='SIGNED_IN' && u) logAnalytics('login');
+      loadCommunityFromDB().then(()=>rAll());
     });
   }
   setTimeout(openSharedFromUrl, 800); // ouvrir un événement partagé par lien (?ev=...)
