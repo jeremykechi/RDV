@@ -1632,6 +1632,7 @@ const COMP_MAP={
   'cyclisme-tdf':['tour de france'],
   'cyclisme-giro':['giro'],
   'cyclisme-vuelta':['vuelta'],
+  'cyclisme-classiques':['paris-nice','paris-roubaix','liège-bastogne','liege-bastogne','milan-san','sanremo','tour des flandres','ronde van','flèche wallonne','fleche wallonne','amstel','il lombardia','tour de lombardie','strade bianche','classiques cyclisme','cyclisme classiques'],
   'golf-gs':['masters 20','pga championship','us open golf','the open'],
   'golf-solheim':['solheim'],
   'f1-all':['f1 ','formula'],
@@ -1681,6 +1682,22 @@ function srcMatchesComp(src,comp){
   return patterns.some(p=>s.includes(p));
 }
 
+// Groupes de sous-catégories sport (L2 qui regroupent plusieurs sous-types L3)
+const SPORT_GROUPS={
+  'auto-moto':['f1','motogp','endurance','classique'],
+  'basket':['nba','euroligue','betclic'],
+  'combat':['ufc','pfl','boxe','judo','muay-thai','kickboxing','sumo'],
+};
+// Correspondance d'un événement avec une sous-sous-catégorie (niveau 3)
+function matchesL3(e,id){
+  if(id==='vacances') return e.cat==='vacances';
+  if(id==='scolarite') return e.cat==='scolaire' && /scolaire/i.test(e.src||'');
+  if(id==='etudiants') return e.cat==='scolaire' && /étudiant|etudiant/i.test(e.src||'');
+  const SPORT_TYPES=['nba','euroligue','betclic','f1','motogp','endurance','classique','ufc','pfl','boxe','judo','muay-thai','kickboxing','sumo','foot','tennis','rugby','cyclisme','golf','running'];
+  if(SPORT_TYPES.includes(id)) return getSportOfSrc(e.src)===id;
+  return srcMatchesComp(e.src,id);
+}
+
 // ── Filtrage principal ────────────────────────────────────────────────────────
 function filt(){
   const vqPrefs=getVQPrefs();        // ['feries','vacances','meteo'] avec ✦
@@ -1724,15 +1741,8 @@ function filt(){
     // Filtre L2 (sous-sport)
     if(catL2){
       const sp=catL2; // ex: 'foot','tennis','rugby'...
-      if(sp==='auto-moto'){
-        // Groupe Auto-moto : F1 + MotoGP + Endurance + Classique
-        evts=evts.filter(e=>['f1','motogp','endurance','classique'].includes(getSportOfSrc(e.src)));
-      } else if(sp==='basket'){
-        // Groupe Basket : NBA + Euroligue + Betclic Élite
-        evts=evts.filter(e=>['nba','euroligue','betclic'].includes(getSportOfSrc(e.src)));
-      } else {
-        evts=evts.filter(e=>getSportOfSrc(e.src)===sp);
-      }
+      if(SPORT_GROUPS[sp]) evts=evts.filter(e=>SPORT_GROUPS[sp].includes(getSportOfSrc(e.src)));
+      else evts=evts.filter(e=>getSportOfSrc(e.src)===sp);
     }
     // Filtre compétition
     if(sportComps.length>0){
@@ -1786,7 +1796,7 @@ function filt(){
     evts=evts.filter(e=>e.cat===cat);
   }
   // Filtre niveau 3 (compétition / sous-sous-catégorie)
-  if(catL3) evts=evts.filter(e=>srcMatchesComp(e.src,catL3));
+  if(catL3) evts=evts.filter(e=>matchesL3(e,catL3));
   return evts;
 }
 
@@ -1823,7 +1833,7 @@ const L2_DEFS={
     {id:'cyclisme',label:'🚴 Cyclisme',color:'#F97316'},
     {id:'running',label:'🏃 Running',color:'#16A34A'},
     {id:'golf',label:'⛳ Golf',color:'#006747'},
-    {id:'ufc',label:'🥊 Combat',color:'#E8334A'},
+    {id:'combat',label:'🥊 Combat',color:'#E8334A'},
   ],
 };
 
@@ -2064,10 +2074,33 @@ const L3_DEFS={
     {id:'cyclisme-tdf',label:'🇫🇷 Tour de France',color:'#F97316'},
     {id:'cyclisme-giro',label:'🇮🇹 Giro',color:'#F97316'},
     {id:'cyclisme-vuelta',label:'🇪🇸 Vuelta',color:'#F97316'},
+    {id:'cyclisme-classiques',label:'🚵 Classiques',color:'#F97316'},
   ],
   golf:[
     {id:'golf-gs',label:'🏆 Grands Chelems',color:'#006747'},
     {id:'golf-solheim',label:'👩 Solheim Cup',color:'#006747'},
+  ],
+  basket:[
+    {id:'nba',label:'🏀 NBA',color:'#C8102E'},
+    {id:'betclic',label:'🇫🇷 Betclic Élite',color:'#C8102E'},
+    {id:'euroligue',label:'🇪🇺 EuroLigue',color:'#C8102E'},
+  ],
+  'auto-moto':[
+    {id:'f1',label:'🏎️ F1',color:'#E8334A'},
+    {id:'motogp',label:'🏍️ MotoGP',color:'#CC0000'},
+    {id:'endurance',label:'🏁 Endurance',color:'#0EA5E9'},
+    {id:'classique',label:'🏁 Classique',color:'#D97706'},
+  ],
+  combat:[
+    {id:'ufc',label:'🥋 UFC / MMA',color:'#E8334A'},
+    {id:'pfl',label:'🥊 PFL',color:'#E8334A'},
+    {id:'boxe',label:'🥊 Boxe',color:'#E8334A'},
+    {id:'judo',label:'🥋 Judo',color:'#E8334A'},
+  ],
+  education:[
+    {id:'vacances',label:'🏖 Vacances',color:'#2563EB'},
+    {id:'etudiants',label:'🎓 Vie étudiante',color:'#2563EB'},
+    {id:'scolarite',label:'📚 Scolarité',color:'#2563EB'},
   ],
 };
 let L3_ORDER={}; // ordre personnalisé des compétitions, par sous-catégorie
