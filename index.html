@@ -1471,6 +1471,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <button class="ab pri"><i class="ti ti-external-link"></i> En savoir +</button>
     </div>
     <div class="rel"><div class="relt">Voir aussi</div><div id="rl"></div></div>
+    <div class="dsocial" style="padding:4px 20px 28px">
+      <div class="relt">⭐ Notes &amp; avis</div>
+      <div id="ev-rate" style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:8px 0 2px"></div>
+      <div id="ev-comments" style="margin-top:14px;display:flex;flex-direction:column;gap:10px"></div>
+      <div id="ev-cbox" style="margin-top:12px"></div>
+    </div>
   </div>
 </div>
 </div>
@@ -2526,6 +2532,76 @@ function openD(id){
       <i class="ti ti-chevron-right" style="font-size:14px;color:var(--tx3)"></i>
     </div>`).join('');
   dw.querySelector('.dscr').scrollTop=0;
+  openSocial(id);
+}
+
+// ── Notes & commentaires ──────────────────────────────────────────────────────
+function _esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function openSocial(id){ renderRate(id); renderComments(id); }
+
+async function renderRate(id){
+  const box=document.getElementById('ev-rate'); if(!box)return;
+  let avg=0,cnt=0,mine=0;
+  if(supa){
+    try{
+      const {data}=await supa.from('event_ratings').select('rating,user_id').eq('event_id',id);
+      if(data&&data.length){ cnt=data.length; avg=data.reduce((s,r)=>s+r.rating,0)/cnt; const m=currentUser&&data.find(r=>r.user_id===currentUser.id); mine=m?m.rating:0; }
+    }catch(e){}
+  }
+  const ref=mine||Math.round(avg);
+  let stars='';
+  for(let i=1;i<=5;i++){ stars+=`<span onclick="rateEvent('${id}',${i})" style="cursor:pointer;font-size:24px;line-height:1;color:${i<=ref?'#F5A623':'var(--tx3,#bbb)'}">★</span>`; }
+  box.innerHTML=`<div style="display:flex;gap:3px">${stars}</div>`+
+    `<div style="font-size:12px;color:var(--tx2)">${cnt?(avg.toFixed(1)+' / 5 · '+cnt+' avis'):'Pas encore de note'}${mine?' · ta note : '+mine:''}</div>`+
+    (currentUser?'':'<div style="font-size:11px;color:var(--tx3);flex-basis:100%">Connecte-toi pour noter</div>');
+}
+
+async function rateEvent(id,n){
+  if(!currentUser){ openAuth&&openAuth(); return; }
+  if(!supa)return;
+  try{ await supa.from('event_ratings').upsert({event_id:id,user_id:currentUser.id,rating:n,updated_at:new Date().toISOString()},{onConflict:'event_id,user_id'}); }catch(e){ console.log('rate err',e.message); }
+  renderRate(id);
+}
+
+async function renderComments(id){
+  const list=document.getElementById('ev-comments'), box=document.getElementById('ev-cbox');
+  if(!list||!box)return;
+  let rows=[];
+  if(supa){ try{ const {data}=await supa.from('event_comments').select('*').eq('event_id',id).eq('status','visible').order('created_at',{ascending:false}); rows=data||[]; }catch(e){} }
+  list.innerHTML = rows.length ? rows.map(c=>{
+    const mine=currentUser&&c.user_id===currentUser.id;
+    const d=new Date(c.created_at).toLocaleDateString('fr-FR');
+    return `<div style="background:var(--ec-bg,rgba(128,128,128,.08));border:1px solid var(--ec-bd,rgba(128,128,128,.15));border-radius:12px;padding:10px 12px">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+        <strong style="font-size:12px">${_esc(c.author_name||'Utilisateur')}</strong>
+        <span style="font-size:10px;color:var(--tx3)">${d}</span>
+      </div>
+      <div style="font-size:13px;margin-top:4px;white-space:pre-wrap">${_esc(c.body)}</div>
+      ${mine?`<button onclick="deleteComment('${c.id}','${id}')" style="background:none;border:none;color:#ff6b6b;font-size:11px;cursor:pointer;padding:4px 0 0;font-family:inherit">Supprimer</button>`:''}
+    </div>`;
+  }).join('') : '<div style="font-size:12px;color:var(--tx3)">Aucun commentaire pour le moment.</div>';
+  if(currentUser){
+    box.innerHTML=`<textarea id="ev-ctext" maxlength="2000" placeholder="Partage ton avis…" style="width:100%;box-sizing:border-box;min-height:62px;border:1px solid var(--bd2,#ccc);border-radius:10px;padding:9px;font-family:inherit;font-size:13px;background:transparent;color:inherit;resize:vertical"></textarea>
+      <button onclick="postComment('${id}')" class="ab pri" style="margin-top:6px;width:auto;padding:8px 16px">Publier</button>`;
+  } else {
+    box.innerHTML=`<div style="font-size:12px;color:var(--tx2)">Connecte-toi pour laisser un commentaire. <a onclick="openAuth()" style="cursor:pointer;text-decoration:underline">Se connecter</a></div>`;
+  }
+}
+
+async function postComment(id){
+  if(!currentUser||!supa) return;
+  const ta=document.getElementById('ev-ctext'); if(!ta)return;
+  const body=ta.value.trim(); if(!body)return;
+  const author=(currentUser.email||'').split('@')[0];
+  try{ await supa.from('event_comments').insert({event_id:id,user_id:currentUser.id,author_name:author,body}); }catch(e){ console.log('comment err',e.message); }
+  renderComments(id);
+}
+
+async function deleteComment(cid,id){
+  if(!supa)return;
+  try{ await supa.from('event_comments').delete().eq('id',cid); }catch(e){}
+  renderComments(id);
 }
 
 
