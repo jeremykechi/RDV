@@ -1726,6 +1726,8 @@ function filt(){
           sportInAll.includes(comp) && srcMatchesComp(e.src,comp)
         );
       }
+      // Mes événements : dans « Tout » seulement si je l'ai choisi par événement
+      if(e.cat==='mes-evenements') return !!e._inAll;
       // Autres catégories : afficher si la catégorie est active dans réglages
       return true;
     });
@@ -1848,6 +1850,7 @@ const CAT_COLORS={
   shopping:'#E11D48',
   enfants:'#F97316',
   communaute:'#06B6D4',
+  'mes-evenements':'#0D9488',
   autour:'#06B6D4',
 };
 
@@ -1863,6 +1866,7 @@ const CATS=[
   {id:'shopping',label:'🛍 Shopping'},
   {id:'enfants',label:'👶 Enfants'},
   {id:'communaute',label:'👥 Communauté'},
+  {id:'mes-evenements',label:'👤 Mes événements'},
   {id:'autour',label:'📍 Autour de moi'},
 ];
 let CAT_ORDER=CATS.map(c=>c.id);
@@ -2743,12 +2747,19 @@ function evActions(e){
   if(!e||!e._community) return;
   let html='';
   if(currentUser && e._creator===currentUser.id){
+    html+='<button class="ab" onclick="toggleInAll(\''+e.id+'\','+(e._inAll?'false':'true')+')">'+(e._inAll?'✦ Retirer de « Tout »':'➕ Afficher dans « Tout »')+'</button>';
     if(e._visibility!=='public'){ html+='<button class="ab" onclick="_copy(location.origin+location.pathname+\'?ev='+e.id+'\');alert(\'Lien copié.\')">🔗 Copier le lien de partage</button>'; }
     html+='<button class="ab" style="color:#ff6b6b" onclick="deleteCommunity(\''+e.id+'\')">🗑️ Supprimer mon événement</button>';
   } else {
     html+='<button class="ab" onclick="reportEvent(\''+e.id+'\')">🚩 Signaler</button>';
   }
   box.innerHTML=html;
+}
+async function toggleInAll(id,val){
+  if(!supa||!currentUser) return;
+  try{ await supa.from('community_events').update({in_all:val}).eq('id',id); }catch(e){ console.log('in_all err',e.message); }
+  await loadCommunityFromDB(); rAll();
+  const ev=EVT.find(x=>x.id===id); if(ev) evActions(ev);
 }
 async function deleteCommunity(id){
   if(!supa||!currentUser) return;
@@ -3303,16 +3314,17 @@ async function loadEventsFromDB() {
 // ── Événements communautaires (UGC) ──────────────────────────────────────────
 function ceToEvt(ce){
   const p=(ce.date||'').split('-');
+  const owned = currentUser && ce.creator_id===currentUser.id;
   return {
     id:ce.id, date:ce.date,
     d:parseInt(p[2],10), m:parseInt(p[1],10)-1, y:parseInt(p[0],10),
-    cat:'communaute', i:ce.icon||'📅', c:'#06B6D4', bg:'#063B4A',
-    t:ce.title, s:(ce.visibility==='private'?'🔒 Mon événement privé':ce.visibility==='semi'?'🔗 Partagé sur lien':'👥 Communauté')+(ce.ville?' · '+ce.ville:''),
+    cat: owned?'mes-evenements':'communaute', i:ce.icon||'📅', c:'#06B6D4', bg:'#063B4A',
+    t:ce.title, s:(ce.visibility==='private'?'🔒 Privé':ce.visibility==='semi'?'🔗 Sur lien':'👥 Public')+(ce.ville?' · '+ce.ville:''),
     h:ce.hour||'',
     dt:(p.length===3?(p[2]+' '+(MO[parseInt(p[1],10)-1]||'')+' '+p[0]):ce.date)+(ce.hour?' · '+ce.hour:''),
     lieu:ce.lieu||'', v:ce.ville||'', px:ce.prix||'', desc:ce.description||'',
     res:null, rel:[], src:'Communauté',
-    _community:true, _creator:ce.creator_id, _visibility:ce.visibility
+    _community:true, _creator:ce.creator_id, _visibility:ce.visibility, _inAll:!!ce.in_all
   };
 }
 async function loadCommunityFromDB(){
