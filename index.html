@@ -1965,33 +1965,35 @@ function makeSortable(container, onReorder){
     }
     if(!placed) container.appendChild(drag);
   }
+  function startVisual(){
+    if(!drag)return;
+    drag.classList.add('dragging'); drag.style.opacity='.55'; drag.style.transform='scale(1.06)';
+    try{ container.setPointerCapture(pid); }catch(_){}
+    if(isTouch && navigator.vibrate) navigator.vibrate(12);
+  }
   container.addEventListener('pointerdown', e=>{
     const item=e.target.closest('.pill');
     if(!item||!container.contains(item)){ drag=null; mode=''; return; }
     isTouch=(e.pointerType==='touch');
     sx=e.clientX; sy=e.clientY; lastX=e.clientX; pid=e.pointerId; mode=''; didMove=false;
-    drag=(item.id==='pill-all')?null:item; // « Tout » : non déplaçable (mais le défilement reste géré)
+    drag=(item.id==='pill-all')?null:item; // « Tout » : non déplaçable
     clearTimeout(timer);
-    if(drag){
-      timer=setTimeout(()=>{
-        if(mode) return;            // un défilement a déjà commencé
-        mode='drag';
-        drag.classList.add('dragging'); drag.style.opacity='.55'; drag.style.transform='scale(1.06)';
-        try{ container.setPointerCapture(pid); }catch(_){}
-        if(navigator.vibrate) navigator.vibrate(12);
-      }, LONG);
+    // Tactile : appui long pour saisir. Souris : glisser direct (géré dans pointermove).
+    if(drag && isTouch){
+      timer=setTimeout(()=>{ if(!mode){ mode='drag'; startVisual(); } }, LONG);
     }
   });
   container.addEventListener('pointermove', e=>{
     if(mode==='drag'){ e.preventDefault(); didMove=true; reorderTo(e.clientX); return; }
     if(mode==='scroll'){ container.scrollLeft -= (e.clientX-lastX); lastX=e.clientX; return; }
     const dx=e.clientX-sx, dy=e.clientY-sy;
-    if(Math.abs(dx)<=CANCEL && Math.abs(dy)<=CANCEL) return; // zone morte : on attend l'appui long
-    clearTimeout(timer);
-    if(isTouch && Math.abs(dx)>Math.abs(dy)){
-      mode='scroll'; container.scrollLeft -= dx; lastX=e.clientX; // glissement horizontal court → défilement manuel
-    } else {
-      drag=null; // vertical (scroll de page natif) ou souris desktop
+    if(Math.abs(dx)<=CANCEL && Math.abs(dy)<=CANCEL) return; // zone morte
+    if(isTouch){
+      clearTimeout(timer);
+      if(Math.abs(dx)>Math.abs(dy)){ mode='scroll'; container.scrollLeft -= dx; lastX=e.clientX; } // swipe horizontal → défilement
+      else { drag=null; } // vertical → scroll de page natif
+    } else if(drag){
+      mode='drag'; startVisual(); e.preventDefault(); didMove=true; reorderTo(e.clientX); // souris : glisser immédiat
     }
   }, {passive:false});
   // Bloque le défilement natif tant qu'on glisse ou qu'on défile manuellement
