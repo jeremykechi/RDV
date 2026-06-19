@@ -3784,7 +3784,7 @@ async function loadCyclismeFromDB() {
         desc: `🚴 ${e.course}\n${e.nom}${trajet ? '\n📍 ' + trajet : ''}${km ? '\n📏' + km : ''}`,
         res: e.resultat,
         rel: [],
-        src: 'Cyclisme 2026'
+        src: 'Cyclisme ' + (e.course || '') + ' 2026'
       };
     });
 
