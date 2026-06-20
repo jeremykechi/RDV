@@ -4141,5 +4141,350 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </script>
 
+<!-- ═══════════ ONBOARDING (kob) — module additif, premier lancement ═══════════ -->
+<style>
+#kob-root{position:fixed;inset:0;z-index:1500;background:#f5f5fb;display:none;flex-direction:column;color:#1a1a2e;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}
+#kob-root.kob-on{display:flex}
+#kob-root *{box-sizing:border-box}
+.kob-screen{display:none;flex-direction:column;height:100%}
+.kob-screen.on{display:flex}
+.kob-top{display:flex;align-items:center;gap:10px;padding:16px 18px 4px;flex:0 0 auto}
+.kob-back{border:none;background:none;font-size:22px;color:#aaa;cursor:pointer;padding:2px 6px;line-height:1}
+.kob-prog{flex:1;height:6px;background:#e2e1ee;border-radius:6px;overflow:hidden}
+.kob-prog>i{display:block;height:100%;width:0;background:linear-gradient(90deg,#5b4be6,#7c6cf0);transition:width .35s}
+.kob-phase{font-size:11px;color:#888;font-weight:600;white-space:nowrap}
+.kob-body{flex:1 1 auto;overflow-y:auto;padding:10px 22px 16px;-webkit-overflow-scrolling:touch}
+.kob-body.kob-center{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.kob-foot{flex:0 0 auto;padding:12px 22px calc(14px + env(safe-area-inset-bottom))}
+.kob-h{font-size:23px;font-weight:800;margin:12px 0 6px;line-height:1.2}
+.kob-sub{color:#6b7280;font-size:15px;line-height:1.45;margin:0 0 14px}
+.kob-btn{display:block;width:100%;border:none;border-radius:14px;padding:15px;font-size:16px;font-weight:700;cursor:pointer;text-align:center;font-family:inherit}
+.kob-btn.p{background:linear-gradient(135deg,#5b4be6,#7c6cf0);color:#fff;box-shadow:0 8px 20px rgba(91,75,230,.3)}
+.kob-btn.s{background:#fff;color:#1a1a2e;border:1.5px solid #e5e5ef}
+.kob-btn.g{background:none;color:#5b4be6}
+.kob-btn+.kob-btn{margin-top:8px}
+.kob-logo{font-size:38px;font-weight:800;letter-spacing:1px;background:linear-gradient(135deg,#5b4be6,#7c6cf0);-webkit-background-clip:text;background-clip:text;color:transparent}
+.kob-ic{font-size:58px;margin-bottom:8px}
+.kob-grid{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0}
+.kob-pill{width:calc(33.33% - 7px);border:1.5px solid #e5e5ef;background:#fff;border-radius:14px;padding:12px 4px;text-align:center;cursor:pointer;font-size:12px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:6px;user-select:none}
+.kob-pill .e{font-size:24px}
+.kob-pill.on{border-color:#5b4be6;background:#f0edfd}
+.kob-chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 12px}
+.kob-chip{border:1.5px solid #e5e5ef;background:#fff;border-radius:30px;padding:9px 14px;cursor:pointer;font-size:13px;font-weight:600;user-select:none}
+.kob-chip.on{border-color:#5b4be6;background:#5b4be6;color:#fff}
+.kob-note{font-size:12px;color:#6b7280;background:#fff;border:1px dashed #ddd;border-radius:10px;padding:10px;margin-top:12px;line-height:1.45}
+.kob-sect{font-size:12px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.5px;margin:16px 0 4px}
+.kob-dots{display:flex;gap:7px;justify-content:center;margin-top:16px}
+.kob-dots i{width:8px;height:8px;border-radius:50%;background:#cfcde6}
+.kob-dots i.on{background:#5b4be6;width:22px;border-radius:6px}
+.kob-call{background:#fff;border:1.5px solid #ece9fb;border-left:3px solid #5b4be6;border-radius:12px;padding:11px 13px;margin-bottom:9px}
+.kob-call b{display:flex;gap:8px;align-items:center;font-size:14px;margin-bottom:2px}
+.kob-call span{font-size:12.5px;color:#6b7280}
+.kob-num{background:#5b4be6;color:#fff;width:20px;height:20px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex:0 0 auto}
+.kob-modal{position:fixed;inset:0;background:rgba(20,16,40,.55);z-index:1600;display:none;align-items:flex-end}
+.kob-modal.on{display:flex}
+.kob-sheet{background:#fff;width:100%;border-radius:24px 24px 0 0;padding:24px 22px calc(24px + env(safe-area-inset-bottom));text-align:center}
+@media(min-width:520px){#kob-root .kob-screen,#kob-root .kob-sheet{max-width:480px;margin:0 auto}}
+</style>
+
+<div id="kob-root">
+  <!-- A2 WELCOME -->
+  <section class="kob-screen on" id="kob-welcome">
+    <div class="kob-body kob-center">
+      <div class="kob-ic" id="kob-wel-ic">🗓️</div>
+      <h2 class="kob-h" id="kob-wel-t" style="text-align:center">Tous vos événements au même endroit</h2>
+      <p class="kob-sub" id="kob-wel-s" style="text-align:center">Sport, culture, sorties, dates clés — réunis dans un seul calendrier.</p>
+      <div class="kob-dots"><i class="on" id="kob-d0"></i><i id="kob-d1"></i><i id="kob-d2"></i></div>
+    </div>
+    <div class="kob-foot">
+      <button class="kob-btn p" onclick="kobWelNext()">Suivant</button>
+      <button class="kob-btn g" onclick="kobSkipWelcome()">Passer</button>
+    </div>
+  </section>
+
+  <!-- B1 ENTRY -->
+  <section class="kob-screen" id="kob-entry">
+    <div class="kob-body kob-center">
+      <div class="kob-logo">KALENDI</div>
+      <p class="kob-sub" style="margin-top:12px;text-align:center">Crée ton compte pour une expérience personnalisée, ou explore librement.</p>
+    </div>
+    <div class="kob-foot">
+      <button class="kob-btn p" onclick="kobAccount('signup')">Créer un compte</button>
+      <button class="kob-btn s" onclick="kobAccount('login')">Se connecter</button>
+      <button class="kob-btn g" onclick="kobGuest()">Découvrir sans compte</button>
+      <p class="kob-note" style="text-align:center">Mode invité = lecture seule. Toute personnalisation demande un compte e-mail.</p>
+    </div>
+  </section>
+
+  <!-- D1 VILLE -->
+  <section class="kob-screen" id="kob-pville">
+    <div class="kob-top"><div class="kob-prog"><i></i></div><span class="kob-phase">Perso 1/4</span></div>
+    <div class="kob-body">
+      <h2 class="kob-h">Tu es où&nbsp;?</h2>
+      <p class="kob-sub">Pour la météo locale, les vacances scolaires de ta zone et les sorties près de toi.</p>
+      <div class="kob-chips">
+        <span class="kob-chip on" data-v="paris" onclick="kobVille(this)">Paris</span>
+        <span class="kob-chip" data-v="lyon" onclick="kobVille(this)">Lyon</span>
+        <span class="kob-chip" data-v="marseille" onclick="kobVille(this)">Marseille</span>
+        <span class="kob-chip" data-v="bordeaux" onclick="kobVille(this)">Bordeaux</span>
+        <span class="kob-chip" data-v="nantes" onclick="kobVille(this)">Nantes</span>
+        <span class="kob-chip" data-v="toulouse" onclick="kobVille(this)">Toulouse</span>
+        <span class="kob-chip" data-v="lille" onclick="kobVille(this)">Lille</span>
+        <span class="kob-chip" data-v="nice" onclick="kobVille(this)">Nice</span>
+        <span class="kob-chip" data-v="toute-france" onclick="kobVille(this)">🇫🇷 Toute la France</span>
+      </div>
+      <p class="kob-note">On déduit ta zone de vacances (source education.gouv.fr). Adresse exacte non demandée.</p>
+    </div>
+    <div class="kob-foot"><button class="kob-btn p" onclick="kobShow('kob-pint')">Continuer</button></div>
+  </section>
+
+  <!-- D2 INTÉRÊTS -->
+  <section class="kob-screen" id="kob-pint">
+    <div class="kob-top"><button class="kob-back" onclick="kobShow('kob-pville')">‹</button><div class="kob-prog"><i></i></div><span class="kob-phase">Perso 2/4</span></div>
+    <div class="kob-body">
+      <h2 class="kob-h">Qu'est-ce qui t'intéresse&nbsp;?</h2>
+      <p class="kob-sub">Choisis tes univers. Les autres seront masqués (modifiable à tout moment).</p>
+      <div class="kob-grid">
+        <div class="kob-pill on" data-cat="sport" onclick="kobTog(this)"><span class="e">⚽</span>Sport</div>
+        <div class="kob-pill on" data-cat="culture" onclick="kobTog(this)"><span class="e">🎭</span>Culture</div>
+        <div class="kob-pill" data-cat="quotidien" onclick="kobTog(this)"><span class="e">🏠</span>Quotidien</div>
+        <div class="kob-pill" data-cat="business" onclick="kobTog(this)"><span class="e">📈</span>Business</div>
+        <div class="kob-pill" data-cat="tourisme" onclick="kobTog(this)"><span class="e">🗺️</span>Sorties</div>
+        <div class="kob-pill" data-cat="mode" onclick="kobTog(this)"><span class="e">👗</span>Mode</div>
+        <div class="kob-pill" data-cat="shopping" onclick="kobTog(this)"><span class="e">🛍️</span>Shopping</div>
+        <div class="kob-pill" data-cat="enfants" onclick="kobTog(this)"><span class="e">👶</span>Enfants</div>
+        <div class="kob-pill" data-cat="communaute" onclick="kobTog(this)"><span class="e">👥</span>Communauté</div>
+      </div>
+    </div>
+    <div class="kob-foot"><button class="kob-btn p" onclick="kobShow('kob-pgout')">Continuer</button></div>
+  </section>
+
+  <!-- D3 GOÛTS -->
+  <section class="kob-screen" id="kob-pgout">
+    <div class="kob-top"><button class="kob-back" onclick="kobShow('kob-pint')">‹</button><div class="kob-prog"><i></i></div><span class="kob-phase">Perso 3/4</span></div>
+    <div class="kob-body">
+      <h2 class="kob-h">Compétitions à suivre</h2>
+      <p class="kob-sub">Coche ce que tu veux voir apparaître. Tu pourras tout affiner dans les Réglages.</p>
+      <div class="kob-sect">⚽ Football</div>
+      <div class="kob-chips">
+        <span class="kob-chip on" data-comp="ligue1" onclick="kobTog(this)">🇫🇷 Ligue 1</span>
+        <span class="kob-chip on" data-comp="ldc" onclick="kobTog(this)">🏆 Ligue des Champions</span>
+        <span class="kob-chip on" data-comp="cdm" onclick="kobTog(this)">🌍 Coupe du Monde</span>
+        <span class="kob-chip" data-comp="pl" onclick="kobTog(this)">🏴 Premier League</span>
+        <span class="kob-chip" data-comp="seriea" onclick="kobTog(this)">🇮🇹 Serie A</span>
+        <span class="kob-chip" data-comp="laliga" onclick="kobTog(this)">🇪🇸 La Liga</span>
+        <span class="kob-chip" data-comp="bundesliga" onclick="kobTog(this)">🇩🇪 Bundesliga</span>
+      </div>
+      <p class="kob-note">Les autres sports et univers (culture, sorties…) restent accessibles selon tes choix d'intérêts.</p>
+    </div>
+    <div class="kob-foot"><button class="kob-btn p" onclick="kobShow('kob-pfav')">Continuer</button></div>
+  </section>
+
+  <!-- D4 FAVORIS -->
+  <section class="kob-screen" id="kob-pfav">
+    <div class="kob-top"><button class="kob-back" onclick="kobShow('kob-pgout')">‹</button><div class="kob-prog"><i></i></div><span class="kob-phase">Perso 4/4</span></div>
+    <div class="kob-body">
+      <h2 class="kob-h">Tes équipes & pays favoris</h2>
+      <p class="kob-sub">Un favori remonte dans « Tout », même hors de sa compétition.</p>
+      <div class="kob-sect">Clubs</div>
+      <div class="kob-chips">
+        <span class="kob-chip" data-fav="psg" onclick="kobTog(this)">🔵 PSG</span>
+        <span class="kob-chip" data-fav="om" onclick="kobTog(this)">🔵 OM</span>
+        <span class="kob-chip" data-fav="ol" onclick="kobTog(this)">🔴 OL</span>
+        <span class="kob-chip" data-fav="monaco" onclick="kobTog(this)">🔴 Monaco</span>
+        <span class="kob-chip" data-fav="lille" onclick="kobTog(this)">🔴 Lille</span>
+        <span class="kob-chip" data-fav="lens" onclick="kobTog(this)">🟡 Lens</span>
+        <span class="kob-chip" data-fav="rennes" onclick="kobTog(this)">🔴 Rennes</span>
+        <span class="kob-chip" data-fav="nice" onclick="kobTog(this)">🔴 Nice</span>
+        <span class="kob-chip" data-fav="real" onclick="kobTog(this)">⚪ Real Madrid</span>
+        <span class="kob-chip" data-fav="barca" onclick="kobTog(this)">🔵 Barça</span>
+        <span class="kob-chip" data-fav="juventus" onclick="kobTog(this)">⚫ Juventus</span>
+        <span class="kob-chip" data-fav="arsenal" onclick="kobTog(this)">🔴 Arsenal</span>
+      </div>
+      <div class="kob-sect">Sélections nationales</div>
+      <div class="kob-chips">
+        <span class="kob-chip" data-fav="france-foot" onclick="kobTog(this)">🇫🇷 France</span>
+        <span class="kob-chip" data-fav="italie-foot" onclick="kobTog(this)">🇮🇹 Italie</span>
+      </div>
+    </div>
+    <div class="kob-foot"><button class="kob-btn p" onclick="kobShow('kob-recap')">Continuer</button></div>
+  </section>
+
+  <!-- D5 RÉCAP -->
+  <section class="kob-screen" id="kob-recap">
+    <div class="kob-top"><button class="kob-back" onclick="kobShow('kob-pfav')">‹</button><div class="kob-prog"><i></i></div><span class="kob-phase">Récap</span></div>
+    <div class="kob-body kob-center">
+      <div class="kob-ic">🎉</div>
+      <h2 class="kob-h" style="text-align:center">On y est presque&nbsp;!</h2>
+      <p class="kob-sub" style="text-align:center">On enregistre tes préférences. Tout reste modifiable dans les Réglages.</p>
+    </div>
+    <div class="kob-foot"><button class="kob-btn p" onclick="kobToTuto()">C'est parti&nbsp;!</button></div>
+  </section>
+
+  <!-- E1 TUTO -->
+  <section class="kob-screen" id="kob-tuto">
+    <div class="kob-top"><div class="kob-prog"><i></i></div><span class="kob-phase">Prise en main</span></div>
+    <div class="kob-body">
+      <h2 class="kob-h">Comment ça marche</h2>
+      <p class="kob-sub">Un tour rapide (rejouable depuis l'aide).</p>
+      <div class="kob-call"><b><span class="kob-num">1</span> Navigation</b><span>Barre de catégories en haut, vue Mois (et Jour sur mobile).</span></div>
+      <div class="kob-call"><b><span class="kob-num">2</span> Un événement</b><span>Ouvre le détail : date, lieu, météo, résultat, description, source.</span></div>
+      <div class="kob-call"><b><span class="kob-num">3</span> Favoris ★</b><span>Marque un événement ou une équipe — il remonte dans « Tout ».</span></div>
+      <div class="kob-call"><b><span class="kob-num">4</span> Préférences</b><span>Affiche/masque et réordonne par glisser-déposer.</span></div>
+      <div class="kob-call"><b><span class="kob-num">5</span> Communauté</b><span>Crée ton propre événement (privé / public / lien privé).</span></div>
+    </div>
+    <div class="kob-foot"><button class="kob-btn p" onclick="kobComplete()">Voir mon accueil</button></div>
+  </section>
+
+  <!-- Mur de compte (invité) -->
+  <div class="kob-modal" id="kob-wall">
+    <div class="kob-sheet">
+      <div class="kob-ic" style="font-size:46px">🔒</div>
+      <h2 class="kob-h" style="margin-top:0">Crée ton compte</h2>
+      <p class="kob-sub">La personnalisation (favoris, réglages…) demande un compte avec e-mail. L'exploration reste libre.</p>
+      <button class="kob-btn p" onclick="kobWallAccount('signup')">Créer mon compte</button>
+      <button class="kob-btn g" onclick="kobCloseWall()">Continuer à explorer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* KALENDI onboarding (kob) — module additif, réutilise auth + persistance existantes */
+(function(){
+  var KOB = { cur:'kob-welcome', wi:0, flow:false,
+    ZONE:{paris:'C',lyon:'A',marseille:'B',bordeaux:'A',nantes:'B',toulouse:'C',lille:'B',nice:'B','toute-france':'ABC'},
+    WEL:[
+      {e:'🗓️',t:'Tous vos événements au même endroit',s:'Sport, culture, sorties, dates clés — réunis dans un seul calendrier.'},
+      {e:'🎯',t:'Personnalisé pour vous',s:'Vos équipes, vos goûts, votre ville. Des suggestions vraiment pertinentes.'},
+      {e:'🔔',t:'Jamais une date manquée',s:'Favoris et rappels pour ne rien laisser passer.'}
+    ],
+    PROG:{'kob-pville':60,'kob-pint':70,'kob-pgout':80,'kob-pfav':88,'kob-recap':94,'kob-tuto':99}
+  };
+  window.KOB = KOB;
+
+  function el(id){ return document.getElementById(id); }
+  function kobOpen(){ var r=el('kob-root'); if(r) r.classList.add('kob-on'); }
+  function kobHide(){ var r=el('kob-root'); if(r) r.classList.remove('kob-on'); }
+  function kobVisible(){ var r=el('kob-root'); return r && r.classList.contains('kob-on'); }
+  function kobShow(id){
+    var list=document.querySelectorAll('#kob-root .kob-screen');
+    for(var i=0;i<list.length;i++) list[i].classList.remove('on');
+    var s=el(id); if(s) s.classList.add('on');
+    KOB.cur=id;
+    var bar=document.querySelector('#'+id+' .kob-prog > i');
+    if(bar && KOB.PROG[id]!==undefined) bar.style.width=KOB.PROG[id]+'%';
+    var b=document.querySelector('#'+id+' .kob-body'); if(b) b.scrollTop=0;
+  }
+  window.kobShow=kobShow;
+
+  function kobWelNext(){
+    KOB.wi++;
+    if(KOB.wi>=KOB.WEL.length){ KOB.wi=0; kobShow('kob-entry'); return; }
+    var w=KOB.WEL[KOB.wi];
+    el('kob-wel-ic').textContent=w.e; el('kob-wel-t').textContent=w.t; el('kob-wel-s').textContent=w.s;
+    for(var k=0;k<3;k++){ var d=el('kob-d'+k); if(d) d.className=(k===KOB.wi?'on':''); }
+  }
+  window.kobWelNext=kobWelNext;
+  window.kobSkipWelcome=function(){ kobShow('kob-entry'); };
+
+  window.kobTog=function(elm){ elm.classList.toggle('on'); };
+  window.kobVille=function(elm){
+    var sib=elm.parentNode.querySelectorAll('.kob-chip');
+    for(var i=0;i<sib.length;i++) sib[i].classList.remove('on');
+    elm.classList.add('on');
+  };
+
+  function kobAccount(mode){
+    KOB.flow=true;
+    if(typeof window.openAuth==='function') window.openAuth();
+    if(typeof window.setAuthMode==='function') try{ window.setAuthMode(mode); }catch(e){}
+  }
+  window.kobAccount=kobAccount;
+  window.kobGuest=function(){
+    try{ localStorage.setItem('kalendi-guest','1'); localStorage.setItem('kalendi-onboarded','1'); }catch(e){}
+    kobHide();
+  };
+
+  function kobFinish(){
+    var base={}; try{ base=JSON.parse(localStorage.getItem('kalendi-settings')||'{}'); }catch(e){ base={}; }
+    if(base.v!==2) base={};
+    var vEl=document.querySelector('#kob-pville .kob-chip.on');
+    var ville=vEl?vEl.getAttribute('data-v'):'paris';
+    var zone=KOB.ZONE[ville]||'B';
+    var interests=[].map.call(document.querySelectorAll('#kob-pint .kob-pill.on'),function(b){return b.getAttribute('data-cat');});
+    var comps=[].map.call(document.querySelectorAll('#kob-pgout .kob-chip.on'),function(b){return b.getAttribute('data-comp');});
+    var favs=[].map.call(document.querySelectorAll('#kob-pfav .kob-chip.on'),function(b){return b.getAttribute('data-fav');});
+    var allOpt=['sport','culture','quotidien','business','tourisme','mode','shopping','enfants','communaute'];
+    var chosen=interests.length?interests:allOpt;
+    var catHidden=allOpt.filter(function(id){ return chosen.indexOf(id)<0; });
+    var state=Object.assign({},base,{
+      v:2, ville:ville, zone:zone, catHidden:catHidden,
+      sportComps: comps.length?comps:(base.sportComps||[]),
+      sportInAll: comps.length?comps:(base.sportInAll||[]),
+      favs: favs.length?favs:(base.favs||[])
+    });
+    if(typeof CAT_ORDER!=='undefined' && !state.catOrder){ state.catOrder=[].concat(CAT_ORDER); }
+    try{ localStorage.setItem('kalendi-settings',JSON.stringify(state)); localStorage.setItem('kalendi-zone',zone); }catch(e){}
+    try{ if(typeof window.loadSettings==='function') window.loadSettings(); }catch(e){}
+    try{ if(typeof window.syncSettingsToProfile==='function') window.syncSettingsToProfile(); }catch(e){}
+    try{ if(typeof window.rAll==='function') window.rAll(); }catch(e){}
+  }
+  window.kobFinish=kobFinish;
+  window.kobToTuto=function(){ kobFinish(); kobShow('kob-tuto'); };
+  window.kobComplete=function(){
+    try{ localStorage.setItem('kalendi-onboarded','1'); localStorage.removeItem('kalendi-guest'); }catch(e){}
+    kobHide();
+    try{ if(typeof window.rAll==='function') window.rAll(); }catch(e){}
+  };
+
+  function kobGuestMode(){
+    var logged = (typeof currentUser!=='undefined' && currentUser);
+    var g=false; try{ g=localStorage.getItem('kalendi-guest')==='1'; }catch(e){}
+    return g && !logged;
+  }
+  window.kobWall=function(){ var m=el('kob-wall'); if(m) m.classList.add('on'); };
+  window.kobCloseWall=function(){ var m=el('kob-wall'); if(m) m.classList.remove('on'); };
+  window.kobWallAccount=function(mode){ window.kobCloseWall(); kobAccount(mode); };
+
+  function kobGate(){
+    var done, has;
+    try{ done=localStorage.getItem('kalendi-onboarded'); has=localStorage.getItem('kalendi-settings'); }catch(e){ return; }
+    if(done || has) return;
+    kobShow('kob-welcome'); kobOpen();
+  }
+
+  function kobAuthHook(){
+    if(typeof supa==='undefined' || !supa){ setTimeout(kobAuthHook,400); return; }
+    try{
+      supa.auth.onAuthStateChange(function(evt,session){
+        var u=session?session.user:null;
+        if(!u) return;
+        if(KOB.flow){ KOB.flow=false; kobShow('kob-pville'); kobOpen(); }
+        else if(kobVisible() && (KOB.cur==='kob-welcome'||KOB.cur==='kob-entry')){
+          try{ localStorage.setItem('kalendi-onboarded','1'); }catch(e){}
+          kobHide();
+        }
+      });
+    }catch(e){}
+  }
+
+  function kobPatchGuards(){
+    var names=['toggleFav','toggleSportComp','toggleSportInAll','toggleVille','toggleChip','togglePrefInAll','setZone','toggleVqInAll'];
+    names.forEach(function(name){
+      var orig=window[name];
+      if(typeof orig!=='function') return;
+      window[name]=function(){
+        if(kobGuestMode()){ window.kobWall(); return; }
+        return orig.apply(this,arguments);
+      };
+    });
+  }
+
+  window.addEventListener('load', function(){
+    setTimeout(function(){ kobPatchGuards(); kobAuthHook(); kobGate(); }, 600);
+  });
+})();
+</script>
+
 </body>
 </html>
