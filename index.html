@@ -3667,6 +3667,11 @@ async function loadCDMFromDB() {
     const cdmEvents = data.map(m => {
       const isFrance = m.equipe1 === 'France' || m.equipe2 === 'France';
       const chaine = m.chaine;
+      const isGroup = /^[A-L]$/.test((m.groupe || '').trim()); // groupes = lettre unique ; sinon = tour à élimination directe
+      const tbd = m.equipe1 === 'À déterminer' || m.equipe2 === 'À déterminer';
+      const roundLabel = isGroup ? `Groupe ${m.groupe}` : m.groupe;
+      const title = tbd ? m.groupe : `${m.equipe1} - ${m.equipe2}`;
+      const matchup = tbd ? 'Équipes à déterminer' : `${m.equipe1} vs ${m.equipe2}`;
       return {
         id: `cdm-${m.id}`,
         date: m.date_match,
@@ -3674,17 +3679,17 @@ async function loadCDMFromDB() {
         m: parseInt(m.date_match.split('-')[1], 10) - 1,
         y: parseInt(m.date_match.split('-')[0], 10),
         cat: 'sport',
-        i: isFrance ? '🇫🇷' : '⚽',
+        i: isFrance ? '🇫🇷' : (isGroup ? '⚽' : '🏆'),
         c: '#fff',
         bg: 'transparent',
-        t: `${m.equipe1} - ${m.equipe2}`,
-        s: `Groupe ${m.groupe} · ${chaine}`,
+        t: title,
+        s: `${roundLabel} · ${chaine}`,
         h: m.heure_match,
         dt: m.date_match,
         lieu: m.stade,
         v: m.ville,
         px: '',
-        desc: `⚽ Coupe du Monde 2026\n🏟️ Groupe ${m.groupe}\n${m.equipe1} vs ${m.equipe2}\n📍 ${m.stade}, ${m.ville}\n⏰ ${m.heure_match}\n📺 ${chaine}`,
+        desc: `⚽ Coupe du Monde 2026\n🏟️ ${roundLabel}\n${matchup}\n📍 ${m.stade}, ${m.ville}\n⏰ ${m.heure_match}\n📺 ${chaine}`,
         res: m.resultat,
         rel: [],
         src: 'CDM 2026'
